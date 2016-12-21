@@ -72,5 +72,8 @@ client.add_listener(on_event)
 client.add_invite_listener(on_invite)
 client.start_listener_thread()
 
+user = client.get_user(client.user_id)
+user.set_display_name(config.get("tiny-matrix-bot", "name"))
+
 while True:
     pass

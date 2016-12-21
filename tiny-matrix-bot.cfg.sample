@@ -2,3 +2,4 @@
 host = https://matrix.example.com
 user = bot
 pass = secret
+name = Bot
