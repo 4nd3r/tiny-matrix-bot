@@ -70,7 +70,9 @@ def m_text(room, event):
 for room_id in client.get_rooms():
     join_room(room_id)
 
-client.add_listener(on_event)
+if config.getboolean("tiny-matrix-bot", "chat"):
+    client.add_listener(on_event)
+
 client.add_invite_listener(on_invite)
 client.start_listener_thread()
 
