@@ -1,0 +1,2 @@
+#!/bin/sh
+echo "hmm... $( echo $@ | sed -r 's/\s*(\s|or|või)\s*/\n/' | shuf -n1 )"

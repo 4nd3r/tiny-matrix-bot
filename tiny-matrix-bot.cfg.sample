@@ -1,0 +1,4 @@
+[tiny-matrix-bot]
+host = https://matrix.example.com
+user = bot
+pass = secret
