@@ -2,4 +2,4 @@
 #https://github.com/mth/hirc/blob/master/plans.txt
 echo "1. $@"
 echo "2. ???"
-echo "3. $(shuf -n1 plans.txt)"
+echo "3. $(shuf -n1 plan.txt)"
