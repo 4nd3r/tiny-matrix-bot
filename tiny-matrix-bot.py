@@ -81,4 +81,4 @@ user = client.get_user(client.user_id)
 user.set_display_name(config.get("tiny-matrix-bot", "name"))
 
 while True:
-    pass
+    raw_input()
