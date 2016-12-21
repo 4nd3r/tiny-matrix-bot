@@ -66,7 +66,7 @@ def m_text(room, event):
     output = check_output([script, args]).strip()
     for line in output.splitlines():
         sleep(1)
-        room.send_notice(line)
+        room.send_text(line)
 
 for room_id in client.get_rooms():
     join_room(room_id)
