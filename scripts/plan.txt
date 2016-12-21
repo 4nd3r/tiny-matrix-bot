@@ -64,3 +64,6 @@ suurenenud teotahe
 sama jama, uus nimi
 lõõgastav õhtu fooliummütsiga mullivannis
 üleestiline reede
+hea pidu
+halb pidu
+kuskil on piir
