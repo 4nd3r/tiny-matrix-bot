@@ -65,7 +65,7 @@ def m_text(room, event):
     print("script {0} {1}".format(script, args))
     output = check_output([script, args]).strip()
     for line in output.splitlines():
-        sleep(0.5)
+        sleep(1)
         room.send_notice(line)
 
 for room_id in client.get_rooms():
