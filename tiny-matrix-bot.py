@@ -17,6 +17,8 @@ logging.basicConfig(level=logging.WARNING)
 config = ConfigParser.ConfigParser()
 config.read("tiny-matrix-bot.cfg")
 
+os.chdir("scripts")
+
 client = MatrixClient(config.get("tiny-matrix-bot", "host"))
 
 token = client.login_with_password(
