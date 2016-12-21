@@ -62,6 +62,7 @@ def m_text(room, event):
     if not stat.S_IXUSR & os.stat(script)[stat.ST_MODE]:
         print "ERROR: file `{0}' not executable".format(script)
         return
+    print("script {0} {1}".format(script, args))
     output = check_output([script, args]).strip()
     for line in output.splitlines():
         sleep(0.5)
