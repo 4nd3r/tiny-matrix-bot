@@ -1,0 +1,2 @@
+#!/bin/sh
+echo "Tartu: $( curl -s -m 1 https://kvlt.ee/ilm/ | sed -nr 's/^tartu-keskmine-temp:\s(.+)$/\1/p' )"
