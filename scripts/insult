@@ -1,0 +1,2 @@
+#!/bin/sh
+shuf -n1 insult.txt | sed -e "s/\$1/$1/g"
