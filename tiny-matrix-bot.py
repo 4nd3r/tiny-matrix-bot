@@ -32,7 +32,7 @@ def on_room_event(room, event):
             m_text(room, event)
 
 def m_text(room, event):
-    body = event["content"]["body"]
+    body = event["content"]["body"].strip()
     if not body.startswith("!"):
         return
     s = body.split()
