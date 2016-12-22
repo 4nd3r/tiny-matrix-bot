@@ -1,2 +1,6 @@
 #!/bin/sh
-echo "hmm... $( echo $@ | sed -r 's/\s*(\s|or|või)\s*/\n/g' | shuf -n1 )"
+echo $@ | egrep -q '(või|ja|or)'
+if [ $? = 0 ]
+then echo $@ | sed -r 's/\s+(või|ja|or)\s+/\n/g'
+else echo $@ | sed -r 's/\s/\n/g'
+fi | shuf -n1
