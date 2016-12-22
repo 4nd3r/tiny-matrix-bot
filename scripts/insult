@@ -1,2 +1,3 @@
 #!/bin/sh
+#https://github.com/mth/hirc/blob/master/insult.txt
 shuf -n1 insult.txt | sed -e "s/\$1/$1/g"
