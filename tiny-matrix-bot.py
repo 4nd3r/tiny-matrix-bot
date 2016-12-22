@@ -65,10 +65,10 @@ client.login_with_password(
 user = client.get_user(client.user_id)
 user.set_display_name(config.get("tiny-matrix-bot", "name"))
 
-os.chdir("scripts")
-
 if config.getboolean("tiny-matrix-bot", "chat"):
     client.add_listener(on_event)
+
+os.chdir("scripts")
 
 for room_id in client.get_rooms():
     join_room(room_id)
