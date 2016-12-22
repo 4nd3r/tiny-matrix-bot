@@ -29,13 +29,11 @@ def join_room(room_id):
 def on_room_event(room, event):
     if event["type"] == "m.room.message":
         if event["content"]["msgtype"] == "m.text":
-            m_text(room, event)
+            if event["content"]["body"].strip().startswith("!"):
+                run_script(room, event)
 
-def m_text(room, event):
-    body = event["content"]["body"].strip()
-    if not body.startswith("!"):
-        return
-    s = body.split()
+def run_script(room, event):
+    s = event["content"]["body"].strip().split()
     cmd = s[0][1:]
     s.pop(0)
     args = " ".join(s)
