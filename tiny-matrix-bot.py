@@ -9,22 +9,6 @@ from time import sleep
 from subprocess import check_output
 from matrix_client.client import MatrixClient
 
-reload(sys)
-sys.setdefaultencoding("utf-8")
-
-logging.basicConfig(level=logging.WARNING)
-
-config = ConfigParser.ConfigParser()
-config.read("tiny-matrix-bot.cfg")
-
-os.chdir("scripts")
-
-client = MatrixClient(config.get("tiny-matrix-bot", "host"))
-
-token = client.login_with_password(
-    username=config.get("tiny-matrix-bot", "user"),
-    password=config.get("tiny-matrix-bot", "pass"))
-
 def on_event(event):
     if event["type"] == "m.room.message":
         print("{0} {1} {2} {3}".format(
@@ -68,17 +52,31 @@ def m_text(room, event):
         sleep(1)
         room.send_text(line)
 
-for room_id in client.get_rooms():
-    join_room(room_id)
+reload(sys)
+sys.setdefaultencoding("utf-8")
+logging.basicConfig(level=logging.WARNING)
+
+config = ConfigParser.ConfigParser()
+config.read("tiny-matrix-bot.cfg")
+
+client = MatrixClient(config.get("tiny-matrix-bot", "host"))
+client.login_with_password(
+    username=config.get("tiny-matrix-bot", "user"),
+    password=config.get("tiny-matrix-bot", "pass"))
+
+user = client.get_user(client.user_id)
+user.set_display_name(config.get("tiny-matrix-bot", "name"))
+
+os.chdir("scripts")
 
 if config.getboolean("tiny-matrix-bot", "chat"):
     client.add_listener(on_event)
 
+for room_id in client.get_rooms():
+    join_room(room_id)
+
 client.add_invite_listener(on_invite)
 client.start_listener_thread()
-
-user = client.get_user(client.user_id)
-user.set_display_name(config.get("tiny-matrix-bot", "name"))
 
 while True:
     raw_input()
