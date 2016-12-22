@@ -39,10 +39,10 @@ def run_script(room, event):
     args = " ".join(s)
     script = os.path.abspath(cmd)
     if not os.path.isfile(script):
-        print "ERROR: file `{0}' not found".format(script)
+        print "ERROR: script `{0}' not found".format(script)
         return
     if not stat.S_IXUSR & os.stat(script)[stat.ST_MODE]:
-        print "ERROR: file `{0}' not executable".format(script)
+        print "ERROR: script `{0}' not executable".format(script)
         return
     print("script {0} {1}".format(script, args))
     output = check_output([script, args]).strip()
