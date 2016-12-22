@@ -1,7 +1,7 @@
 $1: sa oled nuhtluseks maailmale loodud, et inimesed näeksid, kui madalale võib üks inimeseloom #linux.ee peal langeda.
 $1: sa oled loll nagu lauajalg.
 Tead $1, mine osta õige üks tükk seepi.
-Erikuradikinomees sa $1 oled, reede õhta ircus!
+Erikuradikinomees sa $1 oled, reede õhta maatriksis!
 $1: sa oled üks plekist persega vedruvasikas.
 $1: käi jala.
 $1, sa vana pede, sinu kohta on artikkel: http://www.$1.isgay.com/
