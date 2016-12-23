@@ -1,4 +1,5 @@
 #!/bin/sh
+echo -n 'hmm... '
 echo $@ | egrep -q '(või|ja|or)'
 if [ $? = 0 ]
 then echo $@ | sed -r 's/\s+(või|ja|or)\s+/\n/g'
