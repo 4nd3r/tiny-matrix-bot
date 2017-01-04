@@ -3,27 +3,28 @@
 
 $dicts = array
 (
-	'ss' => 'http://www.eki.ee/dict/ekss/index.cgi?Q=%s&C01=1&C02=1&C03=1',
-	'qs' => 'http://www.eki.ee/dict/qs/index.cgi?Q=%s&C01=1&C02=1',
+    'ss'  => 'http://www.eki.ee/dict/ekss/index.cgi?Q=%s&C01=1&C02=1&C03=1',
+    'qs'  => 'http://www.eki.ee/dict/qs/index.cgi?Q=%s&C01=1&C02=1',
+    'ety' => 'http://www.eki.ee/dict/ety/index.cgi?Q=%s&F=M&C06=et',
 );
 
 define( 'EKI_LENGTH', 300 );
 define( 'EKI_ROWS',   3 );
 
 if ( $argc < 3 )
-	exit( "eki <sõnastik> <sõna(d)>\n" );
+    exit( "eki <sõnastik> <sõna(d)>\n" );
 
 $dict = $argv[ 1 ];
 
 if ( ! isset( $dicts[ $dict ] ) )
-	exit( "Tundmatu sõnastik.\n" );
+    exit( "Tundmatu sõnastik.\n" );
 
 unset( $argv[ 0 ] );
 unset( $argv[ 1 ] );
 
 $str = '';
 foreach ( $argv as $arg )
-	$str .= $arg . ' ';
+    $str .= $arg . ' ';
 
 $str  = urlencode( trim( $str ) );
 $url  = sprintf( $dicts[ $dict ], $str );
@@ -38,26 +39,26 @@ $counter = 0;
 
 foreach ( $results as $result )
 {
-	foreach ( $result->childNodes as $node )
-	{
-		$counter++;
+    foreach ( $result->childNodes as $node )
+    {
+        $counter++;
 
-		$line = trim( $node->nodeValue );
+        $line = trim( $node->nodeValue );
 
-		if ( mb_strlen( $line ) >= EKI_LENGTH )
-			$line = mb_substr( $line, 0, EKI_LENGTH - 3 ) . '...';
+        if ( mb_strlen( $line ) >= EKI_LENGTH )
+            $line = mb_substr( $line, 0, EKI_LENGTH - 3 ) . '...';
 
-		echo $line . "\n";
+        echo $line . "\n";
 
-		if ( $counter >= EKI_ROWS )
-			break;
-	}
+        if ( $counter >= EKI_ROWS )
+            break;
+    }
 
-	if ( $counter >= EKI_ROWS )
-		break;
+    if ( $counter >= EKI_ROWS )
+        break;
 }
 
 if ( $counter > 0 )
-	echo $url . "\n";
+    echo $url . "\n";
 else
-	echo "Ei ole sellist sõna!\n";
+    echo "Ei ole sellist sõna!\n";
