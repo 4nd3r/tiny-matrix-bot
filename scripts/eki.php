@@ -61,4 +61,4 @@ foreach ( $results as $result )
 if ( $counter > 0 )
     echo $url . "\n";
 else
-    echo "Ei ole sellist sõna!\n";
+    echo "Nein!\n";
