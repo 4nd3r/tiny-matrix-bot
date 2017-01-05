@@ -5,5 +5,5 @@ tln=$( sed -nr 's/^tallinn-mustamäe-temp:\s(.+)$/\1/p' $tmp )
 hrk=$( sed -nr 's/^tallinn-harku-temp:\s(.+)$/\1/p' $tmp )
 trt=$( sed -nr 's/^tartu-keskmine-temp:\s(.+)$/\1/p' $tmp )
 vru=$( sed -nr 's/^võru-temp:\s(.+)$/\1/p' $tmp )
-echo "Tallinn: $tln; Harku: $hrk; Tartu: $trt; Võru: $vru"
+echo "Tallinn: $tln; Harku: $hrk; Tartu: $trt; Võru: $vru" | sed 's/\./,/g'
 rm -f $tmp
