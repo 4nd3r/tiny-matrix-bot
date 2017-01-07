@@ -25,14 +25,6 @@ def on_signal(signal, frame):
     if signal == 15:
         exit()
 
-def on_event(event):
-    if event["type"] == "m.room.message":
-        print("{0} {1} {2} {3}".format(
-            event["content"]["msgtype"],
-            event["room_id"],
-            event["sender"],
-            event["content"]["body"]))
-
 def on_invite(room_id, state):
     print("invite {0}".format(room_id))
     join_room(room_id)
@@ -62,6 +54,12 @@ def create_socket(room):
 
 def on_room_event(room, event):
     if event["type"] == "m.room.message":
+        if config.getboolean("tiny-matrix-bot", "chat"):
+            print("{0} {1} {2} {3}".format(
+                event["content"]["msgtype"],
+                event["room_id"],
+                event["sender"],
+                event["content"]["body"]))
         if event["content"]["msgtype"] == "m.text":
             if event["content"]["body"].strip().startswith("!"):
                 run_script(room, event)
@@ -99,9 +97,6 @@ client.login_with_password(
 
 user = client.get_user(client.user_id)
 user.set_display_name(config.get("tiny-matrix-bot", "name"))
-
-if config.getboolean("tiny-matrix-bot", "chat"):
-    client.add_listener(on_event)
 
 os.chdir(PATH_SCRIPTS)
 
