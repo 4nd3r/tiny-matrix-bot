@@ -4,3 +4,4 @@ user = bot
 pass = secret
 name = Bot
 chat = false
+sock = false

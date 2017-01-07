@@ -32,7 +32,8 @@ def join_room(room_id):
     room = client.join_room(room_id)
     room.add_listener(on_room_event)
     print("join {0}".format(room_id))
-    thread.start_new_thread(create_socket, (room, ))
+    if config.getboolean("tiny-matrix-bot", "sock"):
+        thread.start_new_thread(create_socket, (room, ))
 
 def create_socket(room):
     p = os.path.join(PATH_SOCKETS,
