@@ -13,8 +13,8 @@ from subprocess import check_output
 from matrix_client.client import MatrixClient
 
 PATH_CURRENT = os.path.dirname(os.path.realpath(__file__))
-PATH_SCRIPTS = os.path.join(PATH_CURRENT, 'scripts')
-PATH_SOCKETS = os.path.join(PATH_CURRENT, 'sockets')
+PATH_SCRIPTS = os.path.join(PATH_CURRENT, "scripts")
+PATH_SOCKETS = os.path.join(PATH_CURRENT, "sockets")
 
 def on_event(event):
     if event["type"] == "m.room.message":
@@ -37,7 +37,7 @@ def join_room(room_id):
 
 def create_socket(room):
     p = os.path.join(PATH_SOCKETS,
-        re.search('^\!([A-Za-z]+):', room.room_id).group(1))
+        re.search("^\!([A-Za-z]+):", room.room_id).group(1))
     try:
         os.remove(p)
     except OSError:
