@@ -72,7 +72,6 @@ def create_socket(room):
 
 def on_leave(room_id, state):
     print("leave {0}".format(room_id))
-    # TODO: remove sockets etc
 
 def on_room_event(room, event):
     if event["type"] == "m.room.message":
