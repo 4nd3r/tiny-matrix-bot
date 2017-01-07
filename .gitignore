@@ -1,2 +1,4 @@
 matrix_client
+sockets/*
+!sockets/README.md
 tiny-matrix-bot.cfg

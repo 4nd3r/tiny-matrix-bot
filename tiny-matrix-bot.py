@@ -2,12 +2,19 @@
 
 import sys
 import os
+import re
 import stat
+import thread
+import socket
 import logging
 import ConfigParser
 from time import sleep
 from subprocess import check_output
 from matrix_client.client import MatrixClient
+
+PATH_CURRENT = os.path.dirname(os.path.realpath(__file__))
+PATH_SCRIPTS = os.path.join(PATH_CURRENT, 'scripts')
+PATH_SOCKETS = os.path.join(PATH_CURRENT, 'sockets')
 
 def on_event(event):
     if event["type"] == "m.room.message":
@@ -25,6 +32,23 @@ def join_room(room_id):
     room = client.join_room(room_id)
     room.add_listener(on_room_event)
     print("join {0}".format(room_id))
+    socket_name = re.search('^\!([A-Za-z]+):', room_id).group(1)
+    socket_path = os.path.join(PATH_SOCKETS, socket_name)
+    try:
+        os.remove(socket_path)
+    except OSError:
+        pass
+    thread.start_new_thread(create_socket, (socket_path, room))
+
+def create_socket(socket_path, room):
+    s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+    s.bind(socket_path)
+    s.listen(1)
+    print("socket {0}".format(s.getsockname()))
+    while True:
+        c, a = s.accept()
+        d = c.recv(4096).strip()
+        room.send_text(d)
 
 def on_room_event(room, event):
     if event["type"] == "m.room.message":
@@ -68,7 +92,7 @@ user.set_display_name(config.get("tiny-matrix-bot", "name"))
 if config.getboolean("tiny-matrix-bot", "chat"):
     client.add_listener(on_event)
 
-os.chdir("scripts")
+os.chdir(PATH_SCRIPTS)
 
 for room_id in client.get_rooms():
     join_room(room_id)
