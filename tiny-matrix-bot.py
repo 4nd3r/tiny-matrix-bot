@@ -115,9 +115,9 @@ os.chdir(path_scripts)
 for room_id in client.get_rooms():
     join_room(room_id)
 
+client.start_listener_thread()
 client.add_invite_listener(on_invite)
 client.add_leave_listener(on_leave)
-client.start_listener_thread()
 
 while True:
     try:
