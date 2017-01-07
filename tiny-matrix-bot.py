@@ -5,11 +5,11 @@ import os
 import re
 import stat
 import signal
-import thread
 import socket
 import logging
 import ConfigParser
 from time import sleep
+from threading import Thread
 from subprocess import check_output
 from matrix_client.client import MatrixClient
 
@@ -51,7 +51,9 @@ def join_room(room_id):
     room.add_listener(on_room_event)
     print("join {0}".format(room_id))
     if CONF_SOCK:
-        thread.start_new_thread(create_socket, (room, ))
+        thread = Thread(target=create_socket, args=(room, ))
+        thread.daemon = True
+        thread.start()
 
 def create_socket(room):
     p = os.path.join(PATH_SOCKETS,
