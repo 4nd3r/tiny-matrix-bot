@@ -13,6 +13,10 @@ from time import sleep
 from subprocess import check_output
 from matrix_client.client import MatrixClient
 
+reload(sys)
+sys.setdefaultencoding("utf-8")
+logging.basicConfig(level=logging.WARNING)
+
 PATH_CURRENT = os.path.dirname(os.path.realpath(__file__))
 PATH_SCRIPTS = os.path.join(PATH_CURRENT, "scripts")
 PATH_SOCKETS = os.path.join(PATH_CURRENT, "sockets")
@@ -35,6 +39,8 @@ def exit(msg="bye!"):
 def on_signal(signal, frame):
     if signal == 15:
         exit()
+
+signal.signal(signal.SIGTERM, on_signal)
 
 def on_invite(room_id, state):
     print("invite {0}".format(room_id))
@@ -96,11 +102,6 @@ def run_script(room, event):
     for line in output.splitlines():
         sleep(1)
         room.send_text(line)
-
-reload(sys)
-sys.setdefaultencoding("utf-8")
-signal.signal(signal.SIGTERM, on_signal)
-logging.basicConfig(level=logging.WARNING)
 
 client = MatrixClient(CONF_HOST)
 client.login_with_password(username=CONF_USER, password=CONF_PASS)
