@@ -35,20 +35,20 @@ def join_room(room_id):
     thread.start_new_thread(create_socket, (room, ))
 
 def create_socket(room):
-    socket_name = re.search('^\!([A-Za-z]+):', room.room_id).group(1)
-    socket_path = os.path.join(PATH_SOCKETS, socket_name)
+    p = os.path.join(PATH_SOCKETS,
+        re.search('^\!([A-Za-z]+):', room.room_id).group(1))
     try:
-        os.remove(socket_path)
+        os.remove(p)
     except OSError:
         pass
     s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-    s.bind(socket_path)
+    s.bind(p)
     s.listen(1)
     print("socket {0}".format(s.getsockname()))
     while True:
         c, a = s.accept()
-        d = c.recv(4096).strip()
-        room.send_text(d)
+        t = c.recv(4096).strip()
+        room.send_text(t)
 
 def on_room_event(room, event):
     if event["type"] == "m.room.message":
