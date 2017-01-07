@@ -52,6 +52,10 @@ def create_socket(room):
         t = c.recv(4096).strip()
         room.send_text(t)
 
+def on_leave(room_id, state):
+    print("leave {0}".format(room_id))
+    # TODO: remove sockets etc
+
 def on_room_event(room, event):
     if event["type"] == "m.room.message":
         if config.getboolean("tiny-matrix-bot", "chat"):
@@ -104,6 +108,7 @@ for room_id in client.get_rooms():
     join_room(room_id)
 
 client.add_invite_listener(on_invite)
+client.add_leave_listener(on_leave)
 client.start_listener_thread()
 
 while True:
