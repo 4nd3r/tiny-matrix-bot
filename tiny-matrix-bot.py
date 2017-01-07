@@ -121,6 +121,11 @@ client.add_leave_listener(on_leave)
 
 while True:
     try:
-        raw_input()
+        input = raw_input()
+        if input == "rooms":
+            for room_id in client.get_rooms():
+                print(room_id)
+        if input.strip().startswith("part "):
+            client.get_rooms()[input[5:]].leave()
     except (EOFError, KeyboardInterrupt):
         exit()
