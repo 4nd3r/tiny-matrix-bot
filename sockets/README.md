@@ -1,4 +1,4 @@
-sockets will be placed here, use socat to send text
+sockets will be placed here, use `socat` to send text
 
 example:
 
