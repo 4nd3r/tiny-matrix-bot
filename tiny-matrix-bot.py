@@ -16,9 +16,10 @@ from matrix_client.client import MatrixClient
 PATH_CURRENT = os.path.dirname(os.path.realpath(__file__))
 PATH_SCRIPTS = os.path.join(PATH_CURRENT, "scripts")
 PATH_SOCKETS = os.path.join(PATH_CURRENT, "sockets")
+PATH_CONFIG  = os.path.join(PATH_CURRENT, "tiny-matrix-bot.cfg")
 
 config = ConfigParser.ConfigParser()
-config.read("tiny-matrix-bot.cfg")
+config.read(PATH_CONFIG)
 
 CONF_HOST = config.get("tiny-matrix-bot", "host")
 CONF_USER = config.get("tiny-matrix-bot", "user")
