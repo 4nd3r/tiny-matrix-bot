@@ -17,20 +17,19 @@ reload(sys)
 sys.setdefaultencoding("utf-8")
 logging.basicConfig(level=logging.WARNING)
 
-PATH_CURRENT = os.path.dirname(os.path.realpath(__file__))
-PATH_SCRIPTS = os.path.join(PATH_CURRENT, "scripts")
-PATH_SOCKETS = os.path.join(PATH_CURRENT, "sockets")
-PATH_CONFIG  = os.path.join(PATH_CURRENT, "tiny-matrix-bot.cfg")
+path_current = os.path.dirname(os.path.realpath(__file__))
+path_scripts = os.path.join(path_current, "scripts")
+path_sockets = os.path.join(path_current, "sockets")
+path_config  = os.path.join(path_current, "tiny-matrix-bot.cfg")
 
 config = ConfigParser.ConfigParser()
-config.read(PATH_CONFIG)
-
-CONF_HOST = config.get("tiny-matrix-bot", "host")
-CONF_USER = config.get("tiny-matrix-bot", "user")
-CONF_PASS = config.get("tiny-matrix-bot", "pass")
-CONF_NAME = config.get("tiny-matrix-bot", "name")
-CONF_CHAT = config.getboolean("tiny-matrix-bot", "chat")
-CONF_SOCK = config.getboolean("tiny-matrix-bot", "sock")
+config.read(path_config)
+config_host = config.get("tiny-matrix-bot", "host")
+config_user = config.get("tiny-matrix-bot", "user")
+config_pass = config.get("tiny-matrix-bot", "pass")
+config_name = config.get("tiny-matrix-bot", "name")
+config_chat = config.getboolean("tiny-matrix-bot", "chat")
+config_sock = config.getboolean("tiny-matrix-bot", "sock")
 
 def exit(msg="bye!"):
     print(msg)
@@ -47,16 +46,16 @@ def on_invite(room_id, state):
     join_room(room_id)
 
 def join_room(room_id):
-    room = client.join_room(room_id)
-    room.add_listener(on_room_event)
+    r = client.join_room(room_id)
+    r.add_listener(on_room_event)
     print("join {0}".format(room_id))
-    if CONF_SOCK:
-        thread = Thread(target=create_socket, args=(room, ))
-        thread.daemon = True
-        thread.start()
+    if config_sock:
+        t = Thread(target=create_socket, args=(r, ))
+        t.daemon = True
+        t.start()
 
 def create_socket(room):
-    p = os.path.join(PATH_SOCKETS,
+    p = os.path.join(path_sockets,
         re.search("^\!([A-Za-z]+):", room.room_id).group(1))
     try:
         os.remove(p)
@@ -77,7 +76,7 @@ def on_leave(room_id, state):
 
 def on_room_event(room, event):
     if event["type"] == "m.room.message":
-        if CONF_CHAT:
+        if config_chat:
             print("{0} {1} {2} {3}".format(
                 event["content"]["msgtype"],
                 event["room_id"],
@@ -105,13 +104,13 @@ def run_script(room, event):
         sleep(1)
         room.send_text(line)
 
-client = MatrixClient(CONF_HOST)
-client.login_with_password(username=CONF_USER, password=CONF_PASS)
+client = MatrixClient(config_host)
+client.login_with_password(username=config_user, password=config_pass)
 
 user = client.get_user(client.user_id)
-user.set_display_name(CONF_NAME)
+user.set_display_name(config_name)
 
-os.chdir(PATH_SCRIPTS)
+os.chdir(path_scripts)
 
 for room_id in client.get_rooms():
     join_room(room_id)
