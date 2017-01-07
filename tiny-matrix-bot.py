@@ -17,6 +17,16 @@ PATH_CURRENT = os.path.dirname(os.path.realpath(__file__))
 PATH_SCRIPTS = os.path.join(PATH_CURRENT, "scripts")
 PATH_SOCKETS = os.path.join(PATH_CURRENT, "sockets")
 
+config = ConfigParser.ConfigParser()
+config.read("tiny-matrix-bot.cfg")
+
+CONF_HOST = config.get("tiny-matrix-bot", "host")
+CONF_USER = config.get("tiny-matrix-bot", "user")
+CONF_PASS = config.get("tiny-matrix-bot", "pass")
+CONF_NAME = config.get("tiny-matrix-bot", "name")
+CONF_CHAT = config.getboolean("tiny-matrix-bot", "chat")
+CONF_SOCK = config.getboolean("tiny-matrix-bot", "sock")
+
 def exit(msg="bye!"):
     print(msg)
     sys.exit()
@@ -33,7 +43,7 @@ def join_room(room_id):
     room = client.join_room(room_id)
     room.add_listener(on_room_event)
     print("join {0}".format(room_id))
-    if config.getboolean("tiny-matrix-bot", "sock"):
+    if CONF_SOCK:
         thread.start_new_thread(create_socket, (room, ))
 
 def create_socket(room):
@@ -58,7 +68,7 @@ def on_leave(room_id, state):
 
 def on_room_event(room, event):
     if event["type"] == "m.room.message":
-        if config.getboolean("tiny-matrix-bot", "chat"):
+        if CONF_CHAT:
             print("{0} {1} {2} {3}".format(
                 event["content"]["msgtype"],
                 event["room_id"],
@@ -91,16 +101,11 @@ sys.setdefaultencoding("utf-8")
 signal.signal(signal.SIGTERM, on_signal)
 logging.basicConfig(level=logging.WARNING)
 
-config = ConfigParser.ConfigParser()
-config.read("tiny-matrix-bot.cfg")
-
-client = MatrixClient(config.get("tiny-matrix-bot", "host"))
-client.login_with_password(
-    username=config.get("tiny-matrix-bot", "user"),
-    password=config.get("tiny-matrix-bot", "pass"))
+client = MatrixClient(CONF_HOST)
+client.login_with_password(username=CONF_USER, password=CONF_PASS)
 
 user = client.get_user(client.user_id)
-user.set_display_name(config.get("tiny-matrix-bot", "name"))
+user.set_display_name(CONF_NAME)
 
 os.chdir(PATH_SCRIPTS)
 
