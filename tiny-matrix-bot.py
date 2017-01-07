@@ -4,6 +4,7 @@ import sys
 import os
 import re
 import stat
+import signal
 import thread
 import socket
 import logging
@@ -15,6 +16,14 @@ from matrix_client.client import MatrixClient
 PATH_CURRENT = os.path.dirname(os.path.realpath(__file__))
 PATH_SCRIPTS = os.path.join(PATH_CURRENT, "scripts")
 PATH_SOCKETS = os.path.join(PATH_CURRENT, "sockets")
+
+def exit(msg="bye!"):
+    print(msg)
+    sys.exit()
+
+def on_signal(signal, frame):
+    if signal == 15:
+        exit()
 
 def on_event(event):
     if event["type"] == "m.room.message":
@@ -77,6 +86,7 @@ def run_script(room, event):
 
 reload(sys)
 sys.setdefaultencoding("utf-8")
+signal.signal(signal.SIGTERM, on_signal)
 logging.basicConfig(level=logging.WARNING)
 
 config = ConfigParser.ConfigParser()
@@ -102,4 +112,7 @@ client.add_invite_listener(on_invite)
 client.start_listener_thread()
 
 while True:
-    raw_input()
+    try:
+        raw_input()
+    except (EOFError, KeyboardInterrupt):
+        exit()
