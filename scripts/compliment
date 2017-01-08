@@ -1,3 +1,8 @@
 #!/bin/sh
 #https://github.com/mth/hirc/blob/master/compliments.txt
-shuf -n1 compliment.txt | sed -e "s/\$1/$1/g"
+r="^\!compliment\s"
+if [ -n "$CONFIG" ]
+then echo $r; exit
+fi
+a=$( echo $@ | sed "s/$r//" )
+shuf -n1 compliment.txt | sed -e "s/\$1/$a/g"

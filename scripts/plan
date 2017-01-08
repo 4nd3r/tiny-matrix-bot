@@ -1,5 +1,10 @@
 #!/bin/sh
 #https://github.com/mth/hirc/blob/master/plans.txt
-echo "1. $@"
+r="^\!plan\s"
+if [ -n "$CONFIG" ]
+then echo $r; exit
+fi
+a=$( echo $@ | sed "s/$r//" )
+echo "1. $a"
 echo "2. ???"
 echo "3. $( shuf -n1 plan.txt )"

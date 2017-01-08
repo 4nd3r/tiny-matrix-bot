@@ -1,2 +1,7 @@
 #!/bin/sh
-php eki.php ety $@
+r="^\!ety\s"
+if [ -n "$CONFIG" ]
+then echo $r; exit
+fi
+a=$( echo $@ | sed "s/$r//" )
+php eki.php ety $a

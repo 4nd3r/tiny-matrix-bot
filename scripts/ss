@@ -1,2 +1,7 @@
 #!/bin/sh
-php eki.php ss $@
+r="^\!ss\s"
+if [ -n "$CONFIG" ]
+then echo $r; exit
+fi
+a=$( echo $@ | sed "s/$r//" )
+php eki.php ss $a

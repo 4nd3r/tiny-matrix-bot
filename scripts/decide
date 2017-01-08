@@ -1,7 +1,12 @@
 #!/bin/sh
+r="^\!decide\s"
+if [ -n "$CONFIG" ]
+then echo $r; exit
+fi
+a=$( echo $@ | sed "s/$r//" )
 echo -n 'hmm... '
-echo $@ | egrep -q '(või|ja|or)'
+echo $a | egrep -q '(või|ja|or)'
 if [ $? = 0 ]
-then echo $@ | sed -r 's/\s+(või|ja|or)\s+/\n/g'
-else echo $@ | sed -r 's/\s/\n/g'
+then echo $a | sed -r 's/\s+(või|ja|or)\s+/\n/g'
+else echo $a | sed -r 's/\s/\n/g'
 fi | shuf -n1

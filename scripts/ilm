@@ -1,4 +1,8 @@
 #!/bin/sh
+r="^(\!ilm|ilm\?)"
+if [ -n "$CONFIG" ]
+then echo $r; exit
+fi
 tmp=$( tempfile )
 curl -s -m 1 -o $tmp https://kvlt.ee/ilm/
 tln=$( sed -nr 's/^tallinn-temp:\s(.+)$/\1/p' $tmp )
