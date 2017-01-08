@@ -63,7 +63,12 @@ class TinyMatrixtBot():
             script = os.path.join(path, script)
             if not stat.S_IXUSR & os.stat(script)[stat.ST_MODE]:
                 continue
-            output = subprocess.getoutput("CONFIG=1 {}".format(script)).strip()
+            output = subprocess.Popen(
+                [script],
+                env={"CONFIG": "1"},
+                stdout=subprocess.PIPE,
+                universal_newlines=True
+                ).communicate()[0].strip()
             if not output:
                 continue
             scripts[output] = script
@@ -114,7 +119,11 @@ class TinyMatrixtBot():
 
     def run_script(self, room, script, args):
         print("run {} {}".format(script, args))
-        output = subprocess.getoutput("{} {}".format(script, args)).strip()
+        output = subprocess.Popen(
+            [script, args],
+            stdout=subprocess.PIPE,
+            universal_newlines=True
+            ).communicate()[0].strip()
         for line in output.splitlines():
             sleep(1)
             print(line)
