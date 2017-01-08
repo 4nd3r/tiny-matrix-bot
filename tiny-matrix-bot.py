@@ -124,7 +124,7 @@ if __name__ == "__main__":
         print("{} <path to config file>".format(sys.argv[0]))
         sys.exit()
     if not os.path.isfile(sys.argv[1]):
-        print("ERROR: config file `{}' not found".format(sys.argv[1]))
+        print("config file `{}' not found".format(sys.argv[1]))
         sys.exit()
     config = configparser.ConfigParser()
     config.read(sys.argv[1])
