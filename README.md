@@ -15,3 +15,5 @@ cp tiny-matrix-bot.cfg.sample tiny-matrix-bot.cfg
 vim tiny-matrix-bot.cfg
 screen ./tiny-matrix-bot.py tiny-matrix-bot.cfg
 ```
+
+scripts must have execute bit - `chmod +x`
