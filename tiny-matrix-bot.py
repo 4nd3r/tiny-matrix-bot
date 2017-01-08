@@ -103,6 +103,8 @@ class TinyMatrixtBot():
         print("leave {}".format(room_id))
 
     def on_room_event(self, room, event):
+        if event["sender"] == self.client.user_id:
+            return
         if event["type"] == "m.room.message":
             if event["content"]["msgtype"] == "m.text":
                 body = event["content"]["body"].strip()
