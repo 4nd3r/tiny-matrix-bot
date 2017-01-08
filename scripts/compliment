@@ -1,8 +1,15 @@
 #!/bin/sh
-#https://github.com/mth/hirc/blob/master/compliments.txt
-r="^\!compliment\s"
+
+# https://github.com/mth/hirc/blob/master/compliments.txt
+
+regex="^\!compliment\s"
+
 if [ -n "$CONFIG" ]
-then echo $r; exit
+then
+    echo $regex
+    exit
 fi
-a=$( echo $@ | sed "s/$r//" )
-shuf -n1 compliment.txt | sed -e "s/\$1/$a/g"
+
+args=$( echo $@ | sed "s/$regex//" )
+
+shuf -n1 compliment.txt | sed -e "s/\$1/$args/g"

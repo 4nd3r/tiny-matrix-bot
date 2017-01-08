@@ -1,7 +1,0 @@
-#!/bin/sh
-r="^\!qs\s"
-if [ -n "$CONFIG" ]
-then echo $r; exit
-fi
-a=$( echo $@ | sed "s/$r//" )
-php eki.php qs $a

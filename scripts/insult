@@ -1,8 +1,15 @@
 #!/bin/sh
-#https://github.com/mth/hirc/blob/master/insult.txt
-r="^\!insult\s"
+
+# https://github.com/mth/hirc/blob/master/insult.txt
+
+regex="^\!insult\s"
+
 if [ -n "$CONFIG" ]
-then echo $r; exit
+then
+    echo $regex
+    exit
 fi
-a=$( echo $@ | sed "s/$r//" )
-shuf -n1 insult.txt | sed -e "s/\$1/$a/g"
+
+args=$( echo $@ | sed "s/$regex//" )
+
+shuf -n1 insult.txt | sed -e "s/\$1/$args/g"

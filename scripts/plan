@@ -1,10 +1,17 @@
 #!/bin/sh
-#https://github.com/mth/hirc/blob/master/plans.txt
-r="^\!plan\s"
+
+# https://github.com/mth/hirc/blob/master/plans.txt
+
+regex="^\!plan\s"
+
 if [ -n "$CONFIG" ]
-then echo $r; exit
+then
+    echo $regex
+    exit
 fi
-a=$( echo $@ | sed "s/$r//" )
-echo "1. $a"
+
+args=$( echo $@ | sed "s/$regex//" )
+
+echo "1. $args"
 echo "2. ???"
 echo "3. $( shuf -n1 plan.txt )"

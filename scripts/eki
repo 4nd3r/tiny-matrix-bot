@@ -1,11 +1,17 @@
 #!/usr/bin/php
 <?php
 
+if ( false !== getenv('CONFIG') )
+{
+    echo '^\!(qs|ss|ety)\s' . PHP_EOL;
+    exit;
+}
+
 $dicts = array
 (
-    'ss'  => 'http://www.eki.ee/dict/ekss/index.cgi?Q=%s&C01=1&C02=1&C03=1',
-    'qs'  => 'http://www.eki.ee/dict/qs/index.cgi?Q=%s&C01=1&C02=1',
-    'ety' => 'http://www.eki.ee/dict/ety/index.cgi?Q=%s&F=M&C06=et',
+    '!ss'  => 'http://www.eki.ee/dict/ekss/index.cgi?Q=%s&C01=1&C02=1&C03=1',
+    '!qs'  => 'http://www.eki.ee/dict/qs/index.cgi?Q=%s&C01=1&C02=1',
+    '!ety' => 'http://www.eki.ee/dict/ety/index.cgi?Q=%s&F=M&C06=et',
 );
 
 define( 'EKI_LENGTH', 300 );
