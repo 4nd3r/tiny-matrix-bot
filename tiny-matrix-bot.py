@@ -9,7 +9,6 @@ import socket
 import logging
 import subprocess
 import configparser
-import time
 from time import sleep
 from threading import Thread
 from matrix_client.client import MatrixClient
