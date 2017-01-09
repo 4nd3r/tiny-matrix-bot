@@ -10,6 +10,6 @@ then
     exit
 fi
 
-args=$( echo $@ | sed "s/$regex//" )
+args=$( echo $@ | sed "s/$regex//I" )
 
 shuf -n1 insult.txt | sed -e "s/\$1/$args/g"

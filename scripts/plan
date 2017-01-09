@@ -10,7 +10,7 @@ then
     exit
 fi
 
-args=$( echo $@ | sed "s/$regex//" )
+args=$( echo $@ | sed "s/$regex//I" )
 
 echo "1. $args"
 echo "2. ???"

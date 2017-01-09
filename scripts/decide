@@ -8,16 +8,16 @@ then
     exit
 fi
 
-args=$( echo $@ | sed "s/$regex//" )
+args=$( echo $@ | sed "s/$regex//I" )
 
 echo -n 'hmm... '
 
-echo $args | egrep -q '(või|ja|or|and)'
+echo $args | egrep -iq '(või|ja|or|and)'
 
 if [ $? = 0 ]
 then
-    echo $args | sed -r 's/\s+(või|ja|or|and)\s+/\n/g'
+    echo $args | sed -r 's/\s+(või|ja|or|and)\s+/\n/gI'
 else
-    echo $args | sed -r 's/\s/\n/g'
+    echo $args | sed -r 's/\s/\n/gI'
 fi \
 | shuf -n1

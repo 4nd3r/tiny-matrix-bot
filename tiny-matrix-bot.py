@@ -87,7 +87,7 @@ class TinyMatrixtBot():
         thread.start()
 
     def create_socket(self, room):
-        socket_name = re.search("^\!([A-Za-z]+):", room.room_id).group(1)
+        socket_name = re.search("^\!([a-z]+):", room.room_id, re.IGNORECASE).group(1)
         socket_path = os.path.join(self.sockets_path, socket_name)
         try:
             os.remove(socket_path)
@@ -113,7 +113,7 @@ class TinyMatrixtBot():
             if event["content"]["msgtype"] == "m.text":
                 body = event["content"]["body"].strip()
                 for regex, script in self.scripts.items():
-                    if re.search(regex, body):
+                    if re.search(regex, body, re.IGNORECASE):
                         self.run_script(room, script, body)
 
     def run_script(self, room, script, args):
