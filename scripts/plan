@@ -13,5 +13,7 @@ fi
 args=$( echo $@ | sed "s/$regex//I" )
 
 echo "1. $args"
+echo
 echo "2. ???"
+echo
 echo "3. $( shuf -n1 plan.txt )"

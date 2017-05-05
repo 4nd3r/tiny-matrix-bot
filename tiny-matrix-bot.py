@@ -123,7 +123,7 @@ class TinyMatrixtBot():
             stdout=subprocess.PIPE,
             universal_newlines=True
             ).communicate()[0].strip()
-        for line in output.splitlines():
+        for line in output.split("\n\n"):
             sleep(1)
             print(line)
             room.send_text(line)

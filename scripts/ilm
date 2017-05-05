@@ -18,8 +18,7 @@ last=$( echo $ilm | awk '{print $NF}' )
 for city in $ilm
 do
     temp=$( sed -nr "s/^$city-temp:\s(.+)$/\1/pi" $dump )
-    [ -n "$temp" ] && echo -n "$city: $temp" | sed 's/\./,/g'
-    [ "$city" = "$last" ] && echo || echo -n '; '
+    [ -n "$temp" ] && echo "$city: $temp" | sed 's/\./,/g'
 done
 
 rm -f $dump
