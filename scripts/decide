@@ -10,7 +10,8 @@ fi
 
 args=$( echo $@ | sed "s/$regex//I" )
 
-echo -n 'hmm... '
+echo 'hmm... '
+echo
 
 echo $args | egrep -iq '(või|ja|or|and)'
 
