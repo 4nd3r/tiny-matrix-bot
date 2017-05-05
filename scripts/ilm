@@ -12,10 +12,7 @@ dump=$( tempfile )
 
 curl -s -o $dump https://kvlt.ee/ilm/
 
-ilm='Tallinn Harku Tartu Võru Pärnu Brüssel'
-last=$( echo $ilm | awk '{print $NF}' )
-
-for city in $ilm
+for city in Tallinn Harku Tartu Võru Pärnu Brüssel
 do
     temp=$( sed -nr "s/^$city-temp:\s(.+)$/\1/pi" $dump )
     [ -n "$temp" ] && echo "$city: $temp" | sed 's/\./,/g'
