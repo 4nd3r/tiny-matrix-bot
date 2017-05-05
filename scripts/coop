@@ -16,14 +16,14 @@ dump=$( tempfile )
 
 curl -o $dump -s "https://ecoop.ee/api/v1/products?show_search=1&ordering=_sell_price&keyword=$keyword"
 
-jq -r '.results[] | "\(.sell_price) € \(.name)"' $dump | head -3
+jq -r '.results[] | "\(.sell_price) € \(.name)"' $dump | head -5
 
 count=$( jq '.count' $dump )
 
 if [ $count -eq 0 ]
 then echo ?
 else
-    [ $count -gt 3 ] && echo -n "$count toodet: "
+    [ $count -gt 5 ] && echo -n "$count toodet: "
     echo "https://ecoop.ee/et/otsing/?otsing=$keyword"
 fi
 
