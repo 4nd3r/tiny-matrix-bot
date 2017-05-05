@@ -1,0 +1,25 @@
+#!/bin/sh -e
+
+regex="^\!coop\s"
+
+if [ -n "$CONFIG" ]
+then
+    echo $regex
+    exit
+fi
+
+args=$( echo $@ | sed "s/$regex//I" )
+
+keyword=$( echo -n $args | python -c 'import urllib,sys; print urllib.quote_plus("".join(sys.stdin.readlines()))' )
+
+dump=$( tempfile )
+
+curl -o $dump -s "https://ecoop.ee/api/v1/products?show_search=1&ordering=relevancy&keyword=$keyword"
+
+jq -r '.results[] | "\(.sell_price) € \(.name)"' $dump | head -5
+
+count=$( jq '.count' $dump )
+
+[ $count -eq 0 ] && echo ? || echo "https://ecoop.ee/et/otsing/?otsing=$keyword"
+
+rm -f $dump
