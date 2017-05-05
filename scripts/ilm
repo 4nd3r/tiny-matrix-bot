@@ -8,17 +8,18 @@ then
     exit
 fi
 
-tmp=$( tempfile )
+dump=$( tempfile )
 
-curl -s -o $tmp https://kvlt.ee/ilm/
+curl -s -o $dump https://kvlt.ee/ilm/
 
-tln=$( sed -nr 's/^tallinn-temp:\s(.+)$/\1/p' $tmp )
-hrk=$( sed -nr 's/^harku-temp:\s(.+)$/\1/p' $tmp )
-prn=$( sed -nr 's/^pärnu-temp:\s(.+)$/\1/p' $tmp )
-trt=$( sed -nr 's/^tartu-temp:\s(.+)$/\1/p' $tmp )
-vru=$( sed -nr 's/^võru-temp:\s(.+)$/\1/p' $tmp )
-bru=$( sed -nr 's/^brüssel-temp:\s(.+)$/\1/p' $tmp )
+ilm='Tallinn Harku Tartu Võru Pärnu Brüssel'
+last=$( echo $ilm | awk '{print $NF}' )
 
-echo "Tallinn: $tln; Harku: $hrk; Pärnu: $prn; Tartu: $trt; Võru: $vru; Brüssel: $bru" | sed 's/\./,/g'
+for city in $ilm
+do
+    temp=$( sed -nr "s/^$city-temp:\s(.+)$/\1/pi" $dump )
+    [ -n "$temp" ] && echo -n "$city: $temp" | sed 's/\./,/g'
+    [ "$city" = "$last" ] && echo || echo -n '; '
+done
 
-rm -f $tmp
+rm -f $dump
