@@ -20,6 +20,11 @@ jq -r '.results[] | "\(.sell_price) € \(.name)"' $dump | head -3
 
 count=$( jq '.count' $dump )
 
-[ $count -eq 0 ] && echo ? || echo "https://ecoop.ee/et/otsing/?otsing=$keyword"
+if [ $count -eq 0 ]
+then echo ?
+else
+    [ $count -gt 3 ] && echo -n "$count toodet: "
+    echo "https://ecoop.ee/et/otsing/?otsing=$keyword"
+fi
 
 rm -f $dump
