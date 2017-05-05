@@ -24,7 +24,7 @@ if [ $count -eq 0 ]
 then echo ?
 else
     [ $count -gt 5 ] && echo -n "$count toodet: "
-    echo "https://ecoop.ee/et/otsing/?otsing=$keyword"
+    echo "https://ecoop.ee/et/otsing/?ordering=_sell_price&otsing=$keyword"
 fi
 
 rm -f $dump
