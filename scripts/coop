@@ -14,7 +14,7 @@ keyword=$( echo -n $args | python -c 'import urllib,sys; print urllib.quote_plus
 
 dump=$( tempfile )
 
-curl -o $dump -s "https://ecoop.ee/api/v1/products?show_search=1&ordering=relevancy&keyword=$keyword"
+curl -o $dump -s "https://ecoop.ee/api/v1/products?show_search=1&ordering=_sell_price&keyword=$keyword"
 
 jq -r '.results[] | "\(.sell_price) € \(.name)"' $dump | head -3
 
