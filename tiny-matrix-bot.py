@@ -43,6 +43,8 @@ class TinyMatrixtBot():
                 if i == "rooms":
                     for room_id in self.client.get_rooms():
                         print(room_id)
+                if i == "reload":
+                    self.scripts = self.load_scripts(self.scripts_path)
                 if i.startswith("part "):
                     self.client.get_rooms()[i[5:]].leave()
             except (EOFError, KeyboardInterrupt):
