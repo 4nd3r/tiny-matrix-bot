@@ -16,8 +16,7 @@ dump=$( tempfile )
 
 curl -s -o $dump "http://piibel.net/.json?q=$query"
 
-jq -r '.[].bibles[].books[].chapters[].verses[].text' $dump \
-| while read l
+jq -r '.[].bibles[].books[].chapters[].verses[].text' $dump | while read l
 do
     echo $l \
     | sed -r 's/(&[a-z]+;|br \/)/ /gi' \
