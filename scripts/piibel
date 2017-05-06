@@ -1,0 +1,27 @@
+#!/bin/sh -e
+
+regex="^\!piibel\s"
+
+if [ -n "$CONFIG" ]
+then
+    echo $regex
+    exit
+fi
+
+args=$( echo $@ | sed "s/$regex//I" )
+
+query=$( echo -n $args | python -c 'import urllib,sys; print urllib.quote_plus("".join(sys.stdin.readlines()))' )
+
+dump=$( tempfile )
+
+curl -s -o $dump "http://piibel.net/.json?q=$query"
+
+echo $args | grep -qP '\d:\d' \
+&& filter='.[].bibles[].books[].chapters[].verses[0].text' \
+|| filter='.[].bibles[].books[].chapters[].verses[range(0;3)].text'
+
+verse=$( jq -r "$filter" $dump )
+
+echo $verse | sed 's/&lt;br \/&gt;/ /gi' | sed -r 's/&[a-z]+;/ /gi'
+
+rm -f $dump
