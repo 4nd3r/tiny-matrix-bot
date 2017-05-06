@@ -18,7 +18,7 @@ curl -s -o $dump "http://piibel.net/.json?q=$query"
 
 jq -r '.[].bibles[].books[].chapters[].verses[].text' $dump \
 | while read l
-do echo $l
+do echo $l; echo
 done \
 | sed -r 's/(&[a-z]+;|br \/|\s+)/ /gim' \
 | sed -r 's/\s+/ /gim'
