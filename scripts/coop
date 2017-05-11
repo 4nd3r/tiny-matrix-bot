@@ -14,7 +14,7 @@ keyword=$( echo -n $args | python -c 'import urllib,sys; print urllib.quote_plus
 
 dump=$( tempfile )
 
-curl -s -o $dump "https://ecoop.ee/api/v1/products?show_search=1&ordering=_sell_price&keyword=$keyword"
+curl -s -o $dump "https://ecoop.ee/api/v1/products?ordering=relevancy&show_search=1&keyword=$keyword"
 
 jq -r '.results[] | "\(.sell_price) € \(.name)"' $dump | head -5
 
@@ -24,7 +24,7 @@ if [ $count -eq 0 ]
 then echo ?
 else
     [ $count -gt 5 ] && echo -n "$count toodet: "
-    echo "https://ecoop.ee/et/otsing/?ordering=_sell_price&otsing=$keyword"
+    echo "https://ecoop.ee/et/otsing/?ordering=relevancy&otsing=$keyword"
 fi
 
 rm -f $dump
