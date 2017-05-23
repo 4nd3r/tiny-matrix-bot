@@ -18,3 +18,5 @@ screen ./tiny-matrix-bot.py
 ```
 
 scripts must have execute bit - `chmod +x`
+
+`mkdir sockets` for... sockets
