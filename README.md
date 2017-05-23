@@ -14,7 +14,11 @@ cd tiny-matrix-bot
 ln -s ../matrix-python-sdk/matrix_client
 cp tiny-matrix-bot.cfg.sample tiny-matrix-bot.cfg
 vim tiny-matrix-bot.cfg
-screen ./tiny-matrix-bot.py
+cp tiny-matrix-bot.service /etc/systemd/system
+systemctl enable tiny-matrix-bot
+systemctl start tiny-matrix-bot
+systemctl reload tiny-matrix-bot
+systemctl stop tiny-matrix-bot
 ```
 
 scripts must have execute bit - `chmod +x`
