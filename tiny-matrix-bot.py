@@ -132,14 +132,16 @@ class TinyMatrixtBot():
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.WARNING)
-    if len(sys.argv) < 2:
-        print("{} <path to config file>".format(sys.argv[0]))
-        sys.exit()
-    if not os.path.isfile(sys.argv[1]):
-        print("config file `{}' not found".format(sys.argv[1]))
+    cfg = os.path.join(
+        os.path.dirname(os.path.realpath(__file__)),
+        "tiny-matrix-bot.cfg")
+    if len(sys.argv) == 2:
+        cfg = sys.argv[1]
+    if not os.path.isfile(cfg):
+        print("config file `{}' not found".format(cfg))
         sys.exit()
     config = configparser.ConfigParser()
-    config.read(sys.argv[1])
+    config.read(cfg)
     TinyMatrixtBot(
         config.get("tiny-matrix-bot", "host"),
         config.get("tiny-matrix-bot", "user"),
