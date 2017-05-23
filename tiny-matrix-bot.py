@@ -21,6 +21,9 @@ class TinyMatrixtBot():
         self.current_path = os.path.dirname(os.path.realpath(__file__))
         self.scripts_path = os.path.join(self.current_path, "scripts")
         self.sockets_path = os.path.join(self.current_path, "sockets")
+
+        if not os.access(self.sockets_path, os.W_OK):
+            self.sockets_path = None
         
         os.chdir(self.scripts_path)
         self.scripts = self.load_scripts(self.scripts_path)
@@ -73,9 +76,10 @@ class TinyMatrixtBot():
         room = self.client.join_room(room_id)
         room.add_listener(self.on_room_event)
         print("join {}".format(room_id))
-        thread = Thread(target=self.create_socket, args=(room, ))
-        thread.daemon = True
-        thread.start()
+        if self.sockets_path is not None:
+            thread = Thread(target=self.create_socket, args=(room, ))
+            thread.daemon = True
+            thread.start()
 
     def create_socket(self, room):
         socket_name = re.search("^\!([a-z]+):", room.room_id, re.IGNORECASE).group(1)
