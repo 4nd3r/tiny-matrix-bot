@@ -16,6 +16,7 @@ from matrix_client.client import MatrixClient
 class TinyMatrixtBot():
     def __init__(self, hostname, username, password, displayname):
         signal.signal(signal.SIGTERM, self.on_signal)
+        signal.signal(signal.SIGHUP, self.on_signal)
 
         self.current_path = os.path.dirname(os.path.realpath(__file__))
         self.scripts_path = os.path.join(self.current_path, "scripts")
@@ -38,25 +39,13 @@ class TinyMatrixtBot():
         self.client.add_leave_listener(self.on_leave)
 
         while True:
-            try:
-                i = input().strip()
-                if i == "rooms":
-                    for room_id in self.client.get_rooms():
-                        print(room_id)
-                if i == "reload":
-                    self.scripts = self.load_scripts(self.scripts_path)
-                if i.startswith("part "):
-                    self.client.get_rooms()[i[5:]].leave()
-            except (EOFError, KeyboardInterrupt):
-                self.exit()
-
-    def exit(self, msg="bye!"):
-        print(msg)
-        sys.exit()
+            sleep(10)
 
     def on_signal(self, signal, frame):
+        if signal == 1:
+            self.scripts = self.load_scripts(self.scripts_path)
         if signal == 15:
-            self.exit()
+            sys.exit()
 
     def load_scripts(self, path):
         scripts = {}
