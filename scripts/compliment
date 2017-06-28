@@ -2,14 +2,14 @@
 
 # https://github.com/mth/hirc/blob/master/compliments.txt
 
-regex="^\!compliment\s"
+regex='^\!compliment\s'
 
 if [ -n "$CONFIG" ]
 then
-    echo $regex
+    echo "$regex"
     exit
 fi
 
-args=$( echo $@ | sed "s/$regex//I" )
+args="$( echo $@ | sed "s/$regex//I" )"
 
 shuf -n1 compliment.txt | sed -e "s/\$1/$args/g"
