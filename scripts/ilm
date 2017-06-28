@@ -1,21 +1,21 @@
 #!/bin/sh
 
-regex="^(\!ilm|ilm\?)"
+regex='^(\!ilm|ilm\?)'
 
 if [ -n "$CONFIG" ]
 then
-    echo $regex
+    echo "$regex"
     exit
 fi
 
-dump=$( tempfile )
+dump="$( tempfile )"
 
-curl -s -o $dump https://kvlt.ee/ilm/
+curl -s -o "$dump" https://kvlt.ee/ilm/
 
 for city in Tallinn Harku Tartu Võru Pärnu Brüssel
 do
-    temp=$( sed -nr "s/^$city-temp:\s(.+)$/\1/pi" $dump )
+    temp="$( sed -nr "s/^$city-temp:\s(.+)$/\1/pi" "$dump" )"
     [ -n "$temp" ] && echo "$city: $temp" | sed 's/\./,/g'
 done
 
-rm -f $dump
+rm -f "$dump"
