@@ -1,24 +1,24 @@
 #!/bin/sh
 
-regex="^\!decide\s"
+regex='^\!decide\s'
 
 if [ -n "$CONFIG" ]
 then
-    echo $regex
+    echo "$regex"
     exit
 fi
 
-args=$( echo $@ | sed "s/$regex//I" )
+args="$( echo "$@" | sed "s/$regex//I" )"
 
-echo 'hmm... '
+echo 'hmm...'
 echo
 
-echo $args | egrep -iq '(või|ja|or|and)'
+echo "$args" | egrep -iq '(või|ja|or|and)'
 
-if [ $? = 0 ]
+if [ "$?" = 0 ]
 then
-    echo $args | sed -r 's/\s+(või|ja|or|and)\s+/\n/gI'
+    echo "$args" | sed -r 's/\s+(või|ja|or|and)\s+/\n/gI'
 else
-    echo $args | sed -r 's/\s/\n/gI'
+    echo "$args" | sed -r 's/\s/\n/gI'
 fi \
 | shuf -n1
