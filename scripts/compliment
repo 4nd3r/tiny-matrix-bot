@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # https://github.com/mth/hirc/blob/master/compliments.txt
 
