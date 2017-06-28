@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 find sockets | while read -r l
 do test -S "$l" && date | socat - "UNIX-CONNECT:$l"
 done
