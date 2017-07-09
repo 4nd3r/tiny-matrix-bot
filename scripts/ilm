@@ -37,8 +37,8 @@ __mordor() {
 
 __tartu() {
     m=$( __mordor )
-    k=$( __ilmateenistus 'Tartu-Kvissental' )
-    t=$( __ilmateenistus 'Tartu-Tõravere' )
+    k=$( __ilmateenistus Tartu-Kvissental )
+    t=$( __ilmateenistus Tartu-Tõravere )
     echo "($m+$k+$t)/3" | bc -l
 }
 
@@ -63,7 +63,7 @@ __print \
 
 __print \
     Harku \
-    "$( __ilmateenistus 'Tallinn-Harku' )"
+    "$( __ilmateenistus Tallinn-Harku )"
 
 __print \
     Tartu \
@@ -71,11 +71,11 @@ __print \
 
 __print \
     Võru \
-    "$( __ilmateenistus 'Võru' )"
+    "$( __ilmateenistus Võru )"
 
 __print \
     Pärnu \
-    "$( __ilmateenistus 'Pärnu-Sauga' )"
+    "$( __ilmateenistus Pärnu-Sauga )"
 
 __print \
     Brüssel \
