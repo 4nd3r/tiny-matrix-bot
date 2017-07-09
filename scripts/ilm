@@ -39,7 +39,7 @@ __tartu() {
     m=$( __mordor )
     k=$( __ilmateenistus Tartu-Kvissental )
     t=$( __ilmateenistus Tartu-Tõravere )
-    echo "($m+$k+$t)/3" | bc -l
+    echo "($m+$k+$t)/3" | bc
 }
 
 __brussel() {
