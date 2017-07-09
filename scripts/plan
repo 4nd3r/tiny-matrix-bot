@@ -10,7 +10,8 @@ fi
 
 # https://github.com/mth/hirc/blob/master/plans.txt
 
-plans='... (sa ei taha teada)
+plans=$( cat << EOF
+... (sa ei taha teada)
 [CENSORED]
 [CLASSIFIED]
 kõik p*rses
@@ -78,7 +79,9 @@ lõõgastav õhtu fooliummütsiga mullivannis
 üleestiline reede
 hea pidu
 halb pidu
-kuskil on piir'
+kuskil on piir
+EOF
+)
 
 args="$( echo "$@" | sed "s/$regex//I" )"
 
