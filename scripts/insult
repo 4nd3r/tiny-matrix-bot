@@ -8,6 +8,8 @@ then
     exit
 fi
 
+args="$( echo "$@" | sed "s/$regex//I" )"
+
 # https://github.com/mth/hirc/blob/master/insult.txt
 
 insults=$( cat << EOF
@@ -363,7 +365,5 @@ $1 on nii loll, et ei läbi isegi Turingi testi
 $1 pea püsib ikka püsti - sooja õhku täis skalp ei kaalu ju palju ;)
 EOF
 )
-
-args="$( echo "$@" | sed "s/$regex//I" )"
 
 echo "$insults" | shuf -n1 | sed -e "s/\$1/$args/g"

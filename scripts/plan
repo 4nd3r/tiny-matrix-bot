@@ -8,6 +8,8 @@ then
     exit
 fi
 
+args="$( echo "$@" | sed "s/$regex//I" )"
+
 # https://github.com/mth/hirc/blob/master/plans.txt
 
 plans=$( cat << EOF
@@ -82,8 +84,6 @@ halb pidu
 kuskil on piir
 EOF
 )
-
-args="$( echo "$@" | sed "s/$regex//I" )"
 
 echo "1. $args"
 echo
