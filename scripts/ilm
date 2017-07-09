@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-regex='^(\!ilm|ilm\?)'
+regex='^\!?ilm\??'
 
 if [ -n "$CONFIG" ]
 then
@@ -8,14 +8,75 @@ then
     exit
 fi
 
-dump="$( tempfile )"
+__get() {
+    c="/tmp/ilm-$( echo "$1" | md5sum | awk '{print $1}' )"
+    [ -f "$c" ] && a=$(( $( date +%s ) - $( date -r "$c" +%s ) ))
+    if [ ! -f "$c" ] || [ "$a" -gt 500 ]
+    then curl -s -o "$c" "$1"
+    fi
+    echo "$c"
+}
 
-curl -s -o "$dump" https://kvlt.ee/ilm/
+__tallinn() {
+    sed -nr \
+        's/.+<font class="ohutemp">([0-9\.\-]+)\s°C.+/\1/p' \
+        "$( __get http://on-line.msi.ttu.ee/tallinn/ )"
+}
 
-for city in Tallinn Harku Tartu Võru Pärnu Brüssel
-do
-    temp="$( sed -nr "s/^$city-temp:\s(.+)$/\1/pi" "$dump" )"
-    [ -n "$temp" ] && echo "$city: $temp" | sed 's/\./,/g'
-done
+__ilmateenistus() {
+    xmlstarlet sel -t -v \
+        "/observations/station[name='$1']/airtemperature" \
+        "$( __get http://www.ilmateenistus.ee/ilma_andmed/xml/observations.php )"
+}
 
-rm -f "$dump"
+__mordor() {
+    sed -nr \
+        's/.+<B>([0-9\.\-]+)\s&deg;C<\/B>.+/\1/p' \
+        "$( __get http://meteo.physic.ut.ee/et/freshwin.php )"
+}
+
+__tartu() {
+    m=$( __mordor )
+    k=$( __ilmateenistus 'Tartu-Kvissental' )
+    t=$( __ilmateenistus 'Tartu-Tõravere' )
+    echo "($m+$k+$t)/3" | bc -l
+}
+
+__brussel() {
+    grep -FA2 \
+        '<city code="6447">' \
+        "$( __get http://www.meteo.be/meteo/view/en/123386-Observations.html )" \
+            | tail -1 \
+            | sed 's/[^0-9,]*//g' \
+            | sed 's/,/\./'
+}
+
+__print() {
+    printf '%s: %.1f °C\n' "$1" "$2" \
+        | sed 's/\./,/' \
+        | sed 's/,0//'
+}
+
+__print \
+    Tallinn \
+    "$( __tallinn )"
+
+__print \
+    Harku \
+    "$( __ilmateenistus 'Tallinn-Harku' )"
+
+__print \
+    Tartu \
+    "$( __tartu )"
+
+__print \
+    Võru \
+    "$( __ilmateenistus 'Võru' )"
+
+__print \
+    Pärnu \
+    "$( __ilmateenistus 'Pärnu-Sauga' )"
+
+__print \
+    Brüssel \
+    "$( __brussel )"
