@@ -9,30 +9,27 @@ then
 fi
 
 __get() {
-    c="/tmp/ilm-$( echo "$1" | md5sum | awk '{print $1}' )"
+    c="/tmp/ilm-cache-$( echo "$1" | md5sum | awk '{print $1}' )"
     [ -f "$c" ] && a=$(( $( date +%s ) - $( date -r "$c" +%s ) ))
     if [ ! -f "$c" ] || [ "$a" -gt 500 ]
     then curl -s -o "$c" "$1"
     fi
-    echo "$c"
+    cat "$c"
 }
 
 __tallinn() {
-    sed -nr \
-        's/.+<font class="ohutemp">([0-9\.\-]+)\s°C.+/\1/p' \
-        "$( __get http://on-line.msi.ttu.ee/tallinn/ )"
+    __get http://on-line.msi.ttu.ee/tallinn/ \
+        | sed -nr 's/.+<font class="ohutemp">([0-9\.\-]+)\s°C.+/\1/p'
 }
 
 __ilmateenistus() {
-    xmlstarlet sel -t -v \
-        "/observations/station[name='$1']/airtemperature" \
-        "$( __get http://www.ilmateenistus.ee/ilma_andmed/xml/observations.php )"
+    __get http://www.ilmateenistus.ee/ilma_andmed/xml/observations.php \
+        | xmlstarlet sel -t -v "/observations/station[name='$1']/airtemperature"
 }
 
 __mordor() {
-    sed -nr \
-        's/.+<B>([0-9\.\-]+)\s&deg;C<\/B>.+/\1/p' \
-        "$( __get http://meteo.physic.ut.ee/et/freshwin.php )"
+    __get http://meteo.physic.ut.ee/et/freshwin.php \
+        | sed -nr 's/.+<B>([0-9\.\-]+)\s&deg;C<\/B>.+/\1/p'
 }
 
 __tartu() {
@@ -43,12 +40,11 @@ __tartu() {
 }
 
 __brussel() {
-    grep -FA2 \
-        '<city code="6447">' \
-        "$( __get http://www.meteo.be/meteo/view/en/123386-Observations.html )" \
-            | tail -1 \
-            | sed 's/[^0-9,]*//g' \
-            | sed 's/,/\./'
+    __get http://www.meteo.be/meteo/view/en/123386-Observations.html \
+        | grep -FA2 '<city code="6447">' \
+        | tail -1 \
+        | sed 's/[^0-9,]*//g' \
+        | sed 's/,/\./'
 }
 
 __print() {
@@ -57,26 +53,14 @@ __print() {
         | sed 's/,0//'
 }
 
-__print \
-    Tallinn \
-    "$( __tallinn )"
+__print Tallinn "$( __tallinn )"
 
-__print \
-    Harku \
-    "$( __ilmateenistus Tallinn-Harku )"
+__print Harku "$( __ilmateenistus Tallinn-Harku )"
 
-__print \
-    Tartu \
-    "$( __tartu )"
+__print Tartu "$( __tartu )"
 
-__print \
-    Võru \
-    "$( __ilmateenistus Võru )"
+__print Võru "$( __ilmateenistus Võru )"
 
-__print \
-    Pärnu \
-    "$( __ilmateenistus Pärnu-Sauga )"
+__print Pärnu "$( __ilmateenistus Pärnu-Sauga )"
 
-__print \
-    Brüssel \
-    "$( __brussel )"
+__print Brüssel "$( __brussel )"
