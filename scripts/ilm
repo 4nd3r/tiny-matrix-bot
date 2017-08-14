@@ -12,7 +12,7 @@ __get() {
     c="/tmp/ilm-cache-$( echo "$1" | md5sum | awk '{print $1}' )"
     [ -f "$c" ] && a=$(( $( date +%s ) - $( date -r "$c" +%s ) ))
     if [ ! -f "$c" ] || [ "$a" -gt 500 ]
-    then curl -s -o "$c" "$1"
+    then curl --header "User-Agent: tiny-matrix-bot" -s -o "$c" "$1"
     fi
     cat "$c"
 }
