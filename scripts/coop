@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-regex='^\!coop\s'
+regex='^!coop\s'
 
 if [ -n "$CONFIG" ]
 then

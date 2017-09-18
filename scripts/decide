@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-regex='^\!decide\s'
+regex='^!decide\s'
 
 if [ -n "$CONFIG" ]
 then

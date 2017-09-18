@@ -1,7 +1,7 @@
 #!/usr/bin/php
 <?php
 
-$regex = '^\!(qs|ss|ety)\s';
+$regex = '^!(qs|ss|ety)\s';
 
 if ( false !== getenv('CONFIG') )
 {

@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-regex='^\!insult\s'
+regex='^!insult\s'
 
 if [ -n "$CONFIG" ]
 then
