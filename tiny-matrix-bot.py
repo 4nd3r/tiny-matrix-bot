@@ -42,7 +42,7 @@ class TinyMatrixtBot():
         self.client.add_leave_listener(self.on_leave)
 
         while True:
-            sleep(10)
+            sleep(1)
 
     def on_signal(self, signal, frame):
         if signal == 1:
