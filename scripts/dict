@@ -2,7 +2,7 @@
 <?php
 
 $r = '^(dict\?|!add\s|!bite\s|!forget\s|!brainwash\s|\?\s)';
-if ( false !== getenv( 'CONFIG' ) ) { echo $r . PHP_EOL; exit; }
+if ( false !== getenv( 'CONFIG' ) ) { echo $r; exit; }
 
 class dict
 {
@@ -71,7 +71,7 @@ class dict
     function show( $key )
     {
         if ( isset( $this->data[ $key ] ) )
-            return sprintf( '%s = %s' . PHP_EOL, $key, implode( ' | ', $this->data[ $key ] ) );
+            return sprintf( '%s = %s', $key, implode( ' | ', $this->data[ $key ] ) );
         else
             return $this->search( $key );
     }
