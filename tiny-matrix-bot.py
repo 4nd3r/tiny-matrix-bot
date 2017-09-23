@@ -15,8 +15,9 @@ from matrix_client.client import MatrixClient
 
 class TinyMatrixtBot():
     def __init__(self, path_config):
+        signal.signal(signal.SIGHUP,  self.on_signal)
+        signal.signal(signal.SIGINT,  self.on_signal)
         signal.signal(signal.SIGTERM, self.on_signal)
-        signal.signal(signal.SIGHUP, self.on_signal)
 
         self.config = configparser.ConfigParser()
         self.config.read(path_config)
@@ -64,7 +65,7 @@ class TinyMatrixtBot():
     def on_signal(self, signal, frame):
         if signal == 1:
             self.scripts = self.load_scripts(self.scripts_path)
-        if signal == 15:
+        elif signal in [2, 15]:
             sys.exit()
 
     def load_scripts(self, path):
