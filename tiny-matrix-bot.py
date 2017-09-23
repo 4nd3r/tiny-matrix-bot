@@ -28,7 +28,7 @@ class TinyMatrixtBot():
             self.scripts = self.load_scripts(self.path_lib)
         else:
             print("ERROR `{}' is not readable".format(self.path_lib))
-            sys.exit()
+            sys.exit(0)
 
         self.path_var = os.path.realpath(
             self.config.get("tiny-matrix-bot", "var", fallback="./data"))
@@ -36,7 +36,7 @@ class TinyMatrixtBot():
             os.chdir(self.path_var)
         else:
             print("ERROR `{}' is not writeable".format(self.path_var))
-            sys.exit()
+            sys.exit(0)
 
         self.path_run = os.path.realpath(
             self.config.get("tiny-matrix-bot", "run", fallback="./sockets"))
@@ -66,7 +66,7 @@ class TinyMatrixtBot():
         if signal == 1:
             self.scripts = self.load_scripts(self.path_lib)
         elif signal in [2, 15]:
-            sys.exit()
+            sys.exit(0)
 
     def load_scripts(self, path):
         scripts = {}
@@ -158,5 +158,8 @@ if __name__ == "__main__":
         cfg = sys.argv[1]
     if not os.path.isfile(cfg):
         print("config file `{}' not found".format(cfg))
-        sys.exit()
-    TinyMatrixtBot(cfg)
+        sys.exit(0)
+    try:
+        TinyMatrixtBot(cfg)
+    except Exception as e:
+        sys.exit(1)
