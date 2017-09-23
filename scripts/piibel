@@ -12,7 +12,7 @@ query="$( echo "$@" | grep -ioP "$regex" | sed 's/\s/+/' )"
 
 [ -z "$query" ] && exit
 
-dump="$( tempfile )"
+dump="$( mktemp )"
 
 curl -s -o "$dump" "http://piibel.net/.json?q=$query"
 
