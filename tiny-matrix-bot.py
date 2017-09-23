@@ -77,19 +77,20 @@ class TinyMatrixtBot():
     def load_scripts(self, path):
         scripts = {}
         for script in os.listdir(path):
-            script = os.path.join(path, script)
-            if not stat.S_IXUSR & os.stat(script)[stat.ST_MODE]:
+            script_path = os.path.join(path, script)
+            if not os.access(script_path, os.R_OK) \
+                or not os.access(script_path, os.X_OK):
                 continue
             output = subprocess.Popen(
-                [script],
+                [script_path],
                 env={"CONFIG": "1"},
                 stdout=subprocess.PIPE,
                 universal_newlines=True
                 ).communicate()[0].strip()
             if not output:
                 continue
-            scripts[output] = script
-            print("LOAD {} {}".format(os.path.basename(script), output))
+            scripts[output] = script_path
+            print("LOAD {} {}".format(script, output))
         return scripts
 
     def on_invite(self, room_id, state):
