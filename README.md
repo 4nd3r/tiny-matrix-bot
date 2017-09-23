@@ -11,6 +11,7 @@ sudo apt-get install python3 python3-requests
 git clone https://github.com/4nd3r/tiny-matrix-bot
 git clone https://github.com/matrix-org/matrix-python-sdk
 cd tiny-matrix-bot
+mkdir data
 ln -s ../matrix-python-sdk/matrix_client
 cp tiny-matrix-bot.cfg.sample tiny-matrix-bot.cfg
 vim tiny-matrix-bot.cfg
@@ -23,4 +24,4 @@ systemctl stop tiny-matrix-bot
 
 scripts must have execute bit - `chmod +x`
 
-`mkdir sockets` for... sockets
+`mkdir sockets` for sockets
