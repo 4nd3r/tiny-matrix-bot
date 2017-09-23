@@ -12,7 +12,7 @@ args="$( echo "$@" | sed "s/$regex//I" )"
 
 keyword="$( printf "%s" "$args" | python -c 'import urllib,sys; print urllib.quote_plus("".join(sys.stdin.readlines()))' )"
 
-dump="$( tempfile )"
+dump="$( mktemp )"
 
 curl -s -o "$dump" "https://ecoop.ee/api/v1/products?ordering=relevancy&show_search=1&keyword=$keyword"
 
