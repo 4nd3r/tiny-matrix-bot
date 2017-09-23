@@ -25,28 +25,28 @@ class TinyMatrixtBot():
         path_current = os.path.dirname(os.path.realpath(__file__))
 
         self.path_lib = self.config.get("tiny-matrix-bot", "lib",
-            fallback=os.path.join(path_current, "scripts"))
+            fallback=os.path.join(path_current, "scripts")).strip()
         print("SCRIPTS {}".format(self.path_lib))
         if os.access(self.path_lib, os.R_OK):
             self.scripts = self.load_scripts(self.path_lib)
         else:
-            print("ERROR `{}' is not readable".format(self.path_lib))
+            print("ERROR {} is not readable".format(self.path_lib))
             sys.exit(0)
 
         self.path_var = self.config.get("tiny-matrix-bot", "var",
-            fallback=os.path.join(path_current, "data"))
+            fallback=os.path.join(path_current, "data")).strip()
         print("DATA {}".format(self.path_var))
         if os.access(self.path_var, os.W_OK):
             os.chdir(self.path_var)
         else:
-            print("ERROR `{}' is not writeable".format(self.path_var))
+            print("ERROR {} is not writeable".format(self.path_var))
             sys.exit(0)
 
         self.path_run = self.config.get("tiny-matrix-bot", "run",
-            fallback=os.path.join(path_current, "sockets"))
+            fallback=os.path.join(path_current, "sockets")).strip()
         print("SOCKETS {}".format(self.path_run))
         if not os.access(self.path_run, os.W_OK):
-            print("INFO `{}' is not writeable, disabling sockets".format(self.path_run))
+            print("INFO {} is not writeable, disabling sockets".format(self.path_run))
             self.path_run = False
 
         self.client = MatrixClient(self.config.get("tiny-matrix-bot", "host"))
@@ -88,7 +88,7 @@ class TinyMatrixtBot():
             if not output:
                 continue
             scripts[output] = script
-            print("LOAD {} {}".format(output, script))
+            print("LOAD {} {}".format(os.path.basename(script), output))
         return scripts
 
     def on_invite(self, room_id, state):
@@ -162,7 +162,7 @@ if __name__ == "__main__":
     if len(sys.argv) == 2:
         cfg = sys.argv[1]
     if not os.path.isfile(cfg):
-        print("config file `{}' not found".format(cfg))
+        print("config file {} not found".format(cfg))
         sys.exit(0)
     try:
         TinyMatrixtBot(cfg)
