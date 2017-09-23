@@ -13,9 +13,7 @@ args="$( echo "$@" | sed "s/$regex//I" )"
 echo 'hmm...'
 echo
 
-echo "$args" | grep -Eiq '(või|ja|or|and)'
-
-if [ "$?" = 0 ]
+if echo "$args" | grep -Eiq '(või|ja|or|and)'
 then
     echo "$args" | sed -r 's/\s+(või|ja|or|and)\s+/\n/gI'
 else
