@@ -22,24 +22,29 @@ class TinyMatrixtBot():
         self.config = configparser.ConfigParser()
         self.config.read(path_config)
 
-        self.path_lib = os.path.realpath(
-            self.config.get("tiny-matrix-bot", "lib", fallback="./scripts"))
+        path_current = os.path.dirname(os.path.realpath(__file__))
+
+        self.path_lib = self.config.get("tiny-matrix-bot", "lib",
+            fallback=os.path.join(path_current, "scripts"))
+        print("SCRIPTS {}".format(self.path_lib))
         if os.access(self.path_lib, os.R_OK):
             self.scripts = self.load_scripts(self.path_lib)
         else:
             print("ERROR `{}' is not readable".format(self.path_lib))
             sys.exit(0)
 
-        self.path_var = os.path.realpath(
-            self.config.get("tiny-matrix-bot", "var", fallback="./data"))
+        self.path_var = self.config.get("tiny-matrix-bot", "var",
+            fallback=os.path.join(path_current, "data"))
+        print("DATA {}".format(self.path_var))
         if os.access(self.path_var, os.W_OK):
             os.chdir(self.path_var)
         else:
             print("ERROR `{}' is not writeable".format(self.path_var))
             sys.exit(0)
 
-        self.path_run = os.path.realpath(
-            self.config.get("tiny-matrix-bot", "run", fallback="./sockets"))
+        self.path_run = self.config.get("tiny-matrix-bot", "run",
+            fallback=os.path.join(path_current, "sockets"))
+        print("SOCKETS {}".format(self.path_run))
         if not os.access(self.path_run, os.W_OK):
             print("INFO `{}' is not writeable, disabling sockets".format(self.path_run))
             self.path_run = False
