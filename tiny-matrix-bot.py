@@ -161,5 +161,5 @@ if __name__ == "__main__":
         sys.exit(0)
     try:
         TinyMatrixtBot(cfg)
-    except Exception as e:
+    except Exception:
         sys.exit(1)
