@@ -109,12 +109,12 @@ class TinyMatrixtBot():
                 body = event["content"]["body"].strip()
                 for regex, script in self.scripts.items():
                     if re.search(regex, body, re.IGNORECASE):
-                        self.run_script(room, script, body)
+                        self.run_script(room, event, [script, body])
 
-    def run_script(self, room, script, args):
-        print("run {} {}".format(script, args))
+    def run_script(self, room, event, args):
+        print("run {}".format(args))
         output = subprocess.Popen(
-            [script, args],
+            args,
             stdout=subprocess.PIPE,
             universal_newlines=True
             ).communicate()[0].strip()
