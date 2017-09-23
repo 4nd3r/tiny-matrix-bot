@@ -118,10 +118,11 @@ class TinyMatrixtBot():
             stdout=subprocess.PIPE,
             universal_newlines=True
             ).communicate()[0].strip()
+        sleep(0.5)
         for line in output.split("\n\n"):
-            sleep(1)
             print(line)
             room.send_text(line)
+            sleep(1)
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.WARNING)
