@@ -109,15 +109,15 @@ class TinyMatrixtBot():
         sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
         sock.bind(socket_path)
         sock.listen(1)
-        print("bind {}".format(socket_path))
+        print("SOCKET {}".format(socket_path))
         while True:
             conn, addr = sock.accept()
             recv = conn.recv(4096).decode('utf-8').strip()
-            print("recv {} {}".format(socket_path, recv))
+            print("RECV {} {}".format(socket_path, recv))
             room.send_text(recv)
 
     def on_leave(self, room_id, state):
-        print("leave {}".format(room_id))
+        print("LEAVE {}".format(room_id))
 
     def on_room_event(self, room, event):
         if event["sender"] == self.client.user_id:
