@@ -3,7 +3,6 @@
 import sys
 import os
 import re
-import stat
 import signal
 import socket
 import logging
