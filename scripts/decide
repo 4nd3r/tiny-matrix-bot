@@ -13,7 +13,7 @@ args="$( echo "$@" | sed "s/$regex//I" )"
 echo 'hmm...'
 echo
 
-echo "$args" | egrep -iq '(või|ja|or|and)'
+echo "$args" | grep -Eiq '(või|ja|or|and)'
 
 if [ "$?" = 0 ]
 then
