@@ -65,17 +65,17 @@ class TinyMatrixtBot():
             if not output:
                 continue
             scripts[output] = script
-            print("script {} {}".format(output, script))
+            print("LOAD {} {}".format(output, script))
         return scripts
 
     def on_invite(self, room_id, state):
-        print("invite {}".format(room_id))
+        print("INVITE {}".format(room_id))
         self.join_room(room_id)
 
     def join_room(self, room_id):
         room = self.client.join_room(room_id)
         room.add_listener(self.on_room_event)
-        print("join {}".format(room_id))
+        print("JOIN {}".format(room_id))
         if self.sockets_path is not None:
             thread = Thread(target=self.create_socket, args=(room, ))
             thread.daemon = True
@@ -112,16 +112,19 @@ class TinyMatrixtBot():
                         self.run_script(room, event, [script, body])
 
     def run_script(self, room, event, args):
-        print("run {}".format(args))
+        print("ROOM {}".format(event["room_id"]))
+        print("SENDER {}".format(event["sender"]))
+        print("RUN {}".format(args))
         output = subprocess.Popen(
             args,
             stdout=subprocess.PIPE,
             universal_newlines=True
             ).communicate()[0].strip()
         sleep(0.5)
-        for line in output.split("\n\n"):
-            print(line)
-            room.send_text(line)
+        for p in output.split("\n\n"):
+            for l in p.split("\n"):
+                print("OUTPUT {}".format(l))
+            room.send_text(p)
             sleep(1)
 
 if __name__ == "__main__":
