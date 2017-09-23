@@ -44,9 +44,10 @@ class TinyMatrixtBot():
 
         self.path_run = self.config.get("tiny-matrix-bot", "run",
             fallback=os.path.join(path_current, "sockets")).strip()
-        print("SOCKETS {}".format(self.path_run))
-        if not os.access(self.path_run, os.W_OK):
-            print("INFO {} is not writeable, disabling sockets".format(self.path_run))
+        if os.access(self.path_run, os.W_OK):
+            print("SOCKETS {}".format(self.path_run))
+        else:
+            print("SOCKETS {} (not writeable, disabling sockets)".format(self.path_run))
             self.path_run = False
 
         self.client = MatrixClient(self.config.get("tiny-matrix-bot", "host"))
