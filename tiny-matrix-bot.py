@@ -14,25 +14,42 @@ from threading import Thread
 from matrix_client.client import MatrixClient
 
 class TinyMatrixtBot():
-    def __init__(self, hostname, username, password, displayname):
+    def __init__(self, path_config):
         signal.signal(signal.SIGTERM, self.on_signal)
         signal.signal(signal.SIGHUP, self.on_signal)
 
-        self.current_path = os.path.dirname(os.path.realpath(__file__))
-        self.scripts_path = os.path.join(self.current_path, "scripts")
-        self.sockets_path = os.path.join(self.current_path, "sockets")
+        self.config = configparser.ConfigParser()
+        self.config.read(path_config)
 
-        if not os.access(self.sockets_path, os.W_OK):
-            self.sockets_path = None
-        
-        os.chdir(self.scripts_path)
-        self.scripts = self.load_scripts(self.scripts_path)
+        self.path_lib = os.path.realpath(
+            self.config.get("tiny-matrix-bot", "lib", fallback="./scripts"))
+        if os.access(self.path_lib, os.R_OK):
+            self.scripts = self.load_scripts(self.path_lib)
+        else:
+            print("ERROR `{}' is not readable".format(self.path_lib))
+            sys.exit()
 
-        self.client = MatrixClient(hostname)
-        self.client.login_with_password(username=username, password=password)
+        self.path_var = os.path.realpath(
+            self.config.get("tiny-matrix-bot", "var", fallback="./data"))
+        if os.access(self.path_var, os.W_OK):
+            os.chdir(self.path_var)
+        else:
+            print("ERROR `{}' is not writeable".format(self.path_var))
+            sys.exit()
+
+        self.path_run = os.path.realpath(
+            self.config.get("tiny-matrix-bot", "run", fallback="./sockets"))
+        if not os.access(self.path_run, os.W_OK):
+            print("INFO `{}' is not writeable, disabling sockets".format(self.path_run))
+            self.path_run = False
+
+        self.client = MatrixClient(self.config.get("tiny-matrix-bot", "host"))
+        self.client.login_with_password(
+            username=self.config.get("tiny-matrix-bot", "user"),
+            password=self.config.get("tiny-matrix-bot", "pass"))
 
         self.user = self.client.get_user(self.client.user_id)
-        self.user.set_display_name(displayname)
+        self.user.set_display_name(self.config.get("tiny-matrix-bot", "name"))
 
         for room_id in self.client.get_rooms():
             self.join_room(room_id)
@@ -76,14 +93,14 @@ class TinyMatrixtBot():
         room = self.client.join_room(room_id)
         room.add_listener(self.on_room_event)
         print("JOIN {}".format(room_id))
-        if self.sockets_path is not None:
+        if self.path_run is not False:
             thread = Thread(target=self.create_socket, args=(room, ))
             thread.daemon = True
             thread.start()
 
     def create_socket(self, room):
         socket_name = re.search("^\!([a-z]+):", room.room_id, re.IGNORECASE).group(1)
-        socket_path = os.path.join(self.sockets_path, socket_name)
+        socket_path = os.path.join(self.path_run, socket_name)
         try:
             os.remove(socket_path)
         except OSError:
@@ -141,10 +158,4 @@ if __name__ == "__main__":
     if not os.path.isfile(cfg):
         print("config file `{}' not found".format(cfg))
         sys.exit()
-    config = configparser.ConfigParser()
-    config.read(cfg)
-    TinyMatrixtBot(
-        config.get("tiny-matrix-bot", "host"),
-        config.get("tiny-matrix-bot", "user"),
-        config.get("tiny-matrix-bot", "pass"),
-        config.get("tiny-matrix-bot", "name"))
+    TinyMatrixtBot(cfg)
