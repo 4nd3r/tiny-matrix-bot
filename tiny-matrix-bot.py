@@ -64,7 +64,7 @@ class TinyMatrixtBot():
 
     def on_signal(self, signal, frame):
         if signal == 1:
-            self.scripts = self.load_scripts(self.scripts_path)
+            self.scripts = self.load_scripts(self.path_lib)
         elif signal in [2, 15]:
             sys.exit()
 
