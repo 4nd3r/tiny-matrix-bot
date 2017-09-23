@@ -117,6 +117,10 @@ class TinyMatrixtBot():
         print("RUN {}".format(args))
         output = subprocess.Popen(
             args,
+            env={
+                "MXROOMID": event["room_id"],
+                "MXSENDER": event["sender"]
+            },
             stdout=subprocess.PIPE,
             universal_newlines=True
             ).communicate()[0].strip()
