@@ -1,0 +1,59 @@
+#!/bin/sh -e
+
+regex='^[!\?]wiki\s'
+
+if [ -n "$CONFIG" ]
+then
+    echo "$regex"
+    exit
+fi
+
+__wiki_search() {
+    str=$( printf '%s' "$1" | tr '[:upper:]' '[:lower:]' | tr '[:space:]' '+' )
+    url=$( echo "https://en.wikipedia.org/w/api.php?
+        action=query&
+        format=json&
+        list=prefixsearch&
+        pslimit=5&
+        pssearch=$str" | tr -d '[:space:]' )
+    tmp=$( mktemp )
+    curl -s -o "$tmp" "$url"
+    jq -r '.query.prefixsearch[].title' "$tmp"
+    rm "$tmp"
+}
+
+__wiki_extract() {
+    str=$( printf '%s' "$1" | tr '[:space:]' '_' )
+    url=$( echo "https://en.wikipedia.org/w/api.php?
+        action=query&
+        format=json&
+        prop=extracts&
+        exlimit=1&
+        exintro=1&
+        exsentences=1&
+        explaintext=1&
+        titles=$str" | tr -d '[:space:]' )
+    tmp=$( mktemp )
+    curl -s -o "$tmp" "$url"
+    printf '%s\nhttps://en.wikipedia.org/wiki/%s\n' \
+        "$( jq -r '.query.pages[].extract' "$tmp" )" \
+        "$str"
+    rm "$tmp"
+}
+
+input="$( printf '%s' "$@" | sed "s/$regex//I" )"
+
+type=$( printf '%.1s' "$@" )
+
+case "$type" in
+    \!)
+        __wiki_search "$input" | while read -r l
+        do
+            __wiki_extract "$l"
+            break
+        done
+    ;;
+    \?)
+        __wiki_search "$input"
+    ;;
+esac
