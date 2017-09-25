@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+# NOT EVEN ALPHA VERSION, JUST QUICK HACK
+
 regex='^[!\?]wiki\s'
 
 if [ -n "$CONFIG" ]
