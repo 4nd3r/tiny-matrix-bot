@@ -49,23 +49,35 @@ class TinyMatrixtBot():
             print("SOCKETS {} (not writeable, disabling sockets)".format(self.path_run))
             self.path_run = False
 
-        self.client = MatrixClient(self.config.get("tiny-matrix-bot", "host"))
-        self.client.login_with_password(
-            username=self.config.get("tiny-matrix-bot", "user"),
-            password=self.config.get("tiny-matrix-bot", "pass"))
-
+        self.connect()
         self.user = self.client.get_user(self.client.user_id)
         self.user.set_display_name(self.config.get("tiny-matrix-bot", "name"))
 
         for room_id in self.client.get_rooms():
             self.join_room(room_id)
 
-        self.client.start_listener_thread()
+        self.client.start_listener_thread(exception_handler=self.listener_exception_handler)
         self.client.add_invite_listener(self.on_invite)
         self.client.add_leave_listener(self.on_leave)
 
         while True:
             sleep(1)
+
+    def connect(self):
+        print("connecting...")
+        try:
+            self.client = MatrixClient(self.config.get("tiny-matrix-bot", "host"))
+            self.client.login_with_password(
+                username=self.config.get("tiny-matrix-bot", "user"),
+                password=self.config.get("tiny-matrix-bot", "pass"))
+            print("connected!")
+        except:
+            print("connection failed, retrying...")
+            sleep(5)
+            self.connect()
+
+    def listener_exception_handler(self, e):
+        self.connect()
 
     def on_signal(self, signal, frame):
         if signal == 1:
