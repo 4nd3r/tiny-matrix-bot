@@ -168,7 +168,7 @@ class TinyMatrixtBot():
         logger.debug("room {}".format(event["room_id"]))
         logger.debug("sender {}".format(event["sender"]))
         logger.debug("run {}".format(args))
-        output = subprocess.Popen(
+        _output = subprocess.Popen(
             args,
             env={
                 "MXROOMID": event["room_id"],
@@ -178,11 +178,11 @@ class TinyMatrixtBot():
             universal_newlines=True
             ).communicate()[0].strip()
         sleep(0.5)
-        for p in output.split("\n\n"):
-            for l in p.split("\n"):
-                logger.debug("output {}".format(l))
-            room.send_text(p)
-            sleep(1)
+        for _p in _output.split("\n\n"):
+            for _l in _p.split("\n"):
+                logger.debug("output {}".format(_l))
+            room.send_text(_p)
+            sleep(0.8)
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
