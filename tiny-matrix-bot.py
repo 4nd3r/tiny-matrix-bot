@@ -154,12 +154,15 @@ class TinyMatrixtBot():
     def on_room_event(self, room, event):
         if event["sender"] == self.client.user_id:
             return
-        if event["type"] == "m.room.message":
-            if event["content"]["msgtype"] == "m.text":
-                body = event["content"]["body"].strip()
-                for regex, script in self.scripts.items():
-                    if re.search(regex, body, re.IGNORECASE):
-                        self.run_script(room, event, [script, body])
+        if event["type"] != "m.room.message":
+            return
+        if event["content"]["msgtype"] != "m.text":
+            return
+        _args = event["content"]["body"].strip()
+        for _regex, _script in self.scripts.items():
+            if not re.search(_regex, _args, re.IGNORECASE):
+                continue
+            self.run_script(room, event, [_script, _args])
 
     def run_script(self, room, event, args):
         logger.debug("room {}".format(event["room_id"]))
