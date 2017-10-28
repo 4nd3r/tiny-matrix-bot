@@ -18,6 +18,8 @@ class TinyMatrixtBot():
         signal.signal(signal.SIGINT,  self.on_signal)
         signal.signal(signal.SIGTERM, self.on_signal)
 
+        self.logger = logging.getLogger("TinyMatrixBot")
+
         self.config = configparser.ConfigParser()
         self.config.read(path_config)
 
@@ -25,28 +27,28 @@ class TinyMatrixtBot():
 
         self.path_lib = self.config.get("tiny-matrix-bot", "lib",
             fallback=os.path.join(path_current, "scripts")).strip()
-        print("SCRIPTS {}".format(self.path_lib))
+        self.logger.info("SCRIPTS {}".format(self.path_lib))
         if os.access(self.path_lib, os.R_OK):
             self.scripts = self.load_scripts(self.path_lib)
         else:
-            print("ERROR {} is not readable".format(self.path_lib))
+            self.logger.error("ERROR {} is not readable".format(self.path_lib))
             sys.exit(0)
 
         self.path_var = self.config.get("tiny-matrix-bot", "var",
             fallback=os.path.join(path_current, "data")).strip()
-        print("DATA {}".format(self.path_var))
+        self.logger.info("DATA {}".format(self.path_var))
         if os.access(self.path_var, os.W_OK):
             os.chdir(self.path_var)
         else:
-            print("ERROR {} is not writeable".format(self.path_var))
+            self.logger.error("ERROR {} is not writeable".format(self.path_var))
             sys.exit(0)
 
         self.path_run = self.config.get("tiny-matrix-bot", "run",
             fallback=os.path.join(path_current, "sockets")).strip()
         if os.access(self.path_run, os.W_OK):
-            print("SOCKETS {}".format(self.path_run))
+            self.logger.info("SOCKETS {}".format(self.path_run))
         else:
-            print("SOCKETS {} (not writeable, disabling sockets)".format(self.path_run))
+            self.logger.info("SOCKETS {} (not writeable, disabling sockets)".format(self.path_run))
             self.path_run = False
 
         self.connect()
@@ -64,15 +66,15 @@ class TinyMatrixtBot():
             sleep(1)
 
     def connect(self):
-        print("connecting...")
+        self.logger.info("Connecting...")
         try:
             self.client = MatrixClient(self.config.get("tiny-matrix-bot", "host"))
             self.client.login_with_password(
                 username=self.config.get("tiny-matrix-bot", "user"),
                 password=self.config.get("tiny-matrix-bot", "pass"))
-            print("connected!")
+            self.logger.info("Connected!")
         except:
-            print("connection failed, retrying...")
+            self.logger.warning("Connection failed, retrying...")
             sleep(5)
             self.connect()
 
@@ -101,17 +103,17 @@ class TinyMatrixtBot():
             if not output:
                 continue
             scripts[output] = script_path
-            print("LOAD {} {}".format(script, output))
+            self.logger.info("LOAD {} {}".format(script, output))
         return scripts
 
     def on_invite(self, room_id, state):
-        print("INVITE {}".format(room_id))
+        self.logger.info("INVITE {}".format(room_id))
         self.join_room(room_id)
 
     def join_room(self, room_id):
         room = self.client.join_room(room_id)
         room.add_listener(self.on_room_event)
-        print("JOIN {}".format(room_id))
+        self.logger.info("JOIN {}".format(room_id))
         if self.path_run is not False:
             thread = Thread(target=self.create_socket, args=(room, ))
             thread.daemon = True
@@ -127,15 +129,15 @@ class TinyMatrixtBot():
         sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
         sock.bind(socket_path)
         sock.listen(1)
-        print("SOCKET {}".format(socket_path))
+        self.logger.info("SOCKET {}".format(socket_path))
         while True:
             conn, addr = sock.accept()
             recv = conn.recv(4096).decode('utf-8').strip()
-            print("RECV {} {}".format(socket_path, recv))
+            self.logger.info("RECV {} {}".format(socket_path, recv))
             room.send_text(recv)
 
     def on_leave(self, room_id, state):
-        print("LEAVE {}".format(room_id))
+        self.logger.info("LEAVE {}".format(room_id))
 
     def on_room_event(self, room, event):
         if event["sender"] == self.client.user_id:
@@ -148,9 +150,9 @@ class TinyMatrixtBot():
                         self.run_script(room, event, [script, body])
 
     def run_script(self, room, event, args):
-        print("ROOM {}".format(event["room_id"]))
-        print("SENDER {}".format(event["sender"]))
-        print("RUN {}".format(args))
+        self.logger.info("ROOM {}".format(event["room_id"]))
+        self.logger.info("SENDER {}".format(event["sender"]))
+        self.logger.info("RUN {}".format(args))
         output = subprocess.Popen(
             args,
             env={
@@ -163,12 +165,12 @@ class TinyMatrixtBot():
         sleep(0.5)
         for p in output.split("\n\n"):
             for l in p.split("\n"):
-                print("OUTPUT {}".format(l))
+                self.logger.info("OUTPUT {}".format(l))
             room.send_text(p)
             sleep(1)
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.WARNING)
+    logging.basicConfig(level=logging.INFO)
     cfg = os.path.join(
         os.path.dirname(os.path.realpath(__file__)),
         "tiny-matrix-bot.cfg")
