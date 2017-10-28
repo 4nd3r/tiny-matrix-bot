@@ -14,6 +14,7 @@ from matrix_client.client import MatrixClient
 
 logger = logging.getLogger(__name__)
 
+
 class TinyMatrixtBot():
     def __init__(self, path_config):
         signal.signal(signal.SIGHUP,  self.on_signal)
@@ -25,7 +26,8 @@ class TinyMatrixtBot():
 
         _path_current = os.path.dirname(os.path.realpath(__file__))
 
-        self.path_lib = self.config.get("tiny-matrix-bot", "lib",
+        self.path_lib = self.config.get(
+            "tiny-matrix-bot", "lib",
             fallback=os.path.join(_path_current, "scripts")).strip()
         logger.debug("path_lib = {}".format(self.path_lib))
         if os.access(self.path_lib, os.R_OK):
@@ -34,7 +36,8 @@ class TinyMatrixtBot():
             logger.error("{} not readable".format(self.path_lib))
             sys.exit(1)
 
-        self.path_var = self.config.get("tiny-matrix-bot", "var",
+        self.path_var = self.config.get(
+            "tiny-matrix-bot", "var",
             fallback=os.path.join(_path_current, "data")).strip()
         logger.debug("path_var = {}".format(self.path_var))
         if os.access(self.path_var, os.W_OK):
@@ -43,12 +46,15 @@ class TinyMatrixtBot():
             logger.error("{} not writeable".format(self.path_var))
             sys.exit(1)
 
-        self.path_run = self.config.get("tiny-matrix-bot", "run",
+        self.path_run = self.config.get(
+            "tiny-matrix-bot", "run",
             fallback=os.path.join(_path_current, "sockets")).strip()
         if os.access(self.path_run, os.W_OK):
             logger.debug("path_run = {}".format(self.path_run))
         else:
-            logger.debug("path_run = {} (not writeable, disabling sockets)".format(self.path_run))
+            logger.debug(
+                "path_run = {}".format(self.path_run) +
+                " (not writeable, disabling sockets)")
             self.path_run = False
 
         self.connect()
@@ -58,7 +64,8 @@ class TinyMatrixtBot():
         for room_id in self.client.get_rooms():
             self.join_room(room_id)
 
-        self.client.start_listener_thread(exception_handler=self.listener_exception_handler)
+        self.client.start_listener_thread(
+            exception_handler=self.listener_exception_handler)
         self.client.add_invite_listener(self.on_invite)
         self.client.add_leave_listener(self.on_leave)
 
@@ -73,8 +80,10 @@ class TinyMatrixtBot():
             self.client = MatrixClient(_host)
             self.client.login_with_password(username=_user, password=_pass)
             logger.info("connected to {}".format(_host))
-        except:
-            logger.warning("connection to {} failed, retrying in 5 seconds...".format(_host))
+        except Exception:
+            logger.warning(
+                "connection to {} failed".format(_host) +
+                ", retrying in 5 seconds...")
             sleep(5)
             self.connect()
 
@@ -91,8 +100,8 @@ class TinyMatrixtBot():
         _scripts = {}
         for _script in os.listdir(path):
             _script_path = os.path.join(path, _script)
-            if not os.access(_script_path, os.R_OK) \
-                or not os.access(_script_path, os.X_OK):
+            if (not os.access(_script_path, os.R_OK) or
+                    not os.access(_script_path, os.X_OK)):
                 continue
             _regex = subprocess.Popen(
                 [_script_path],
@@ -127,7 +136,9 @@ class TinyMatrixtBot():
             _thread.start()
 
     def create_socket(self, room):
-        socket_name = re.search("^\!([a-z]+):", room.room_id, re.IGNORECASE).group(1)
+        socket_name = re.search(
+            "^\!([a-z]+):", room.room_id,
+            re.IGNORECASE).group(1)
         socket_path = os.path.join(self.path_run, socket_name)
         try:
             os.remove(socket_path)
@@ -184,8 +195,9 @@ class TinyMatrixtBot():
             room.send_text(_p)
             sleep(0.8)
 
+
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.DEBUG)
     cfg = os.path.join(
         os.path.dirname(os.path.realpath(__file__)),
         "tiny-matrix-bot.cfg")
