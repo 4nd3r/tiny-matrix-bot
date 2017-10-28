@@ -136,23 +136,23 @@ class TinyMatrixtBot():
             _thread.start()
 
     def create_socket(self, room):
-        socket_name = re.search(
+        _socket_name = re.search(
             "^\!([a-z]+):", room.room_id,
             re.IGNORECASE).group(1)
-        socket_path = os.path.join(self.path_run, socket_name)
+        _socket_path = os.path.join(self.path_run, _socket_name)
         try:
-            os.remove(socket_path)
+            os.remove(_socket_path)
         except OSError:
             pass
-        sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-        sock.bind(socket_path)
-        sock.listen(1)
-        logger.debug("socket {}".format(socket_path))
+        _socket = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+        _socket.bind(_socket_path)
+        _socket.listen(1)
+        logger.debug("socket {}".format(_socket_path))
         while True:
-            conn, addr = sock.accept()
-            recv = conn.recv(4096).decode('utf-8').strip()
-            logger.debug("recv {} {}".format(socket_path, recv))
-            room.send_text(recv)
+            _conn, _addr = _socket.accept()
+            _recv = _conn.recv(4096).decode('utf-8').strip()
+            logger.debug("recv {} {}".format(_socket_path, _recv))
+            room.send_text(_recv)
 
     def on_leave(self, room_id, state):
         _sender = "someone"
