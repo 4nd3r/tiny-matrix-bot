@@ -23,10 +23,10 @@ class TinyMatrixtBot():
         self.config = configparser.ConfigParser()
         self.config.read(path_config)
 
-        path_current = os.path.dirname(os.path.realpath(__file__))
+        _path_current = os.path.dirname(os.path.realpath(__file__))
 
         self.path_lib = self.config.get("tiny-matrix-bot", "lib",
-            fallback=os.path.join(path_current, "scripts")).strip()
+            fallback=os.path.join(_path_current, "scripts")).strip()
         logger.debug("path_lib = {}".format(self.path_lib))
         if os.access(self.path_lib, os.R_OK):
             self.scripts = self.load_scripts(self.path_lib)
@@ -35,7 +35,7 @@ class TinyMatrixtBot():
             sys.exit(1)
 
         self.path_var = self.config.get("tiny-matrix-bot", "var",
-            fallback=os.path.join(path_current, "data")).strip()
+            fallback=os.path.join(_path_current, "data")).strip()
         logger.debug("path_var = {}".format(self.path_var))
         if os.access(self.path_var, os.W_OK):
             os.chdir(self.path_var)
@@ -44,7 +44,7 @@ class TinyMatrixtBot():
             sys.exit(1)
 
         self.path_run = self.config.get("tiny-matrix-bot", "run",
-            fallback=os.path.join(path_current, "sockets")).strip()
+            fallback=os.path.join(_path_current, "sockets")).strip()
         if os.access(self.path_run, os.W_OK):
             logger.debug("path_run = {}".format(self.path_run))
         else:
