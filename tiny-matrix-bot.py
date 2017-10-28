@@ -119,12 +119,12 @@ class TinyMatrixtBot():
 
     def join_room(self, room_id):
         logger.info("join {}".format(room_id))
-        room = self.client.join_room(room_id)
-        room.add_listener(self.on_room_event)
+        _room = self.client.join_room(room_id)
+        _room.add_listener(self.on_room_event)
         if self.path_run is not False:
-            thread = Thread(target=self.create_socket, args=(room, ))
-            thread.daemon = True
-            thread.start()
+            _thread = Thread(target=self.create_socket, args=(_room, ))
+            _thread.daemon = True
+            _thread.start()
 
     def create_socket(self, room):
         socket_name = re.search("^\!([a-z]+):", room.room_id, re.IGNORECASE).group(1)
