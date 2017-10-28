@@ -197,7 +197,10 @@ class TinyMatrixtBot():
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    if 'DEBUG' in os.environ:
+        logging.basicConfig(level=logging.DEBUG)
+    else:
+        logging.basicConfig(level=logging.INFO)
     cfg = os.path.join(
         os.path.dirname(os.path.realpath(__file__)),
         "tiny-matrix-bot.cfg")
