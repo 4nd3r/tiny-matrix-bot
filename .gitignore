@@ -1,4 +1,5 @@
 matrix_client
 data
 sockets
-tiny-matrix-bot.cfg
+-tiny-matrix-bot.cfg.sample
+tiny-matrix-bot.cfg*
