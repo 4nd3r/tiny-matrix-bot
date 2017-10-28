@@ -88,24 +88,24 @@ class TinyMatrixtBot():
             sys.exit(0)
 
     def load_scripts(self, path):
-        scripts = {}
-        for script in os.listdir(path):
-            script_path = os.path.join(path, script)
-            if not os.access(script_path, os.R_OK) \
-                or not os.access(script_path, os.X_OK):
+        _scripts = {}
+        for _script in os.listdir(path):
+            _script_path = os.path.join(path, _script)
+            if not os.access(_script_path, os.R_OK) \
+                or not os.access(_script_path, os.X_OK):
                 continue
-            output = subprocess.Popen(
-                [script_path],
+            _regex = subprocess.Popen(
+                [_script_path],
                 env={"CONFIG": "1"},
                 stdout=subprocess.PIPE,
                 universal_newlines=True
                 ).communicate()[0].strip()
-            if not output:
+            if not _regex:
                 continue
-            scripts[output] = script_path
-            logger.info("script {}".format(script))
-            logger.debug("regex {}".format(output))
-        return scripts
+            _scripts[_regex] = _script_path
+            logger.info("script {}".format(_script))
+            logger.debug("regex {}".format(_regex))
+        return _scripts
 
     def on_invite(self, room_id, state):
         _sender = "someone"
