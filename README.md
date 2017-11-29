@@ -25,3 +25,7 @@ systemctl stop tiny-matrix-bot
 scripts must have execute bit - `chmod +x`
 
 `mkdir sockets` for sockets
+
+## TODO
+  * make code better (right)
+  * document all config variables
