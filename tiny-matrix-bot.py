@@ -57,6 +57,9 @@ class TinyMatrixtBot():
                 " (not writeable, disabling sockets)")
             self.path_run = False
 
+        self.inviter_whitelist = self.config.get(
+            "tiny-matrix-bot", "inviter_whitelist", fallback="").strip()
+
         self.connect()
         self.user = self.client.get_user(self.client.user_id)
         self.user.set_display_name(self.config.get("tiny-matrix-bot", "name"))
@@ -124,6 +127,12 @@ class TinyMatrixtBot():
             _sender = _event["sender"]
             break
         logger.info("invited to {} by {}".format(room_id, _sender))
+        if self.inviter_whitelist:
+            if not re.search(self.inviter_whitelist, _sender, re.IGNORECASE):
+                logger.info(
+                    "no whitelist match, ignoring invite from {}"
+                    .format(_sender))
+                return
         self.join_room(room_id)
 
     def join_room(self, room_id):
