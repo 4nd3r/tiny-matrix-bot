@@ -1,0 +1,20 @@
+#!/bin/sh -e
+
+regex='^reede\?$'
+
+if [ -n "$CONFIG" ]
+then
+    echo "$regex"
+    exit
+fi
+
+d=$( date +%u )
+
+if [ "$d" -lt 4 ]
+then echo 'Ei.'
+elif [ "$d" -eq 4 ]
+then echo 'varareede alles'
+elif [ "$d" -eq 5 ]
+then echo 'JAH!!!'
+else echo 'nädalavahetus on, kasi tagasi jooma...'
+fi
