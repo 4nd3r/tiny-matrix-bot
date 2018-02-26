@@ -43,7 +43,7 @@ __brussel() {
     __get http://www.meteo.be/meteo/view/en/123386-Observations.html \
         | grep -FA2 '<city code="6447">' \
         | tail -1 \
-        | sed 's/[^0-9,]*//g' \
+        | sed 's/[^0-9,\-]*//g' \
         | sed 's/,/\./'
 }
 
