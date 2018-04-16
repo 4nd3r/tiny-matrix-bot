@@ -29,3 +29,4 @@ scripts must have execute bit - `chmod +x`
 ## TODO
   * make code better (right)
   * document all config variables
+  * define scripts dependencies
