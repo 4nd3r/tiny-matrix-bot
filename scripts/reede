@@ -16,5 +16,7 @@ elif [ "$d" -eq 4 ]
 then echo 'varareede alles'
 elif [ "$d" -eq 5 ]
 then echo 'JAH!!!'
+elif [ "$d" -eq 7 ]
+then echo 'peaks vist vaikselt koomale tõmbama hakkama...'
 else echo 'nädalavahetus on, kasi tagasi jooma...'
 fi
