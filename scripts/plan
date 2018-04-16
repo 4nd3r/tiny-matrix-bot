@@ -12,8 +12,11 @@ args="$( echo "$@" | sed "s/$regex//I" )"
 
 # https://github.com/mth/hirc/blob/master/plans.txt
 
-plans=$( cat << EOF
-... (sa ei taha teada)
+echo "1. $args"
+echo
+echo "2. ???"
+echo
+echo "... (sa ei taha teada)
 [CENSORED]
 [CLASSIFIED]
 kõik p*rses
@@ -81,12 +84,4 @@ lõõgastav õhtu fooliummütsiga mullivannis
 üleestiline reede
 hea pidu
 halb pidu
-kuskil on piir
-EOF
-)
-
-echo "1. $args"
-echo
-echo "2. ???"
-echo
-echo "3. $( echo "$plans" | shuf -n1 )"
+kuskil on piir" | shuf -n1
