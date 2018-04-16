@@ -12,8 +12,7 @@ n="$( echo "$@" | sed "s/$regex//I" )"
 
 # https://github.com/mth/hirc/blob/master/compliments.txt
 
-compliments=$( cat << EOF
-Milline sümpaatne noor inimene on $n! Olgu ta teile eeskujuks.
+echo "Milline sümpaatne noor inimene on $n! Olgu ta teile eeskujuks.
 Pidevast õllejoomisest hoolimata on Sul fantastiline figuur!
 Ma pole veel kohanud nii võrratu käitumisega inimest kui $n
 Eesti mees nagu $n on kõige parem
@@ -74,8 +73,4 @@ Sinuga, $n, võiks ma minna kasvõi maailma lõppu!
 Mis on õnn? Aga vaadake $n poole, saate aru...
 $n: Tule ma kallistan Sind!
 $n: Su elu on nagu muinasjutt...
-Kas teate, miks John Holmes Eestis ei käinud? Ta kartis $n'ga võistelda.
-EOF
-)
-
-echo "$compliments" | shuf -n1
+Kas teate, miks John Holmes Eestis ei käinud? Ta kartis $n'ga võistelda." | shuf -n1
