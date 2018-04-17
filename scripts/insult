@@ -12,8 +12,7 @@ n="$( echo "$@" | sed "s/$regex//I" )"
 
 # https://github.com/mth/hirc/blob/master/insult.txt
 
-insults=$( cat << EOF
-$n: sa oled nuhtluseks maailmale loodud, et inimesed näeksid, kui madalale võib üks inimeseloom #linux.ee peal langeda.
+echo "$n: sa oled nuhtluseks maailmale loodud, et inimesed näeksid, kui madalale võib üks inimeseloom #linux.ee peal langeda.
 $n: sa oled loll nagu lauajalg.
 Tead $n, mine osta õige üks tükk seepi.
 Erikuradikinomees sa $n oled, reede õhta maatriksis!
@@ -362,8 +361,4 @@ $n: miks sul häbe näos on?
 $n pärast ongi piimapakkidel kiri "Ava siit"
 $n on hea näide sellest, mis juhtub, kui õigel ajal aborti ei tehta
 $n on nii loll, et ei läbi isegi Turingi testi
-$n pea püsib ikka püsti - sooja õhku täis skalp ei kaalu ju palju ;)
-EOF
-)
-
-echo "$insults" | shuf -n1
+$n pea püsib ikka püsti - sooja õhku täis skalp ei kaalu ju palju ;)" | shuf -n1
