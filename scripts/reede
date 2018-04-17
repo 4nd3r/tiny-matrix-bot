@@ -8,15 +8,10 @@ then
     exit
 fi
 
-d=$( date +%u )
-
-if [ "$d" -lt 4 ]
-then echo 'Ei.'
-elif [ "$d" -eq 4 ]
-then echo 'varareede alles'
-elif [ "$d" -eq 5 ]
-then echo 'JAH!!!'
-elif [ "$d" -eq 7 ]
-then echo 'peaks vist vaikselt koomale tõmbama hakkama...'
-else echo 'nädalavahetus on, kasi tagasi jooma...'
-fi
+case $( date +%u ) in
+    [1-3]) echo 'Ei.' ;;
+    4) echo 'Varareede alles.' ;;
+    5) echo 'JAH!!!' ;;
+    6) echo 'Nädalavahetus on, kasi tagasi jooma!' ;;
+    7) echo 'Homme on tööpäev.' ;;
+esac
