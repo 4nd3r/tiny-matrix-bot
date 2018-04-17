@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-regex='^!compliment\s'
+regex='^!kompliment\s'
 
 if [ -n "$CONFIG" ]
 then
