@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-regex='^!vali\s'
+regex='^!vali\s*'
 
 if [ -n "$CONFIG" ]
 then
@@ -8,15 +8,6 @@ then
     exit
 fi
 
-args="$( echo "$@" | sed "s/$regex//I" )"
-
 echo 'hmm...'
 echo
-
-if echo "$args" | grep -Eiq '(või|ja)'
-then
-    echo "$args" | sed -r 's/\s+(või|ja)\s+/\n/gI'
-else
-    echo "$args" | sed -r 's/\s/\n/gI'
-fi \
-| shuf -n1
+echo "$@" | sed -r "s/$regex//I" | sed -r 's/(\s+või\s+|\s+ja\s+|\s+)/\n/gI' | shuf -n1
