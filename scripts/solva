@@ -12,7 +12,7 @@ n="$( echo "$@" | sed "s/$regex//I" )"
 
 # https://github.com/mth/hirc/blob/master/insult.txt
 
-echo "$n: sa oled nuhtluseks maailmale loodud, et inimesed näeksid, kui madalale võib üks inimeseloom #linux.ee peal langeda.
+echo "$n: sa oled nuhtluseks maailmale loodud, et inimesed näeksid, kui madalale võib üks inimeseloom langeda.
 $n: sa oled loll nagu lauajalg.
 Tead $n, mine osta õige üks tükk seepi.
 Erikuradikinomees sa $n oled, reede õhta maatriksis!
@@ -78,7 +78,7 @@ Näe, tõmbasin küll vett, aga $n ikka alla ei läinud.
 Miskit rõvedat pininat tuleb kusagilt. Aaa, see oled sina, $n!
 Tere $n! Kuidas viinaravi edeneb?
 Vaene $n, kas sa jäid rongi alla või oledki sellisena sündinud?
-$n: Piiblis on kirjas: "Juudas eemaldus ja läks ja poos end üles." Ja veel: "Mine tee sina samuti"
+$n: Piiblis on kirjas: \"Juudas eemaldus ja läks ja poos end üles.\" Ja veel: \"Mine tee sina samuti\"
 $n, miks sa ei lase oma mõistust teritada?
 $n, tee mulle üks teene - ära unusta koduteel vales kohas tänavat ületada.
 $n, mängime kodu, Sina oled uks ja mina löön su kinni.
@@ -88,7 +88,7 @@ $n, vaata, rong läheneb! Roni rööbastele!
 $n, Sul on väga huvitav nägu, mitu korda Sind sinna löödud on?
 $n, mängime hobust. Mina olen esimene ots ja sina võid lihtsalt iseennast mängida.
 $n nalju tervitab alati suur vaikusepahvak.
-Ahv heitis $n'le ühe pilgu ning karjus: "Persse see Darwini teooria - mina endast inimest teha ei lase!"
+Ahv heitis $n'le ühe pilgu ning karjus: \"Persse see Darwini teooria - mina endast inimest teha ei lase!\"
 Peab tunnistama, et $n'i sugused mehed ei kasva puu otsas - nad ripuvad okste küljes.
 Kas tõesti on sõnade helge pea ja $n vahel nii suur erinevus?
 $n on nagu lauaga löödud. Ja mitte ainult vastu rindu
@@ -109,7 +109,7 @@ Ma ei ole sinu tüüp, $n. Ma pole täispuhutav.
 $n, kao eemale! Sa seisad mu aura peal.
 $n: Ära muretse. Ma ei mäleta sinu nime ka.
 $n, ma tahan lihtsalt kätte maksta. Mis selles halba on?
-$n, kummarda ja ütle: "Jah, mu käskija."
+$n, kummarda ja ütle: \"Jah, mu käskija.\"
 $n, kas ma mainisin, et kui sa minuga räägid, saad kohe jalaga munadesse?
 $n, sa näed erakordselt sitt välja. On see mingi uus trend?
 $n, kumb meist nüüd rohtu peaks võtma?
@@ -201,7 +201,7 @@ $n: ma tuleks meelsasti sinuga kohtama, aga mu lemmik reklaam on praegu telekas.
 $n: milline darwini auhind sulle kuulus ?
 $n, muidugi on ka sinul tunded. Aga keda see kotib?
 $n: mul on kiire praegu, võin ma sind mõni teine kord ignoreerida?
-$n: Naerata ja ütle: "Jah, mu käskija."
+$n: Naerata ja ütle: \"Jah, mu käskija.\"
 $n: Näri leiba!
 $n: nii-nii. Jälle on tsirkusest paar klouni putku pannud.
 $n: oled sa alati nii loll või pingutad täna eriti selle nimel?
@@ -211,9 +211,9 @@ $n: on see su nina või sööd sa banaani?
 $n: Parem ära mind vihasta. Mul hakkavad kirstud otsa saama
 $n: sa ei ole paranoik. Kõik vihkavad sind tõesti.
 $n: sa ei saa iialgi nii vanaks kui välja näed.
-$n: sa ei tea sõna "hirm" tähendust. Aga kui järele mõelda, siis sa ei tea enamuse sõnade tähendust.
+$n: sa ei tea sõna \"hirm\" tähendust. Aga kui järele mõelda, siis sa ei tea enamuse sõnade tähendust.
 $n: sa oled loll kui leivaauto.
-$n: sa oled nii kole, et kui ma su loomaaeda viisin, siis talitaja ütles: "Tänan, et ta tagasi tõite."
+$n: sa oled nii kole, et kui ma su loomaaeda viisin, siis talitaja ütles: \"Tänan, et ta tagasi tõite.\"
 $n, sul on nii inetu nägu, et see trükiti Ryanair oksekottidele.
 $n: sa oled nii kole, et su pilt trükiti Ryanair oksekottidele.
 $n: sa oled täpselt nagu Action Man: Kandiline soeng, armiline nägu ja püksis mitte midagi.
@@ -358,7 +358,7 @@ $n: millal sa viimati ilma peeglit kasutamata oma munni nägid?
 $n: mängisid pipimängu jälle?
 $n: kaotasid küpsisemängus jälle?
 $n: miks sul häbe näos on?
-$n pärast ongi piimapakkidel kiri "Ava siit"
+$n pärast ongi piimapakkidel kiri \"Ava siit\"
 $n on hea näide sellest, mis juhtub, kui õigel ajal aborti ei tehta
 $n on nii loll, et ei läbi isegi Turingi testi
 $n pea püsib ikka püsti - sooja õhku täis skalp ei kaalu ju palju ;)" | shuf -n1
