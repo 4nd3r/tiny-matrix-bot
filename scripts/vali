@@ -10,4 +10,4 @@ fi
 
 echo 'hmm...'
 echo
-echo "$@" | sed -r "s/$regex//I" | sed -r 's/(\s+või\s+|\s+ja\s+|\s+)/\n/gI' | shuf -n1
+echo "$@" | sed -r "s/$regex//I" | sed -r 's/(\s+või\s+)/\n/gI' | shuf -n1
