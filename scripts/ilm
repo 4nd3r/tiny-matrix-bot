@@ -51,6 +51,8 @@ __print Harku "$( __ilmateenistus Tallinn-Harku )"
 
 __print Tartu "$( __tartu )"
 
+__print Elva "$( __ilmateenistus Elva )"
+
 __print Võru "$( __ilmateenistus Võru )"
 
 __print Pärnu "$( __ilmateenistus Pärnu-Sauga )"
