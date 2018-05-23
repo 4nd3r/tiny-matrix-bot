@@ -14,9 +14,9 @@ query="$( echo "$@" | grep -ioP "$regex" | sed 's/\s/+/' )"
 
 dump="$( mktemp )"
 
-curl -s -o "$dump" "http://piibel.net/.json?q=$query"
+curl -s -o "$dump" "http://piibel.net/api/v3/.json?q=$query"
 
-jq -r '.[].bibles[].books[].chapters[].verses[].text' "$dump" \
+jq -r '.result.verses[].text' "$dump" \
 | while read -r l
 do echo "$l";
 done \
