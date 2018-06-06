@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 import sys
 import os
@@ -192,7 +193,8 @@ class TinyMatrixtBot():
             args,
             env={
                 "MXROOMID": event["room_id"],
-                "MXSENDER": event["sender"]
+                "MXSENDER": event["sender"],
+                "MXMSG": event["content"]["body"].splitlines()[0]
             },
             stdout=subprocess.PIPE,
             universal_newlines=True

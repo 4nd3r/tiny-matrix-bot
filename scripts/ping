@@ -1,11 +1,1 @@
-#!/bin/sh -e
-
-regex='^!?ping(!|\?)?$'
-
-if [ -n "$CONFIG" ]
-then
-    echo "$regex"
-    exit
-fi
-
-echo 'P O N G'
+scripts-avail/ping
