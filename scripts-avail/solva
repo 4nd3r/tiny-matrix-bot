@@ -1,0 +1,364 @@
+#!/bin/sh -e
+
+regex='^!solva\s'
+
+if [ -n "$CONFIG" ]
+then
+    echo "$regex"
+    exit
+fi
+
+n="$( echo "$@" | sed "s/$regex//I" )"
+
+# https://github.com/mth/hirc/blob/master/insult.txt
+
+echo "$n: sa oled nuhtluseks maailmale loodud, et inimesed näeksid, kui madalale võib üks inimeseloom langeda.
+$n: sa oled loll nagu lauajalg.
+Tead $n, mine osta õige üks tükk seepi.
+Erikuradikinomees sa $n oled, reede õhta maatriksis!
+$n: sa oled üks plekist persega vedruvasikas.
+$n: käi jala.
+$n, sa vana pede, sinu kohta on artikkel: http://www.$n.isgay.com/
+$n: kalla end piimaga üle ja pane traktori kõrval põlema.
+Oh püha perse kiriku laes, kuskohas küll $n'suguseid produtseeritakse.
+$n: sina mine perse ja jäägi sinna.
+$n: vabanda, kui ma sind kuidagi solvasin. See juhtus täiesti tahtlikult.
+$n: ma ei saa aru, kuidas päike küll sinu peale paistes oksendama ei hakka.
+$n: tra küll, kui mina sinu moodi välja näeks, ei julgeks ma ilma maskita väljagi minna
+$n: ma ei näe su silmis mõistusehelki.
+$n: kes küll sinusugusele ajukääbikule kirjakunsti õpetas?
+$n: sina, sitavikat, ime kella!
+$n: kas see on su nina, või kasvatad endale kolmandat kätt?
+$n: mina olen blond, aga mis sinu vabandus on?
+$n: kuidas Sulle kõrvaltvaatajana inimsugu tundub?
+$n: sina ja inetu? Sa ei ole inetu, sa oled lihtsalt ... äh kuradile, Sa oled inetu. Sitaks inetu. Ja paks ka. Ja kiilakas.
+$n: mitu korda ma pean vett tõmbama, et sa ära kaoksid?
+$n: oled sa alati nii loll või on sul lihtsalt blond hetk??
+K: Mida ütles jumal, kui ta $n' tegi? V: Oh shit!
+K: Kui Empire State Building'u katuselt kukuvad alla paks neeger ja $n, siis kumb jõuab alla esimesena? V: Pole valge mehe asi.
+K: Mis on $n' jaoks pikk ja raske? V: Algkool
+$n pole just karbi kõige kirkam kriit
+$n: sa oled erakordselt sita väljanägemisega. On see mingi uus trend?
+$n: kumb meist nüüd mürki peaks võtma?
+$n: mõni küla on sinu pärast praegu ilma lollita.
+$n: on see kitsehabe või on tuvid su lõua täis sittunud?
+$n: palun seisa allatuult.
+$n: sae pekki.
+$n: Ah keri pekki
+Kuule $n, sina kõdunenud kammeljas, sina mädanenud mudakukk, sina solgitud särg, mine osta omale õng.
+$n: näri muru!
+$n: kes sinusugusele kulendile suu andis?
+$n: tead mis, PANE ENNAST PÕLEMA!
+$n: söö sitta! (miljardid kärbsed ei saa ju ometi valel teel olla)
+$n: sa näed välja nagu keedetud kaheksajalg
+$n: sa oled meditsiiniline ime
+$n: sa näed ikka vahva välja! See kleit su seljas on pilapoest, eks?
+$n: kao eemale! Sa seisad mu aura peal!
+$n on mees, kes ei tee palju sõnu. Aga möliseb ikkagi rohkem kui vaja.
+. o O ( Kus on geenipolitsei? Siin on mingi jälk $n ) O o .
+. o O ( Millise kivi alt küll sellised lontrused nagu $n välja ronivad.. ) O o .
+$n: kes ma Sinu arust olen? Kärbsepaber idiootidele?
+$n: on Sul minut aega? Räägi mulle ära kõik, mida Sa üldse tead.
+$n on nii loll, et sobiks ideaalselt Võrno saatesse
+$n: Su jutt kõlab nagu eesti keel, aga ma ei saa mitte halligi aru.
+$n: kõik mu eelarvamused Sinu suhtes on ajapikku tõeks osutunud.
+$n: ilmselgelt on ainuke lahendus sinu probleemile suitsiid.
+$n: see et keegi sind ei mõista, ei tähenda veel et oled kunstnik.
+$n varub ilmselt alati spetsiaalselt aega, et end avalikus kohas lolliks teha.
+$n: Kuuldavasti oli sul kunagi yks mõte, aga see suri yksinduse kätte ära.
+$n: Ma vihkan kõiki. Sina oled järgmine.
+$n: Ja sinu täiesti mõttetu arvamus on...?
+$n: Pista pea perse ja tee porgandi häält.
+$n: Kas sa nüüd taipad, mis juhtub kui sugulased omavahel abielluvad?
+$n: Maakeral ei ole enam ruumi. Mine koju.
+$n: Mine hoia oma pead vee all.
+Isegi lollide maailmameistrivõistlustel saaks $n teise koha, kuna ta on lihtsalt niivõrd loll....
+$n: mine ära enne kui ma sind ümber lükkan.
+Näe, tõmbasin küll vett, aga $n ikka alla ei läinud.
+Miskit rõvedat pininat tuleb kusagilt. Aaa, see oled sina, $n!
+Tere $n! Kuidas viinaravi edeneb?
+Vaene $n, kas sa jäid rongi alla või oledki sellisena sündinud?
+$n: Piiblis on kirjas: \"Juudas eemaldus ja läks ja poos end üles.\" Ja veel: \"Mine tee sina samuti\"
+$n, miks sa ei lase oma mõistust teritada?
+$n, tee mulle üks teene - ära unusta koduteel vales kohas tänavat ületada.
+$n, mängime kodu, Sina oled uks ja mina löön su kinni.
+$n, lähme kusagile, kus me saaksime teineteisest lahus olla.
+Ma ei unusta kunagi ühtegi nägu, aga $n puhul olen ma valmis erandi tegema.
+$n, vaata, rong läheneb! Roni rööbastele!
+$n, Sul on väga huvitav nägu, mitu korda Sind sinna löödud on?
+$n, mängime hobust. Mina olen esimene ots ja sina võid lihtsalt iseennast mängida.
+$n nalju tervitab alati suur vaikusepahvak.
+Ahv heitis $n'le ühe pilgu ning karjus: \"Persse see Darwini teooria - mina endast inimest teha ei lase!\"
+Peab tunnistama, et $n'i sugused mehed ei kasva puu otsas - nad ripuvad okste küljes.
+Kas tõesti on sõnade helge pea ja $n vahel nii suur erinevus?
+$n on nagu lauaga löödud. Ja mitte ainult vastu rindu
+Vaata $n't. Ilmne tõestus, et hullari aed on liiga madal.
+Mõistuse pooles on $n'le kõige lähemal reha ... või äärmisel juhul labidas
+$n, kas sa nüüd taipad, mis juhtub, kui sugulased omavahel abielluvad?
+$n, ma suudan vaevu oma ükskõiksust vaos hoida
+$n, sa tuled tuttav ette. Lahkasin sind vist zooloogiatunnis?
+Kui mind huvitaks su arvamus, $n, siis ütleksin, milline see on.
+Sinuga dringile, $n? Pigem teen endale ise tuimestuseta pimesooleoperatsiooni.
+$n, kas sulle tundub, et ma vajan seltskonda?
+Hei, sina, $n! Kao mu planeedilt minema!
+$n, ja sinu tattnina-arvamus on...?
+$n, ma ei ole tige. Olen lihtsalt juba 10 aastat väga halvas tujus.
+$n, mis stiilis sa ka riietuda ei üritanud, välja see sul igastahes ei tulnud.
+$n, kas su koduplaneedil keegi kunagi vait ka on?
+Ma ei ole sinu tüüp, $n. Ma pole täispuhutav.
+$n, kao eemale! Sa seisad mu aura peal.
+$n: Ära muretse. Ma ei mäleta sinu nime ka.
+$n, ma tahan lihtsalt kätte maksta. Mis selles halba on?
+$n, kummarda ja ütle: \"Jah, mu käskija.\"
+$n, kas ma mainisin, et kui sa minuga räägid, saad kohe jalaga munadesse?
+$n, sa näed erakordselt sitt välja. On see mingi uus trend?
+$n, kumb meist nüüd rohtu peaks võtma?
+$n: Kuidas seda laserkaardikeppi taparežiimile lülitatakse?
+Ja milline seitsmest pöialpoisist sina, $n, oled?
+$n: Ma sorisin küll kaltsupoes, aga seda hilpu ma seal küll ei näinud
+Kus on geenipolitsei? Siin on mingi mutant, kes kasutab nime $n.
+$n, küll sa näed ikka vahva välja. See kleit on sul pilapoest, eks?
+$n, muidugi on ka meestel tunded. Aga keda see kotib?
+Ilus kleit, $n. Loodad alla võtta, et sellesse ära mahtuda?
+Parem ära mind vihasta $n. Mul hakkavad kirstud otsa saama
+Oi, kui kena raseda kleit $n. Sa polegi? Nojah ...
+Ma ei usu imesid, $n. Ma arvestan nendega
+$n, räägi siis ometi! Sul on õigus oma lollile arvamusele.
+Ma vihkan kõiki. Sina, $n, oled järgmine.
+$n, Ja sinu täiesti mõttetu arvamus on...?
+$n: Vaata ette - mul on oma arvamus ja ma tean, kuidas seda kasutada.
+$n: Miks kipuvad kinniste peadega inimesed alati suu lahti tegema?
+Ma olen andekas mitmel alal, $n. Suudan ühteaegu rääkida ja sinu peale laias kaarest kusta.
+Ära hakka minuga plõksima, $n. Nagunii sa jagu ei saa.
+Kuidas ma saangi sinust puudust tunda $n, kui sa kuidagi ära ei lähe?
+$n: Stress kasvab üle pea, aga kägistada pole kedagi.
+$n, sina oled üks hirmus õnnetus, mis headele inimestele kaela kukub.
+$n, Sul on õigus vaikida. Kasuta seda ometi!
+Kui inimest toiduga võrrelda, siis sina, $n, oled odav, maitsetu ja saad kiiresti valmis.
+$n, kuuldavasti oli sul kunagi üks mõte, aga see suri üksinduse kätte ära.
+$n, inetusvõistlusel oleks sulle vääriliseks vastaseks ainlt üleeilne okseloik.
+$n: Ma olen nii õnnelik, et võiksin tappa.
+$n, vabanda, kui tundus, et huvitad mind. Ei huvita.
+$n, su tänane meik on küll puhas raiskamine.
+$n, ma pole sinu tüüp. Mul on pulss.
+$n, ma ei tea, mis viga sul küljes on, aga kindlasti on see raskesti hääldatava diagnoosiga.
+$n, mida ma küll sinuta pihta hakkaksin? Peale selle, et oleksin õnnelik.
+Palun räägi edasi, $n. Ma tahan magada.
+$n, jah, see on noku moodi küll, aga palju väiksem.
+Sina, $n, oled vist palju Bushi kõnesid kuulanud?
+$n: Mulle meeldib su lähenemine.  Nüüd näita, kuidas sa kaugened.
+Sul, $n, käis üks mõte peast läbi?  See pidi vast pikk ja üksildane teekond olema.
+Kuule, $n, mine õige Ameerika asepresidendiga pardijahile.
+kas su vanemad tõesti vihkasid sind niipalju et $n sulle nimeks panid või astusid enesevihkajate klubisse ja võtsid omale sellise nime ?:)
+nimesid nimetamata aga $n on ikka paras ajukääbik küll
+Sa meeldid mulle $n. Inimesed küll ütlevad, et mul ei ole maitset, aga sa meeldid mulle.
+$n: Ära hakka minuga plõksima. Nagunii sa jagu ei saa.
+$n: ära täna mind su solvamise eest. Seda oli nauding teha.
+$n: ära tunne ennast halvasti. Paljudel inimeste ei ole talenti.
+$n: ehk oled kunagi iluoperatsioonile mõelnud ?
+$n: Hei, sina! Kao mu planeedilt minema!
+$n: Hoiatus: mul on oma arvamus ja ma tean, kuidas seda kasutada.
+$n: Huvitav, miks tulnukad sulle pärakusse sondi jätsid?
+$n: Ideaalne aeg hakata kadunud inimeseks.
+$n: Ilus kleit. Loodad alla võtta, et sellesse ära mahtuda?
+$n: Ilus raseda kleit, sünnitad sa varsti?
+$n: ime kanni!
+$n: Inetusvõistlusel oleks sulle vääriliseks vastaseks ainlt üleeilne okseloik.
+$n: Jah, see on noku moodi küll, aga palju väiksem.
+$n: Ja milline seitsmest pöialpoisist sina oled?
+$n: ja mina mõtlesin maailma koledaim inimene küll siia ei juhtu...
+$n: käi jala.
+$n: kaos, paanika, korralagedus - sinu töö on siin edukalt tehtud.
+$n: kas ma mainisin, et kui sa mind puudutad, saad otsekohe jalaga munadesse?
+$n: kas sa käid ilusalongis tagavaraväljapääsu kaudu?
+$n: Kas su koduplaneedil keegi kunagi vait ka on?
+$n: Kas sulle tundub, et ma vajan seltskonda?
+$n: kui aju oleks vihm, siis sina oleks kõrb.
+$n: Kuidas ma saangi sinust puudust tunda, kui sa kunagi ära ei lähe?
+$n: Kuidas seda laserkaardikeppi taparežiimile lülitatakse
+$n: Kui inimest toiduga võrrelda, siis sina oled odav, maitsetu ja saad kiiresti valmis.
+$n: kui ma luban, et igatsen su järele, kas sa siis läheksid ära?
+$n: kui ma peaks tapma kõik kes sind vihkavad, siis see ei oleks mõrv...   ...see oleks genotsiid.
+$n: kui ma vajaks aju, siis ma võtaks sinu oma, sest seda ei ole kunagi kasutatud.
+$n: kui mu koeral oleks selline nägu nagu sul, siis ma raseeriks ta tagumiku ja õpetaks ta tagurpidi käima.
+$n: kui mul oleks vaja lonti saada, mõtleksin ma sinu peale
+$n: Küll sa näed ikka vahva välja. See kleit on sul pilapoest, eks?
+$n: kumb meist nüüd rohtu peaks võtma?
+$n: Kus on geenipolitsei? Siin on mingi mutant.
+$n: Kuuldavasti oli sul kunagi üks mõte, aga see suri üksinduse kätte ära.
+$n: ma annaks sulle ühe mõtte, aga ma ei ole kindel, kas sul on panna seda kuskile.
+$n: ma austan mulda, mis sind ootab.
+$n: Ma ei ole sinu tüüp. Ma pole täispuhutav.
+$n: ma ei tea mis sind nii lolliks teeb, aga see tõesti töötab.
+$n: Ma ei tea, mis viga sul küljes on, aga kindlasti on see raskesti hääldatava diagnoosiga.
+$n: ma ei unusta ühtegi nägu, aga sinu puhul tahaks küll erandi teha
+$n: Ma ei usu imesid. Ma arvestan nendega
+$n: ma küsiks kui vana sa oled, aga ma tean, et sa ei tunne nii suuri numbreid.
+$n: Ma kuulsin, et läksid ajuuuringutele, aga arstid ei leidnud sealt midagi.
+$n: mängime hobust. Mina olen esimene pool ja sina oled sina ise.
+$n: ma tõesti ei arva, et sa oled loll, aga mis minu arvamus loeb tuhandete teiste vastu.
+$n: ma tuleks meelsasti sinuga kohtama, aga mu lemmik reklaam on praegu telekas.
+$n: milline darwini auhind sulle kuulus ?
+$n, muidugi on ka sinul tunded. Aga keda see kotib?
+$n: mul on kiire praegu, võin ma sind mõni teine kord ignoreerida?
+$n: Naerata ja ütle: \"Jah, mu käskija.\"
+$n: Näri leiba!
+$n: nii-nii. Jälle on tsirkusest paar klouni putku pannud.
+$n: oled sa alati nii loll või pingutad täna eriti selle nimel?
+$n: oled sa TONT või Inimene ?
+$n: on need sinu silmamunad, mis ma oma dekolteest leidsin?
+$n: on see su nina või sööd sa banaani?
+$n: Parem ära mind vihasta. Mul hakkavad kirstud otsa saama
+$n: sa ei ole paranoik. Kõik vihkavad sind tõesti.
+$n: sa ei saa iialgi nii vanaks kui välja näed.
+$n: sa ei tea sõna \"hirm\" tähendust. Aga kui järele mõelda, siis sa ei tea enamuse sõnade tähendust.
+$n: sa oled loll kui leivaauto.
+$n: sa oled nii kole, et kui ma su loomaaeda viisin, siis talitaja ütles: \"Tänan, et ta tagasi tõite.\"
+$n, sul on nii inetu nägu, et see trükiti Ryanair oksekottidele.
+$n: sa oled nii kole, et su pilt trükiti Ryanair oksekottidele.
+$n: sa oled täpselt nagu Action Man: Kandiline soeng, armiline nägu ja püksis mitte midagi.
+$n: sa tõendad seda, et isegi jumal eksib vahest.
+$n: see, kui keegi sind ei mõista, ei tähenda veel, et sa oled kunstnik,
+$n: sind tehes läks Loojal vist küll vorm katki. Ja mõned nurgad jäid ilmselt maha kraapimata.
+$n: Sinuga dringile? Pigem teen endale ise tuimestuseta pimesooleoperatsiooni.
+$n: sinu lolliks nimetamine on solvang kõigile teistele lollidele.
+$n: sinu nõuannet ma küll ei vaja. Sa ei oska ju kahekümne ühenigi lugeda, kui sa alasti pole.
+$n, Sul on nii ilusad kõverad jalad
+$n: tavaliselt inimesed elavad ja õpivad. Sina ainult elad.
+$n: tunne end nagu kodus. Korista mu köök ja WC ära.
+$n: üldiselt ma ei taha küll kellegi kohta sitasti öelda aga sina oled ikka tõsiselt räige
+$n: võin ma sinult su nägu laenata, mu tagumik on puhkusel.
+$n: pane müts pähe.. rähn lendab
+Kuule $n, oled sa mingi Transport Object Assembler?
+Võiks arvata, et $n on mingi Konfiguratsioon.
+$n on topis nagu mingi java.
+$n: sinuga läheks luurele küll, aga tagasi tuleksin üksi
+Ettevaatust: $n võib pikaajalisel tarvitamisel pöördumatult kahjustada teie tervist
+Mis on selle vaimuhaiguse nimi, mille põdeja tõi $n ilmale?
+Põrgusse see $n, pigem närin endal pea otsast
+$n puhul on igasuguste teotuste väljamõtlemine mõttetu
+$n, häda on tulnud maale koos sinuga!
+$n: Kas sulle tundub, et ma vajan seltskonda?
+Võrreldes $n õudusega on Cthulhu nagu pehme kiisupoeg
+Mis kuradi käkk see $n sihuke on?
+$n meeldib mulle. Inimesed ütlevad, et mul puudub igasugune maitse, aga mulle ta meeldib.
+rattaletõmbamise võiks asendada $n kasutamisega
+mullast on $n tulnud ja mullaks peab ta ka saama
+$n: tahaks sulle vastu hambaid anda aga miks peaksin ma su välimust parandama?
+$n peal lasub vaaraode needus
+peaga vastu seina peksmine on meeldivam kui $n
+$n kui ohtlik psühholoogiline relv tuleks Genfi konventsiooniga keelustada
+$n: oled sa alati nii loll või on sul lihtsalt blond hetk?
+$n on nagu heroiin: korra proovid, igaveseks jama kaelas
+$n, siin on sulle Statoili kinkepakk, tarvita julgelt
+$n: kas sa oled alati nii loll või on täna mingi eriolukord?
+ma ei tea, mis $n nii lolliks teeb, aga igatahes see mõjub
+$n: mitu korda ma pean vett tõmbama, et sa ära kaoksid?
+$n, ükskord viid sa mu hauda!
+$n: ja mis on sinu olemasolu õigustus?
+$n on vajalik nagu ürask männile
+$n: sinu pilt on preservatiivipakkidel hoiatava näitena
+$n vanematest oli väga vastutustundetu keppida
+$n näeb pimedas palju parem välja
+$n: sina pede mine tagasi munni imema
+$n võiks oma vinnid ära pigistada enne mölisemist
+$n, kas sul tuld on? Siis pane end põlema.
+isegi $n psühhiaater keeldub teda kuulamast
+$n: ma ei mäleta su nime, luba ma kutsun sind perseussiks?
+miks $n mütsi perse peal kannab?
+$n on nii kole, et isegi kärbestel läheb süda pahaks
+$n on jälle eksinud nagu sõrm seedekulglasse
+$n ei saa kunagi nii kõvaks meheks kui ta ema oli
+ma ei ole küll proktoloog, aga $n ajud on pärasoolega vahetusse läinud
+$n: kondoom peas on tõepoolest sulle sobiv riietus!
+$n on vormis - ümmargune on ka vorm.
+$n: ema ütles sulle, et oled eriline, aga tegelikult oled sa lihtsalt loll
+$n on universumi loomulik hälve
+$n püstitas negatiivse IQ maailmarekordi
+$n on värske nagu munn saunas
+$n ei ole mitte homo vaid harilik pede
+kui mul oleks Tourette sündroom, siis $n põhjustaks hoogusid
+$n: näed seda kasti? Värsti näed ainult natuke vasaku silmaga seda. Seestpoolt.
+$n on nagu emo, kes on zileti kaotanud
+$n aju on evolutsiooni jäänuk
+$n: mine kümme meetrit eemale, sa solgid mu aura ära.
+paistab, et $n vanemad ei osanud lapsi teha
+K: Mis on vahet $n'l ja ämbritäiel sital? V: Ämber.
+$n: õpi oma vanemate vigadest - kasuta kondoomi.
+ma oleks $n isa, kui sada krooni poleks liiga palju olnud ta ema eest
+$n: mine varju - prügiauto tuleb
+loodus oli $n suhtes helde ainult 21. kromosoomi andes
+$n: ütle oma boyfriendile, et ta sulle rohkem suhu ei situks
+kas kevad on juba, et $n on lume alt välja sulanud?
+kas keegi peeretas või ütles $n midagi?
+enamus inimesi moodustab sõnadest lauseid - kuid $n on eriline
+$n: Sa käia oskad? Siis käi perse!
+$n vanemad kohtusid esimest korda suguvõsa kokkutulekul
+see, et $n jalge vahel midagi ripub ei tee temast veel meest
+$n: Kas sa põgenesid geneetikalaborist eile?
+$n: Sul on jälle päevad?
+$n: Palun mine katseklaasi tagasi!
+see, et $n ahvi moodi haiseb, ei tähenda veel, et ta oleks Tarzan
+Vau! See pidi küll pirakas teerull olema, mis $n näost üle sõitis.
+$n: säästa oma kopsumahtu tüdruku täis puhumiseks
+ma ei suuda nii palju juua, et $n inimest meenutama hakkaks
+$n on elav tõestus, et inimene saab elada ilma ajudeta.
+ajud pole veel kõik - $n korral pole nad mitte midagi
+igasugune sarnasus $n ja inimese vahel on täielik kokkusattumus
+kui Frankenstein tahaks idiooti kokku panna, siis vajaks ta $n tükke
+kes jättis $n puuri lahti?
+$n: ära tunne end halvasti - paljud inimesed on andetud
+$n: ära mõtle, sa võid oma ajud ära nikastada
+$n: palun räägi edasi, ehk ühel päeval ütled sa ka midagi tarka
+Kui ma sööksin sada kilo nisukliisid, siis mu sitt oleks parem inimene kui $n
+$n on kahjuks langenud anentsefaalia ohvriks
+$n: Su ema kepib telliste eest, et su õele litsimaja ehitada...
+$n on kole nagu hommikune Halonen
+$n: sul pole midagi sellist viga, mida reinkarnatsioon ei parandaks
+$n on tõestus, et jumalal on huumorimeel
+$n aju on samahästi kui uus, kuna seda pole kunagi kasutatud
+tänu $n jutu lugemisele on nüüd kõik siin kanalil lollimad...
+Ma just kuulsin, et $n on haige. Loodetavasti pole see midagi kerget.
+$n on tagasihoidlik inimene. Tal on põhjust selleks...
+$n: mulle tundub, et parim osa sinust jooksis mööda su ema persepragu alla ja lõppes pruuni plekina madratsil
+Mõned toovad rõõmu igale poole, kus nad on. Ka $n - lahkudes.
+kui $n auto alla jääb, siis ei ole see õnnetus.
+Mind ei sega, et $n räägib. Vähemalt niikaua kuni ma seda kuulama ei pea.
+$n tõestab, et ligi paari meetrine sitahunnik võib püsti püsida.
+$n: Sul on nägu mida ainult ema võiks armastada. Kuid ta vihkab sind...
+$n, külast just helistati. Nad tahavad oma lolli tagasi.
+$n: Ma ei elaks sinuga koos, isegi kui maailm oleks kusega üle ujutatud ja sa oleksid ainsa puu otsas.
+$n on alaväärsuskompleksiga - ja täiesti põhjendatult
+$n: Kas sa sündisid paksu limase sitajunnina, või pidid selleks saamiseks vaeva nägema?
+$n: Kas su vanematel on ka mõni elus laps?
+$n: Vastandid pidavat tõmbuma. Loodetavasti kohtud kellegi ilusa, targa ja kultuursega.
+$n: Sul on sitt arvamus inimestest kui arvad, et nad on sinuga võrdsed.
+$n on tugev nagu härg ja peaaegu sama intelligentne
+$n: Mul on hea meel, kui ütlesin sulle midagi mille pärast vabandama peaks :)
+Taburet oleks $n jaoks võrdväärne vestluspartner.
+Ma ei tea mitu jalga on $n-l, kuid taburetil on neid umbes samapalju.
+Kui $n kenam välja näeks, võiks ta töötada IT alal.
+$n: Tead, ma valan su munadeni betooni ja jätan suruõhuvasara kahe meetri kaugusele.
+$n, sina sinirohekollane tipitäpiline puust peaga ja plekist kõrvadega villastes sokkides lollaka naeratusega pilusilmne poolearuline ärakaranud vangi sarnane lampjalgne lasteaia lollpea, kas sa ei mäleta oma kohta?
+$n, tead sina, mine õige kasvata omale uus aju
+$n, palun loobu sellest liiva täis põlvikust, mida sa püksis kannad.
+$n: MIS SUL VIGA ON?
+$n: keri kolmikhüppega perse ja tõmba luuk ka tagant kinni
+Kui taburet tagurpidi panna, siis saab $n koos oma pedesõbraga istuda.
+$n kõlbab ainult litsimajja linu pesema
+$n: ebakõla sinu ja looduse vahel on sulle näkku kirjutatud
+$n: sina sitaviiul jää vait
+$n kuskil munni ei peaks imema?
+$n on nagu kaamel - küür seljas ja ila voolab
+$n: Miks sa minuga räägid? Ma pole puuetega laste hooldaja.
+$n: mängi endaga kusagil mujal.
+$n: tead, kui ma oleks sinu näoga, jookseks ma naerdes ketassae otsa
+$n: mine ära ja võta oma pokemon kaasa!
+$n: millal sa viimati ilma peeglit kasutamata oma munni nägid?
+$n: mängisid pipimängu jälle?
+$n: kaotasid küpsisemängus jälle?
+$n: miks sul häbe näos on?
+$n pärast ongi piimapakkidel kiri \"Ava siit\"
+$n on hea näide sellest, mis juhtub, kui õigel ajal aborti ei tehta
+$n on nii loll, et ei läbi isegi Turingi testi
+$n pea püsib ikka püsti - sooja õhku täis skalp ei kaalu ju palju ;)" | shuf -n1

@@ -1,0 +1,26 @@
+#!/bin/sh -e
+
+regex='^(1Ms|2Ms|3Ms|4Ms|5Ms|Jos|Km|Rt|1Sm|2Sm|1Kn|2Kn|1Aj|2Aj|Esr|Ne|Est|Ii|Ps|Õp|Kg|Ül|Js|Jr|Nl|Hs|Tn|Ho|Jl|Am|Ob|Jn|Mi|Na|Ha|Sf|Hg|Sk|Ml|Jdt|Trk|Tb|Srk|Brk|1Mak|2Mak|Erl|Su|Bl|Lm|As|Kml|Mn|Mt|Mk|Lk|Jh|Ap|Rm|1Kr|2Kr|Gl|Ef|Fl|Kl|1Ts|2Ts|1Tm|2Tm|Tt|Fm|Hb|Jk|1Pt|2Pt|1Jh|2Jh|3Jh|Jd|Ilm)\s[0-9:-]+$'
+
+if [ -n "$CONFIG" ]
+then
+    echo "$regex"
+    exit
+fi
+
+query="$( echo "$@" | grep -ioP "$regex" | sed 's/\s/+/' )"
+
+[ -z "$query" ] && exit
+
+dump="$( mktemp )"
+
+curl -s -o "$dump" "http://piibel.net/api/v3/.json?q=$query"
+
+jq -r '.result.verses[].text' "$dump" \
+| while read -r l
+do echo "$l"
+done \
+| sed -r 's/(&[a-z]+;|br \/|\s+)/ /gim' \
+| sed -r 's/\s+/ /gim'
+
+rm -f "$dump"

@@ -1,0 +1,13 @@
+#!/bin/sh -e
+
+regex='^!vali\s*'
+
+if [ -n "$CONFIG" ]
+then
+    echo "$regex"
+    exit
+fi
+
+echo 'hmm...'
+echo
+echo "$@" | sed -r "s/$regex//I" | sed -r 's/(\s+või\s+)/\n/gI' | shuf -n1

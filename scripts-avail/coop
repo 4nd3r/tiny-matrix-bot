@@ -1,0 +1,30 @@
+#!/bin/sh -e
+
+regex='^!coop\s'
+
+if [ -n "$CONFIG" ]
+then
+    echo "$regex"
+    exit
+fi
+
+args="$( echo "$@" | sed "s/$regex//I" )"
+
+keyword="$( printf "%s" "$args" | python -c 'import urllib,sys; print urllib.quote_plus("".join(sys.stdin.readlines()))' )"
+
+dump="$( mktemp )"
+
+curl -s -o "$dump" "https://ecoop.ee/api/v1/products?ordering=relevancy&show_search=1&keyword=$keyword"
+
+jq -r '.results[] | "\(.sell_price) € \(.name)"' "$dump" | head -5
+
+count="$( jq '.count' "$dump" )"
+
+if [ "$count" -eq 0 ]
+then echo '?'
+else
+    [ "$count" -gt 5 ] && printf "%s toodet: " "$count"
+    echo "https://ecoop.ee/et/otsing/?ordering=relevancy&otsing=$keyword"
+fi
+
+rm -f "$dump"

@@ -1,0 +1,174 @@
+#!/usr/bin/php
+<?php
+
+$r = '^(dict\?|!add\s|!bite\s|!forget\s|!brainwash\s|\?\s)';
+if ( false !== getenv( 'CONFIG' ) ) { echo $r; exit; }
+
+class dict
+{
+    var $data;
+    var $data_file;
+    var $data_checksum;
+
+    function __construct( $file )
+    {
+        $this->data_file = $file;
+
+        if ( file_exists( $this->data_file ) )
+            $load = file_get_contents( $this->data_file );
+        else
+            $load = '';
+
+        $this->data_checksum = md5( $load );
+
+        if ( empty( $load ) )
+            $this->data = array();
+        else
+            $this->data = json_decode( $load, true );
+    }
+
+    function __destruct()
+    {
+        if ( md5( ( $save = json_encode( $this->data ) ) ) != $this->data_checksum )
+            file_put_contents( $this->data_file, $save );
+    }
+
+    function __toString()
+    {
+        $keys = array_keys( $this->data );
+        sort( $keys );
+        return implode( ', ', $keys );
+    }
+
+    function add( $key, $value )
+    {
+        if ( empty( $value ) )
+            return false;
+        foreach ( explode( '|', $value ) as $v )
+            $this->data[ $key ][] = trim( $v );
+        return true;
+    }
+
+    function bite( $key )
+    {
+        if ( isset( $this->data[ $key ] ) )
+            array_pop( $this->data[ $key ] );
+        else
+            return false;
+        if ( empty( $this->data[ $key ] ) )
+            unset( $this->data[ $key ] );
+        return true;
+    }
+
+    function forget( $key )
+    {
+        if ( ! isset( $this->data[ $key ] ) )
+            return false;
+        unset( $this->data[ $key ] );
+        return true;
+    }
+
+    function show( $key )
+    {
+        if ( isset( $this->data[ $key ] ) )
+            return sprintf( '%s = %s', $key, implode( ' | ', $this->data[ $key ] ) );
+        else
+            return $this->search( $key );
+    }
+
+    function search( $search )
+    {
+        $r = array();
+        foreach ( $this->data as $n => $v )
+        {
+            if ( false !== stripos( $n, $search ) )
+                $r[] = $n;
+            foreach ( $v as $vv )
+                if ( false !== stripos( $vv, $search ) )
+                    $r[] = $n;
+        }
+        $r = array_unique( $r );
+        if ( ! empty( $r ) )
+            return sprintf( '%s?', implode( ', ', $r ) );
+        else
+            return false;
+    }
+}
+
+$a = explode( ' ', $argv[ 1 ] );
+$c = $a[ 0 ];
+array_shift( $a );
+$i = implode( ' ', $a );
+
+if ( false === ( $p = strpos( $i, '=' ) ) )
+    $k = $i;
+
+else
+{
+    $k = substr( $i, 0, $p );
+    $v = trim( substr( $i, $p + 1 ) );
+}
+
+$k = strtolower( trim( $k ) );
+
+$d = new dict( 'dict.db' );
+
+switch ( $c )
+{
+    case 'dict?':
+        echo $d;
+    break;
+
+    case '!add':
+        if ( $d->add( $k, $v ) )
+        {
+            if ( is_string( $s = $d->show( $k ) ) )
+                echo $s;
+            else
+                echo 'midagi on katki';
+        }
+        else printf( 'ei saanud aru', $k );
+    break;
+
+    case '!bite':
+        if ( $d->bite( $k ) )
+        {
+            if ( is_string( $s = $d->show( $k ) ) )
+                echo $s;
+            else
+                printf( 'viimane amps, %s unustatud', $k );
+        }
+        else printf( '%s ei eksisteeri', $k );
+    break;
+
+    case '!forget':
+        if ( $d->forget( $k ) )
+            printf( '%s unustatud', $k );
+        else
+            printf( '%s ei eksisteeri', $k );
+    break;
+
+    case '!brainwash':
+        if ( $d->forget( $k ) )
+        {
+            if ( $d->add( $k, $v ) )
+            {
+                if ( is_string( $s = $d->show( $k ) ) )
+                    echo $s;
+                else
+                    echo 'midagi on katki';
+            }
+            else echo 'midagi on katki';
+        }
+        else printf( '%s ei eksisteeri', $k );
+    break;
+
+    case '?':
+        if ( is_string( $s = $d->show( $k ) ) )
+            echo $s;
+        else
+            printf( '%s ei eksisteeri', $k );
+    break;
+}
+
+echo PHP_EOL;

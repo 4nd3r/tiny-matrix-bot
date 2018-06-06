@@ -1,0 +1,61 @@
+#!/usr/bin/php
+<?php
+
+$regex = '^!(qs|ss|ety)\s';
+
+if ( false !== getenv('CONFIG') )
+{
+    echo $regex . PHP_EOL;
+    exit;
+}
+
+preg_match( "/$regex/i", $argv[1], $m );
+
+if ( ! isset( $m[1] ) )
+    exit( "Mida?\n" );
+
+$dict = $m[1];
+$args = preg_replace( "/$regex/i", '', $argv[1] );
+
+$dicts = array
+(
+    'ss'  => 'http://www.eki.ee/dict/ekss/index.cgi?Q=%s&C01=1&C02=1&C03=1',
+    'qs'  => 'http://www.eki.ee/dict/qs/index.cgi?Q=%s&C01=1&C02=1',
+    'ety' => 'http://www.eki.ee/dict/ety/index.cgi?Q=%s&F=M&C06=et',
+);
+
+$url  = sprintf( $dicts[ $dict ], $args );
+$html = file_get_contents( $url );
+
+$dom = new DOMDocument;
+@$dom->loadHTML( $html ); // UTF-suutropp
+$xpath = new DOMXpath( $dom );
+
+$results = $xpath->query( '//div[contains(@class,"tervikart")]' );
+$counter = 0;
+
+foreach ( $results as $result )
+{
+    foreach ( $result->childNodes as $node )
+    {
+        $counter++;
+
+        $line = trim( $node->nodeValue );
+
+        if ( mb_strlen( $line ) >= 300 )
+            $line = mb_substr( $line, 0, 300 ) . '...';
+
+        echo $line . "\n";
+
+        if ( $counter >= 3 )
+            break;
+    }
+
+    if ( $counter >= 3 )
+        break;
+}
+
+if ( $counter > 0 )
+    echo $url . "\n";
+else
+    echo "Nein!\n";

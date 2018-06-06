@@ -1,0 +1,84 @@
+#!/bin/sh -e
+
+regex='^!plaan\s'
+
+if [ -n "$CONFIG" ]
+then
+    echo "$regex"
+    exit
+fi
+
+# https://github.com/mth/hirc/blob/master/plans.txt
+
+echo "1. $( echo "$@" | sed "s/$regex//I" )"
+echo
+echo "2. ???"
+echo
+echo "3. [CENSORED]
+3. [CLASSIFIED]
+3. kõik p*rses
+3. valus perse
+3. valus munn
+3. make profit
+3. räige kasum
+3. sitaks õlut
+3. rule the world
+3. ilus elu
+3. lihtne elu
+3. lihtsalt masendav
+3. ulmeline aldaris
+3. nõukogude võim
+3. kerge joove
+3. raske joove
+3. erakorralised valimised
+3. tagasi paastu ja palve juurde
+3. sittagi pole muutunud
+3. erakordselt sitt pohmakas
+3. metsas läheb elu käima
+3. naabrimutt saab infarkti
+3. tehnoloogiasektor langeb kolinal
+3. kõigil on savi
+3. maapealne paradiis
+3. uuele katsele
+3. juhtum antakse kaitsepolitseile uurida
+3. nobeli preemia
+3. spot the loony!
+3. kesknädalas ilmub pisike nupuke toimunu kohta
+3. mõistus kirjutab lahkumisavalduse
+3. mõistus läheb puhkusele
+3. peaks vist advokaadi palkama
+3. Kroonikal on jälle millest kirjutada
+3. tekib röögatu hunnik tagantjärele tarkust
+3. erakordselt külm talv
+3. maakera jääb häbi pärast seisma
+3. kast viina kõigile
+3. viina defitsiit
+3. poest saab lauaviin otsa
+3. igale pensionärile tasuta suitsuvorst
+3. saabub 1000 aastane rahuriik
+3. Eesti saab uue peaministri nõuniku
+3. sotsiaalministeeriumil valmib esimene edukas e-lahendus
+3. tühistatakse viimane rahareform
+3. Tapa Edasi hakkab uuesti ilmuma
+3. lihtsalt sitt
+3. massirepressioonid
+3. puhas nauding
+3. nädalane orgia
+3. ilge porno
+3. kristlikud organisatsioonid avaldavad hukkamõistu
+3. Venemaa avaldab hukkamõistu
+3. rahvusvaheline tunnustus ja tohutu edu!
+3. valitsus tellib Lätist veekahuri
+3. kogu raha on maha joodud
+3. rootsi kardinad
+3. Katrin Lust-Buchanan kirjutab Delfisse uue nutuloo
+3. sa näed telepurgist hommikust Haloneni
+3. 100k preemiat ja õhtulehe esikaas
+3. Halonen toob kohvikõrvaseks põhjapõdraspermat
+3. suurenenud teotahe
+3. sama jama, uus nimi
+3. lõõgastav õhtu fooliummütsiga mullivannis
+3. üleestiline reede
+3. hea pidu
+3. halb pidu
+3. kuskil on piir" | shuf -n1
