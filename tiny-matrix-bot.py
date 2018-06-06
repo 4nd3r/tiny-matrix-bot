@@ -223,9 +223,9 @@ if __name__ == "__main__":
             cfg=""
         else:
             cfg = sys.argv[1]
-    if not os.path.isfile(cfg):
-        print("config file {} not found".format(cfg))
-        sys.exit(1)
+            if not os.path.isfile(cfg):
+                print("config file {} not found".format(cfg))
+                sys.exit(1)
     try:
         TinyMatrixtBot(cfg)
     except Exception:
