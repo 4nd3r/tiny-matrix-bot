@@ -77,9 +77,12 @@ class TinyMatrixtBot():
             sleep(1)
 
     def connect(self):
-        _host = self.config.get("tiny-matrix-bot", "host")
-        _user = self.config.get("tiny-matrix-bot", "user")
-        _pass = self.config.get("tiny-matrix-bot", "pass")
+        _host = self.config.get("tiny-matrix-bot", "host",
+            fallback=os.environ['TINYHOST'])
+        _user = self.config.get("tiny-matrix-bot", "user",
+            fallback=os.environ['TINYUSER'])
+        _pass = self.config.get("tiny-matrix-bot", "pass",
+            fallback=os.environ['TINYPASS'])
         try:
             self.client = MatrixClient(_host)
             self.client.login_with_password(username=_user, password=_pass)
@@ -216,7 +219,10 @@ if __name__ == "__main__":
         os.path.dirname(os.path.realpath(__file__)),
         "tiny-matrix-bot.cfg")
     if len(sys.argv) == 2:
-        cfg = sys.argv[1]
+        if sys.argv[1] == '-E':
+            cfg=""
+        else:
+            cfg = sys.argv[1]
     if not os.path.isfile(cfg):
         print("config file {} not found".format(cfg))
         sys.exit(1)
