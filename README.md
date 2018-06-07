@@ -33,7 +33,7 @@ First build the image
 
 then run it with
 
-`docker run -e TINYHOST='YourHostName' -e TINYUSER='YourUserName' -e TINYPASS='YourPassword' -e TINYNAME='BotUsername' tiny-matrix-bot:v0.2`
+`docker run -e TINYHOST='YourHostName' -e TINYUSER='YourUserName' -e TINYPASS='YourPassword' -e TINYNAME='BotUsername' tiny-matrix-bot:v1`
 
 ## TODO
   * make code better (right)
