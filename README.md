@@ -26,6 +26,15 @@ scripts must have execute bit - `chmod +x`
 
 `mkdir sockets` for sockets
 
+# Docker instructions
+First build the image
+
+`docker build -t tiny-matrix-bot:v1 .`
+
+then run it with
+
+`docker run -e TINYHOST='YourHostName' -e TINYUSER='YourUserName' -e TINYPASS='YourPassword' -e TINYNAME='BotUsername' tiny-matrix-bot:v0.2`
+
 ## TODO
   * make code better (right)
   * document all config variables
