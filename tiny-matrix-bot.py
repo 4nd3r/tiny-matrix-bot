@@ -81,7 +81,7 @@ class TinyMatrixtBot():
         _pass = self.config.get("tiny-matrix-bot", "pass")
         try:
             self.client = MatrixClient(_host)
-            self.client.login(username=_user, password=_pass)
+            self.client.login(username=_user, password=_pass, limit=0)
             logger.info("connected to {}".format(_host))
         except Exception:
             logger.warning(
