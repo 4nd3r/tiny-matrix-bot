@@ -81,4 +81,5 @@ echo "3. [CENSORED]
 3. üleestiline reede
 3. hea pidu
 3. halb pidu
+3. PÕMM!
 3. kuskil on piir" | shuf -n1
