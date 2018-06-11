@@ -97,6 +97,7 @@ class TinyMatrixtBot():
         if signal == 1:
             self.scripts = self.load_scripts(self.path_lib)
         elif signal in [2, 15]:
+            self.client.logout()
             sys.exit(0)
 
     def load_scripts(self, path):
