@@ -147,7 +147,7 @@ class TinyMatrixtBot():
 
     def create_socket(self, room):
         _socket_name = re.search(
-            "^\!([a-z]+):", room.room_id,
+            "^!([a-z]+):", room.room_id,
             re.IGNORECASE).group(1)
         _socket_path = os.path.join(self.path_run, _socket_name)
         try:
