@@ -26,6 +26,9 @@ class TinyMatrixtBot():
 
         _path_current = os.path.dirname(os.path.realpath(__file__))
 
+        self.enabled_scripts = self.config.get(
+            "tiny-matrix-bot", "enabled_scripts", fallback="").strip()
+
         self.path_lib = self.config.get(
             "tiny-matrix-bot", "lib",
             fallback=os.path.join(_path_current, "scripts")).strip()
@@ -104,6 +107,9 @@ class TinyMatrixtBot():
         _scripts = {}
         for _script in os.listdir(path):
             _script_path = os.path.join(path, _script)
+            if self.enabled_scripts:
+                if _script not in self.enabled_scripts:
+                    continue
             if (not os.access(_script_path, os.R_OK) or
                     not os.access(_script_path, os.X_OK)):
                 continue
