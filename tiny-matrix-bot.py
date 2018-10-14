@@ -157,7 +157,7 @@ class TinyMatrixtBot():
         _socket = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
         _socket.bind(_socket_path)
         _socket.listen(1)
-        logger.debug("socket bind {}".format(_socket_path))
+        logger.info("socket bind {}".format(_socket_path))
         while True:
             _conn, _addr = _socket.accept()
             _recv = _conn.recv(4096).decode('utf-8').strip()
