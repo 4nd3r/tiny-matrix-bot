@@ -30,3 +30,4 @@ scripts must have execute bit - `chmod +x`
   * make code better (right)
   * document all config variables
   * define scripts dependencies
+  * move config (re)load into separate func
