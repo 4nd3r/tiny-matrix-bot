@@ -116,8 +116,8 @@ class TinyMatrixtBot():
             if not _regex:
                 continue
             _scripts[_regex] = _script_path
-            logger.info("script {}".format(_script))
-            logger.debug("regex {}".format(_regex))
+            logger.info("script load {}".format(_script))
+            logger.debug("script regex {}".format(_regex))
         return _scripts
 
     def on_invite(self, room_id, state):
@@ -157,11 +157,11 @@ class TinyMatrixtBot():
         _socket = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
         _socket.bind(_socket_path)
         _socket.listen(1)
-        logger.debug("socket {}".format(_socket_path))
+        logger.debug("socket bind {}".format(_socket_path))
         while True:
             _conn, _addr = _socket.accept()
             _recv = _conn.recv(4096).decode('utf-8').strip()
-            logger.debug("recv {} {}".format(_socket_path, _recv))
+            logger.debug("socket recv {} {}".format(_socket_path, _recv))
             room.send_text(_recv)
 
     def on_leave(self, room_id, state):
@@ -186,9 +186,9 @@ class TinyMatrixtBot():
             self.run_script(room, event, [_script, _args])
 
     def run_script(self, room, event, args):
-        logger.debug("room {}".format(event["room_id"]))
-        logger.debug("sender {}".format(event["sender"]))
-        logger.debug("run {}".format(args))
+        logger.debug("script room_id {}".format(event["room_id"]))
+        logger.debug("script sender {}".format(event["sender"]))
+        logger.debug("script run {}".format(args))
         _script = subprocess.Popen(
             args,
             env={
@@ -205,7 +205,7 @@ class TinyMatrixtBot():
         sleep(0.5)
         for _p in _output.split("\n\n"):
             for _l in _p.split("\n"):
-                logger.debug("output {}".format(_l))
+                logger.debug("script output {}".format(_l))
             room.send_text(_p)
             sleep(0.8)
 
