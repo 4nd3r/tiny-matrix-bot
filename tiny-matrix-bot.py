@@ -82,7 +82,7 @@ class TinyMatrixtBot():
         _host = self.config.get("tiny-matrix-bot", "host")
         _user = self.config.get("tiny-matrix-bot", "user")
         _pass = self.config.get("tiny-matrix-bot", "pass")
-        _token = self.config.get("tiny-matrix-bot", "token")
+        _token = self.config.get("tiny-matrix-bot", "token", fallback=None)
         try:
             if _token:
                 self.client = MatrixClient(_host, token=_token, user_id=_user)
@@ -105,7 +105,7 @@ class TinyMatrixtBot():
         if signal == 1:
             self.scripts = self.load_scripts(self.path_lib)
         elif signal in [2, 15]:
-            _token = self.config.get("tiny-matrix-bot", "token")
+            _token = self.config.get("tiny-matrix-bot", "token", fallback=None)
             if not _token:
                 self.client.logout()
             sys.exit(0)
