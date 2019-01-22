@@ -82,10 +82,15 @@ class TinyMatrixtBot():
         _host = self.config.get("tiny-matrix-bot", "host")
         _user = self.config.get("tiny-matrix-bot", "user")
         _pass = self.config.get("tiny-matrix-bot", "pass")
+        _token = self.config.get("tiny-matrix-bot", "token")
         try:
-            self.client = MatrixClient(_host)
-            self.client.login(username=_user, password=_pass, limit=0)
-            logger.info("connected to {}".format(_host))
+            if _token:
+                self.client = MatrixClient(_host, token=_token, user_id=_user)
+                logger.info("connected to {} using token".format(_host))
+            else:
+                self.client = MatrixClient(_host)
+                self.client.login(username=_user, password=_pass, limit=0)
+                logger.info("connected to {} using password".format(_host))
         except Exception:
             logger.warning(
                 "connection to {} failed".format(_host) +
@@ -100,7 +105,9 @@ class TinyMatrixtBot():
         if signal == 1:
             self.scripts = self.load_scripts(self.path_lib)
         elif signal in [2, 15]:
-            self.client.logout()
+            _token = self.config.get("tiny-matrix-bot", "token")
+            if not _token:
+                self.client.logout()
             sys.exit(0)
 
     def load_scripts(self, path):
