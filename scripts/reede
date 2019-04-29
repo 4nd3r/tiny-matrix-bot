@@ -33,13 +33,11 @@ then
     if __on_riigipyha 'tomorrow' || [ "$__d" = '6' ] || [ "$__d" = '7' ]
     then echo 'Homme on ka vaba... kasi tagasi jooma!'
     else
-        if date -d 'tomorrow' '+%u' | grep -Eq '1|2|3'
-        then echo 'Hakkame lõpetama...'
-        elif [ "$__d" = '4' ]
-        then echo 'Hakkame lõpetama, kuid homme on juba varareede!'
-        elif [ "$__d" = '5' ]
-        then echo 'Hakkame lõpetama, kuid homme on jälle reede!!!'
-        fi
+        case "$( date -d 'tomorrow' '+%u' )" in
+            1|2|3) echo 'Hakkame lõpetama...' ;;
+            4)     echo 'Hakkame lõpetama, kuid homme on juba varareede!' ;;
+            5)     echo 'Hakkame lõpetama, kuid homme on jälle reede!!!' ;;
+        esac
     fi
 elif __on_riigipyha 'tomorrow'
 then
