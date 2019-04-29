@@ -34,9 +34,9 @@ then
     then echo 'Homme on ka vaba... kasi tagasi jooma!'
     else
         case "$( date -d 'tomorrow' '+%u' )" in
-            1|2|3) echo 'Hakkame lõpetama...' ;;
+            1|2|3) echo 'Hakkame lõpetama!' ;;
             4)     echo 'Hakkame lõpetama, kuid homme on juba varareede!' ;;
-            5)     echo 'Hakkame lõpetama, kuid homme on jälle reede!!!' ;;
+            5)     echo 'Peaks hakkama lõpetama... aga homme on jälle reede!!!' ;;
         esac
     fi
 elif __on_riigipyha 'tomorrow'
@@ -52,12 +52,12 @@ then echo 'Varareede alles.'
 elif __on_lyhendatud 'tomorrow' || __on_riigipyha '2 days'
 then echo '"Varareede" alles.'
 elif [ "$__d" = '3' ]
-then echo 'Kolmapäev, aga mõned ju võiks...'
+then echo 'Kolmapäev on nädala selgroog.'
 elif [ "$__d" = '5' ]
 then echo 'JAH!!!'
 elif [ "$__d" = '6' ]
 then echo 'Nädalavahetus on, kasi tagasi jooma!'
 elif [ "$__d" = '7' ]
-then echo 'Hakkame lõpetama...'
+then echo 'Hakkame lõpetama!'
 else echo 'Ei.'
 fi
