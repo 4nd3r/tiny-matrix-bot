@@ -26,15 +26,11 @@ __on_riigipyha() {
     __kas_on "$1" "0101|2402|$__sr|$__yp|0105|2306|2406|2008|2412|2512|2612"
 }
 
-__homme_on_toopaev() {
-    ! __on_riigipyha 'tomorrow' || date -d 'tomorrow' '+%u' | grep -Eq '1'
-}
-
-d="$( date '+%u' )"
+__d="$( date '+%u' )"
 
 if __on_riigipyha
 then
-    if __homme_on_toopaev
+    if ! __on_riigipyha 'tomorrow' || date -d 'tomorrow' '+%u' | grep -Eq '1'
     then echo 'Riigipüha on, kuid peaks hakkama lõpetama...'
     else echo 'Riigipüha on ja homme on ka vaba... kasi tagasi jooma!'
     fi
@@ -42,17 +38,17 @@ elif __on_riigipyha 'tomorrow'
 then echo 'JAH!!! Ja homme riigipüha!'
 elif __on_lyhendatud
 then echo 'JAH!!! Lühendatud ka veel...'
+elif [ "$__d" = '4' ]
+then echo 'Varareede alles.'
 elif __on_lyhendatud 'tomorrow' || __on_riigipyha '2 days'
 then echo '"Varareede" alles.'
-elif [ "$d" = '3' ]
+elif [ "$__d" = '3' ]
 then echo 'Kolmapäev, aga mõned ju võiks...'
-elif [ "$d" = '4' ]
-then echo 'Varareede alles.'
-elif [ "$d" = '5' ]
+elif [ "$__d" = '5' ]
 then echo 'JAH!!!'
-elif [ "$d" = '6' ]
+elif [ "$__d" = '6' ]
 then echo 'Nädalavahetus on, kasi tagasi jooma!'
-elif [ "$d" = '7' ]
+elif [ "$__d" = '7' ]
 then echo 'Hakkame lõpetama...'
 else echo 'Ei.'
 fi
