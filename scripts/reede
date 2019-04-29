@@ -39,11 +39,11 @@ then
     else echo 'Riigipüha on ja homme on ka vaba... kasi tagasi jooma!'
     fi
 elif __on_riigipyha 'tomorrow'
-then echo 'JAH!!! Ja homme suisa riigipüha!'
+then echo 'JAH!!! Ja homme riigipüha!'
 elif __on_lyhendatud
-then echo 'Poolik varareede alles.'
-elif __on_lyhendatud 'tomorrow'
-then echo 'Ei, aga homme on poolik varareede.'
+then echo 'JAH!!! Lühendatud ka veel...'
+elif __on_lyhendatud 'tomorrow' || __on_riigipyha '2 days'
+then echo '"Varareede" alles.'
 elif [ "$d" = '3' ]
 then echo 'Kolmapäev, aga mõned ju võiks...'
 elif [ "$d" = '4' ]
