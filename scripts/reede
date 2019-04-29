@@ -30,14 +30,25 @@ __d="$( date '+%u' )"
 
 if __on_riigipyha
 then
-    if ! __on_riigipyha 'tomorrow' || date -d 'tomorrow' '+%u' | grep -Eq '1'
-    then echo 'Riigipüha on, kuid peaks hakkama lõpetama...'
-    else echo 'Riigipüha on ja homme on ka vaba... kasi tagasi jooma!'
+    if __on_riigipyha 'tomorrow' || [ "$__d" = '6' ] || [ "$__d" = '7' ]
+    then echo 'Homme on ka vaba... kasi tagasi jooma!'
+    else
+        if date -d 'tomorrow' '+%u' | grep -Eq '1|2|3'
+        then echo 'Hakkame lõpetama...'
+        elif [ "$__d" = '4' ]
+        then echo 'Hakkame lõpetama, kuid homme on juba varareede!'
+        elif [ "$__d" = '5' ]
+        then echo 'Hakkame lõpetama, kuid homme on jälle reede!!!'
+        fi
     fi
 elif __on_riigipyha 'tomorrow'
-then echo 'JAH!!! Ja homme riigipüha!'
+then
+    if [ "$__d" = '7' ]
+    then echo 'Homme on riigipüha, kasi tagasi jooma!'
+    else echo 'Jah, homme on riigipüha!'
+    fi
 elif __on_lyhendatud
-then echo 'JAH!!! Lühendatud ka veel...'
+then echo 'Jah, lühendatud ka veel!'
 elif [ "$__d" = '4' ]
 then echo 'Varareede alles.'
 elif __on_lyhendatud 'tomorrow' || __on_riigipyha '2 days'
