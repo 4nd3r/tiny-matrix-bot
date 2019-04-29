@@ -8,10 +8,51 @@ then
     exit
 fi
 
-case $( date +%u ) in
-    [1-3]) echo 'Ei.' ;;
-    4) echo 'Varareede alles.' ;;
-    5) echo 'JAH!!!' ;;
-    6) echo 'Nädalavahetus on, kasi tagasi jooma!' ;;
-    7) echo 'Homme on tööpäev.' ;;
-esac
+__kas_on() {
+    if [ -n "$1" ]
+    then d="$1"
+    else d=today
+    fi
+    date -d "$d" '+%d%m' | grep -Eq "$2"
+}
+
+__on_lyhendatud() {
+    __kas_on "$1" '2302|2206|2312|3112'
+}
+
+__on_riigipyha() {
+    __sr=x # TODO: suur reede
+    __yp=x # TODO: ülestõusmispühade 1. püha
+    __kas_on "$1" "0101|2402|$__sr|$__yp|0105|2306|2406|2008|2412|2512|2612"
+}
+
+__homme_on_toopaev() {
+    ! __on_riigipyha 'tomorrow' || date -d 'tomorrow' '+%u' | grep -Eq '1'
+}
+
+d="$( date '+%u' )"
+
+if __on_riigipyha
+then
+    if __homme_on_toopaev
+    then echo 'Riigipüha on, kuid peaks hakkama lõpetama...'
+    else echo 'Riigipüha on ja homme on ka vaba... kasi tagasi jooma!'
+    fi
+elif __on_riigipyha 'tomorrow'
+then echo 'JAH!!! Ja homme suisa riigipüha!'
+elif __on_lyhendatud
+then echo 'Poolik varareede alles.'
+elif __on_lyhendatud 'tomorrow'
+then echo 'Ei, aga homme on poolik varareede.'
+elif [ "$d" = '3' ]
+then echo 'Kolmapäev, aga mõned ju võiks...'
+elif [ "$d" = '4' ]
+then echo 'Varareede alles.'
+elif [ "$d" = '5' ]
+then echo 'JAH!!!'
+elif [ "$d" = '6' ]
+then echo 'Nädalavahetus on, kasi tagasi jooma!'
+elif [ "$d" = '7' ]
+then echo 'Hakkame lõpetama...'
+else echo 'Ei.'
+fi
