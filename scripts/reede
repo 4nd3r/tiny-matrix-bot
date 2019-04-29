@@ -43,7 +43,7 @@ elif __on_riigipyha 'tomorrow'
 then
     if [ "$__d" = '7' ]
     then echo 'Homme on riigipüha, kasi tagasi jooma!'
-    else echo 'Jah, homme on riigipüha!'
+    else echo 'JAH, sest homme on riigipüha!'
     fi
 elif __on_lyhendatud
 then echo 'Jah, lühendatud ka veel!'
