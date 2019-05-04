@@ -4,7 +4,7 @@ simple and dirty matrix.org bot based on matrix-python-sdk
 
 no support, no warranty
 
-works for me, but pull requests are welcome!
+works for me, but pull requests within reasonable limitations are welcome!
 
 ```
 sudo apt install python3 python3-requests
