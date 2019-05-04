@@ -28,27 +28,27 @@ __d="$( date '+%u' )"
 
 if __on_riigipyha
 then
-    if __on_riigipyha 'tomorrow' || [ "$__d" = '6' ] || [ "$__d" = '7' ]
-    then echo 'Homme on ka vaba... kasi tagasi jooma!'
+    if __on_riigipyha 'tomorrow' || [ "$__d" = '6' ]
+    then echo 'Pühad on, kasi tagasi jooma!'
     else
         case "$( date -d 'tomorrow' '+%u' )" in
             1|2|3) echo 'Hakkame lõpetama!' ;;
-            4)     echo 'Hakkame lõpetama, kuid homme on juba varareede!' ;;
-            5)     echo 'Peaks hakkama lõpetama... aga homme on jälle reede!!!' ;;
+            4)     echo 'Äkki peaks tervisepäevad võtma?' ;;
+            5)     echo 'Võta tervisepäev ja kasi tagasi jooma!' ;;
         esac
     fi
 elif __on_riigipyha 'tomorrow'
 then
     if [ "$__d" = '7' ]
-    then echo 'Homme on riigipüha, kasi tagasi jooma!'
-    else echo 'JAH, sest homme on riigipüha!!!'
+    then echo 'Pühad on, kasi tagasi jooma!'
+    elif __on_lyhendatud
+    then echo 'Jood juba?'
+    else echo 'JAH!!!'
     fi
-elif __on_lyhendatud
-then echo 'JAH ja lühendatud ka veel!!!'
 elif [ "$__d" = '4' ]
 then echo 'Varareede alles.'
 elif __on_lyhendatud 'tomorrow' || __on_riigipyha '2 days'
-then echo '"Varareede" alles.'
+then echo 'Võta tervisepäev ja kasi jooma!'
 elif [ "$__d" = '3' ]
 then echo 'Kolmapäev on nädala selgroog.'
 elif [ "$__d" = '5' ]
