@@ -1,10 +1,8 @@
 #!/bin/sh -e
 
-regex='^!?ilm\??$'
-
 if [ -n "$CONFIG" ]
 then
-    echo "$regex"
+    echo '^!?ilm\??$'
     exit
 fi
 

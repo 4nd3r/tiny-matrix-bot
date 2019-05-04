@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-regex='^!(kiida|kompliment)\s'
+regex='^!kiida\s'
 
 if [ -n "$CONFIG" ]
 then
@@ -8,7 +8,7 @@ then
     exit
 fi
 
-n="$( echo "$@" | sed "s/$regex//I" )"
+n="$( echo "$@" | sed "s/$regex//I" | sed 's/.*/\u&/' )"
 
 # https://github.com/mth/hirc/blob/master/compliments.txt
 
