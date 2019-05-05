@@ -1,0 +1,38 @@
+#!/bin/sh -e
+
+if [ -n "$CONFIG" ]
+then
+    echo '^võtame!$'
+    exit
+fi
+
+# https://github.com/JaanVr/bots/blob/master/bots/v%C3%B5tame.txt
+
+echo "Kallid koosviibijad. Palun tõstame kõik oma pitsid ja pokaalid suu juurde. Nüüd paneme need lauale tagasi.Tänan.
+Joome naiste ja armukeste terviseks ja et nad eales ei kohtuks!
+Elagu naised, kes vähendavad meie valu, teevad meie rõõmud kahekordseks ja väljaminekud kümnekordseks!
+Teie terviseks, minu kõhtu
+Võtame selle terviseks, et meie lastel oleksid rikkad vanemad!
+Joome naiste terviseks, kes ei suuda elada ilma meesteta, nagu kala ei suuda elada veeta!
+Joome mannekeenide terviseks, kes ei lähe kunagi moest!
+Wõtame wõtmise pärast!
+Võta pits ja pea aru
+Joogem selle terviseks, et me vaieldes kuulaksime alati ka teise poole arvamust, isegi kui ta on eesel!
+Tõstkem pits nendele keda me austame, wõtame, ja tühja pitsiga visakem neid, kes meile närvidele käivad!
+Joogem selleks, et on janu, seejärel joogem selleks, et janu vajab kustutamist, ning lõpuks joogem selleks, et lihtsalt tahaks juua!
+Kes homme hiljem ärkab, see vähem silma torkab, wõtame!
+Joome selleks, et elus püsida!
+Kuna elu on seiklus, tõstame pitsi oma tugitoolile!
+Mis sitasti, see uuesti. Tõstkem pits seksile, mis läks sitasti!
+Wõtame kadunukese terviseks... ja nüüd lähme otsime ta üles!
+Kolm põrsakest... wõtame... seapraad!
+Kes viimasena võtab, läheb järgi! Seega, võtame kähku.
+Elagu mumps!
+Viin on lihtsalt lustakas vesi, võtame!
+Kui elu on piin, siis aitab sind viin, ära ülesse end poo, vaid südamest joo!
+Kunagi lugesin, et joomine kahjustab tervist, võtame lugemisoskamatuse terviseks!
+Jätame joomise maha? Jätame. Selle peale võtame? Võtame!
+Keegi tark ütles kunagi, et juua tuleb mõistuse piires. Aga Einstein ütles, et mõistus on piiritu. Võtame Einsteini terviseks!
+Mehed ei sünnita sellepärast, et nad poleks sellise pingutusega üldse nõus. Võtame naiste terviseks!
+Elu on lill, persse need muruniidukid,! Wõtame!
+Kes jõid, need on läinud, kes joovad, need lähevad ka, ja kes ei joo, ega needki siia jää, wõtame!" | shuf -n1
