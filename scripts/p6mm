@@ -6,6 +6,4 @@ then
     exit 0
 fi
 
-[ "$MXROOMID" != '!lEOUPSFjaMXhtfftnc:kvlt.ee' ] && exit 1
-
 printf 'PÕ%s!' "$( printf 'M%.0s' $( seq 1 $( shuf -i 2-8 -n 1 ) ) )"
