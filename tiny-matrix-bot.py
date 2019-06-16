@@ -64,8 +64,6 @@ class TinyMatrixtBot():
             "tiny-matrix-bot", "inviter_whitelist", fallback="").strip()
 
         self.connect()
-        self.user = self.client.get_user(self.client.user_id)
-        self.user.set_display_name(self.config.get("tiny-matrix-bot", "name"))
 
         for room_id in self.client.get_rooms():
             self.join_room(room_id)
