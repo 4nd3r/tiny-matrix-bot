@@ -80,12 +80,12 @@ class TinyMatrixtBot():
 
     def connect(self):
         _host = self.config.get("tiny-matrix-bot", "host")
-        _user = self.config.get("tiny-matrix-bot", "user")
-        _pass = self.config.get("tiny-matrix-bot", "pass")
+        _user = self.config.get("tiny-matrix-bot", "user", fallback=None)
+        _pass = self.config.get("tiny-matrix-bot", "pass", fallback=None)
         _token = self.config.get("tiny-matrix-bot", "token", fallback=None)
         try:
             if _token:
-                self.client = MatrixClient(_host, token=_token, user_id=_user)
+                self.client = MatrixClient(_host, token=_token)
                 logger.info("connected to {} using token".format(_host))
             else:
                 self.client = MatrixClient(_host)
