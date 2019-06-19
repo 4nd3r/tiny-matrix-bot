@@ -139,15 +139,16 @@ class TinyMatrixtBot():
             self.run_script(room, event, _script, _args)
 
     def run_script(self, room, event, script, args):
-        logger.debug("script room_id {}".format(event["room_id"]))
-        logger.debug("script sender {}".format(event["sender"]))
+        _env = {}
+        if script["config"]:
+            _env = script["config"]
+        _env["__room_id"] = event["room_id"]
+        _env["__sender"] = event["sender"]
+        logger.debug("script env {}".format(_env))
         logger.debug("script run {}".format([script["name"], args]))
         _script = subprocess.Popen(
             [script["path"], args],
-            env={
-                "MXROOMID": event["room_id"],
-                "MXSENDER": event["sender"]
-            },
+            env=_env,
             stdout=subprocess.PIPE,
             universal_newlines=True
         )
