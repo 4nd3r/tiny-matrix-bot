@@ -48,6 +48,40 @@ class TinyMatrixtBot():
         while True:
             sleep(1)
 
+    def load_scripts(self, path, enabled):
+        _scripts = []
+        for _script_name in os.listdir(path):
+            _script_path = os.path.join(path, _script_name)
+            if enabled:
+                if _script_name not in enabled:
+                    continue
+            if (not os.access(_script_path, os.R_OK) or
+                    not os.access(_script_path, os.X_OK)):
+                continue
+            _script_regex = subprocess.Popen(
+                [_script_path],
+                env={"CONFIG": "1"},
+                stdout=subprocess.PIPE,
+                universal_newlines=True
+                ).communicate()[0].strip()
+            if not _script_regex:
+                continue
+            _script_config = None
+            if self.config.has_section(_script_name):
+                _script_config = {}
+                for key, value in self.config.items(_script_name):
+                    _script_config["__" + key] = value
+            _script = {
+                "name": _script_name,
+                "path": _script_path,
+                "regex": _script_regex,
+                "config": _script_config
+            }
+            _scripts.append(_script)
+            logger.info("script {}".format(_script["name"]))
+            logger.debug("script {}".format(_script))
+        return _scripts
+
     def connect(self):
         try:
             logger.info("connecting to {}".format(self.url))
@@ -99,40 +133,17 @@ class TinyMatrixtBot():
         if event["content"]["msgtype"] != "m.text":
             return
         _args = event["content"]["body"].strip()
-        for _regex, _script in self.scripts.items():
-            if not re.search(_regex, _args, re.IGNORECASE):
+        for _script in self.scripts:
+            if not re.search(_script["regex"], _args, re.IGNORECASE):
                 continue
-            self.run_script(room, event, [_script, _args])
+            self.run_script(room, event, _script, _args)
 
-    def load_scripts(self, path, enabled):
-        _scripts = {}
-        for _script in os.listdir(path):
-            _script_path = os.path.join(path, _script)
-            if enabled:
-                if _script not in enabled:
-                    continue
-            if (not os.access(_script_path, os.R_OK) or
-                    not os.access(_script_path, os.X_OK)):
-                continue
-            _regex = subprocess.Popen(
-                [_script_path],
-                env={"CONFIG": "1"},
-                stdout=subprocess.PIPE,
-                universal_newlines=True
-                ).communicate()[0].strip()
-            if not _regex:
-                continue
-            _scripts[_regex] = _script_path
-            logger.info("script {}".format(_script))
-            logger.debug("script {} regex {}".format(_script, _regex))
-        return _scripts
-
-    def run_script(self, room, event, args):
+    def run_script(self, room, event, script, args):
         logger.debug("script room_id {}".format(event["room_id"]))
         logger.debug("script sender {}".format(event["sender"]))
-        logger.debug("script run {}".format(args))
+        logger.debug("script run {}".format([script["name"], args]))
         _script = subprocess.Popen(
-            args,
+            [script["path"], args],
             env={
                 "MXROOMID": event["room_id"],
                 "MXSENDER": event["sender"]
