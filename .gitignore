@@ -1,5 +1,4 @@
 matrix_client
-data
-sockets
--tiny-matrix-bot.cfg.sample
-tiny-matrix-bot.cfg*
+run/*
+!run/.placeholder
+tiny-matrix-bot.cfg
