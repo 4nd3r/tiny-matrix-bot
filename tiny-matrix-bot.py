@@ -146,15 +146,15 @@ class TinyMatrixtBot():
         _env["__sender"] = event["sender"]
         logger.debug("script env {}".format(_env))
         logger.debug("script run {}".format([script["name"], args]))
-        _script = subprocess.Popen(
+        _run = subprocess.Popen(
             [script["path"], args],
             env=_env,
             stdout=subprocess.PIPE,
             universal_newlines=True
         )
-        _output = _script.communicate()[0].strip()
-        if _script.returncode != 0:
-            logger.debug("script exit {}".format(_script.returncode))
+        _output = _run.communicate()[0].strip()
+        if _run.returncode != 0:
+            logger.debug("script exit {}".format(_run.returncode))
             return
         sleep(0.5)
         for _p in _output.split("\n\n"):
