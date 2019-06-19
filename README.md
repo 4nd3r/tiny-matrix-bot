@@ -17,6 +17,5 @@ vim tiny-matrix-bot.cfg
 cp tiny-matrix-bot.service /etc/systemd/system
 systemctl enable tiny-matrix-bot
 systemctl start tiny-matrix-bot
-systemctl reload tiny-matrix-bot
 systemctl stop tiny-matrix-bot
 ```
