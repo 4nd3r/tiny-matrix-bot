@@ -8,5 +8,5 @@ token = SuperSecretToken
 
 #[ping]
 #whitelist = \!rOomId1:example\.com
-#blacklist = \!roOMid2:example\.com
+#blacklist = (@spammer|\!roOMid2):example\.com
 #reply = PONG!
