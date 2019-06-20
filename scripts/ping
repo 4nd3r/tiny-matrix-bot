@@ -1,11 +1,14 @@
 #!/bin/sh -e
 
-regex='^!?ping(!|\?)?$'
-
 if [ -n "$CONFIG" ]
 then
-    echo "$regex"
-    exit
+    echo '^!?ping(!|\?)?$'
+    exit 0
 fi
 
-echo 'P O N G'
+if [ -n "$__reply" ]
+then
+    echo "$__reply"
+else
+    echo 'P O N G'
+fi

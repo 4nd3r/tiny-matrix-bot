@@ -1,3 +1,6 @@
 [tiny-matrix-bot]
 url   = https://matrix.example.com
 token = SuperSecretToken
+
+#[ping]
+#reply = PONG!
