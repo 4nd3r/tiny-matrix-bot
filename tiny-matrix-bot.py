@@ -49,38 +49,38 @@ class TinyMatrixtBot():
             sleep(1)
 
     def load_scripts(self, path, enabled):
-        _scripts = []
-        for _script_name in os.listdir(path):
-            _script_path = os.path.join(path, _script_name)
+        scripts = []
+        for script_name in os.listdir(path):
+            script_path = os.path.join(path, script_name)
             if enabled:
-                if _script_name not in enabled:
+                if script_name not in enabled:
                     continue
-            if (not os.access(_script_path, os.R_OK) or
-                    not os.access(_script_path, os.X_OK)):
+            if (not os.access(script_path, os.R_OK) or
+                    not os.access(script_path, os.X_OK)):
                 continue
-            _script_regex = subprocess.Popen(
-                [_script_path],
+            script_regex = subprocess.Popen(
+                [script_path],
                 env={"CONFIG": "1"},
                 stdout=subprocess.PIPE,
                 universal_newlines=True
                 ).communicate()[0].strip()
-            if not _script_regex:
+            if not script_regex:
                 continue
-            _script_config = None
-            if self.config.has_section(_script_name):
-                _script_config = {}
-                for key, value in self.config.items(_script_name):
-                    _script_config["__" + key] = value
-            _script = {
-                "name": _script_name,
-                "path": _script_path,
-                "regex": _script_regex,
-                "config": _script_config
+            script_config = None
+            if self.config.has_section(script_name):
+                script_config = {}
+                for key, value in self.config.items(script_name):
+                    script_config["__" + key] = value
+            script = {
+                "name": script_name,
+                "path": script_path,
+                "regex": script_regex,
+                "config": script_config
             }
-            _scripts.append(_script)
-            logger.info("script {}".format(_script["name"]))
-            logger.debug("script {}".format(_script))
-        return _scripts
+            scripts.append(script)
+            logger.info("script {}".format(script["name"]))
+            logger.debug("script {}".format(script))
+        return scripts
 
     def connect(self):
         try:
@@ -97,15 +97,15 @@ class TinyMatrixtBot():
         self.connect()
 
     def on_invite(self, room_id, state):
-        _sender = "someone"
-        for _event in state["events"]:
-            if _event["type"] != "m.room.join_rules":
+        sender = "someone"
+        for event in state["events"]:
+            if event["type"] != "m.room.join_rules":
                 continue
-            _sender = _event["sender"]
+            sender = event["sender"]
             break
-        logger.info("invited to {} by {}".format(room_id, _sender))
+        logger.info("invited to {} by {}".format(room_id, sender))
         if self.inviter_whitelist:
-            if not re.search(self.inviter_whitelist, _sender, re.IGNORECASE):
+            if not re.search(self.inviter_whitelist, sender, re.IGNORECASE):
                 logger.info(
                     "no whitelist match, ignoring invite from {}"
                     .format(_sender))
@@ -114,16 +114,16 @@ class TinyMatrixtBot():
 
     def join_room(self, room_id):
         logger.info("join {}".format(room_id))
-        _room = self.client.join_room(room_id)
-        _room.add_listener(self.on_room_event)
+        room = self.client.join_room(room_id)
+        room.add_listener(self.on_room_event)
 
     def on_leave(self, room_id, state):
-        _sender = "someone"
-        for _event in state["timeline"]["events"]:
-            if not _event["membership"]:
+        sender = "someone"
+        for event in state["timeline"]["events"]:
+            if not event["membership"]:
                 continue
-            _sender = _event["sender"]
-        logger.info("kicked from {} by {}".format(room_id, _sender))
+            sender = event["sender"]
+        logger.info("kicked from {} by {}".format(room_id, sender))
 
     def on_room_event(self, room, event):
         if event["sender"] == self.client.user_id:
@@ -132,35 +132,35 @@ class TinyMatrixtBot():
             return
         if event["content"]["msgtype"] != "m.text":
             return
-        _args = event["content"]["body"].strip()
-        for _script in self.scripts:
-            if not re.search(_script["regex"], _args, re.IGNORECASE):
+        args = event["content"]["body"].strip()
+        for script in self.scripts:
+            if not re.search(script["regex"], args, re.IGNORECASE):
                 continue
-            self.run_script(room, event, _script, _args)
+            self.run_script(room, event, script, args)
 
     def run_script(self, room, event, script, args):
-        _env = {}
+        env = {}
         if script["config"]:
-            _env = script["config"]
-        _env["__room_id"] = event["room_id"]
-        _env["__sender"] = event["sender"]
-        logger.debug("script env {}".format(_env))
+            env = script["config"]
+        env["__room_id"] = event["room_id"]
+        env["__sender"] = event["sender"]
+        logger.debug("script env {}".format(env))
         logger.debug("script run {}".format([script["name"], args]))
-        _run = subprocess.Popen(
+        run = subprocess.Popen(
             [script["path"], args],
-            env=_env,
+            env=env,
             stdout=subprocess.PIPE,
             universal_newlines=True
         )
-        _output = _run.communicate()[0].strip()
-        if _run.returncode != 0:
-            logger.debug("script exit {}".format(_run.returncode))
+        output = run.communicate()[0].strip()
+        if run.returncode != 0:
+            logger.debug("script exit {}".format(run.returncode))
             return
         sleep(0.5)
-        for _p in _output.split("\n\n"):
-            for _l in _p.split("\n"):
-                logger.debug("script output {}".format(_l))
-            room.send_text(_p)
+        for p in output.split("\n\n"):
+            for l in p.split("\n"):
+                logger.debug("script output {}".format(l))
+            room.send_text(p)
             sleep(0.8)
 
 
