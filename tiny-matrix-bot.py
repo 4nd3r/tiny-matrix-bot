@@ -105,7 +105,7 @@ class TinyMatrixtBot():
             break
         logger.info("invited to {} by {}".format(room_id, sender))
         if self.inviter_whitelist:
-            if not re.search(self.inviter_whitelist, sender, re.IGNORECASE):
+            if not re.search(self.inviter_whitelist, sender):
                 logger.info(
                     "no whitelist match, ignoring invite from {}"
                     .format(_sender))
