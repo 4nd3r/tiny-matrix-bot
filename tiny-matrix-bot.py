@@ -142,12 +142,16 @@ class TinyMatrixtBot():
         script["env"]["__room_id"] = event["room_id"]
         script["env"]["__sender"] = event["sender"]
         logger.debug("script {}".format(script))
-        if ("__whitelist" in script["env"] and not re.search(script["env"]["__whitelist"], event["room_id"]+event["sender"])):
-            logger.debug("script not whitelisted")
-            return
-        if ("__blacklist" in script["env"] and re.search(script["env"]["__blacklist"], event["room_id"]+event["sender"])):
-            logger.debug("script blacklisted")
-            return
+        if "__whitelist" in script["env"]:
+            if not re.search(script["env"]["__whitelist"],
+                             event["room_id"]+event["sender"]):
+                logger.debug("script not whitelisted")
+                return
+        if "__blacklist" in script["env"]:
+            if re.search(script["env"]["__blacklist"],
+                         event["room_id"]+event["sender"]):
+                logger.debug("script blacklisted")
+                return
         logger.debug("script run {}".format([script["name"], args]))
         run = subprocess.Popen(
             [script["path"], args],
