@@ -1,6 +1,10 @@
 [tiny-matrix-bot]
-url   = https://matrix.example.com
+base_url = https://matrix.example.com
 token = SuperSecretToken
+#run_path = run
+#scripts_path = scripts
+#enabled_scripts = ping
+#inviter_whitelist = :example\.com$
 
 #[ping]
 #reply = PONG!

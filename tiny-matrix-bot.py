@@ -15,28 +15,28 @@ logger = logging.getLogger("tiny-matrix-bot")
 
 class TinyMatrixtBot():
     def __init__(self):
-        path_root = os.path.dirname(os.path.realpath(__file__))
+        root_path = os.path.dirname(os.path.realpath(__file__))
         self.config = configparser.ConfigParser()
         if "CONFIG" in os.environ:
-            path_config = os.environ["CONFIG"]
+            config_path = os.environ["CONFIG"]
         else:
-            path_config = os.path.join(path_root, "tiny-matrix-bot.cfg")
-        self.config.read(path_config)
-        path_run = self.config.get(
-            "tiny-matrix-bot", "path_run",
-            fallback=os.path.join(path_root, "run"))
-        os.chdir(path_run)
-        path_scripts = self.config.get(
-            "tiny-matrix-bot", "path_scripts",
-            fallback=os.path.join(path_root, "scripts"))
-        scripts_enabled = self.config.get(
-            "tiny-matrix-bot", "scripts_enabled", fallback=None)
-        self.scripts = self.load_scripts(path_scripts, scripts_enabled)
+            config_path = os.path.join(root_path, "tiny-matrix-bot.cfg")
+        self.config.read(config_path)
+        run_path = self.config.get(
+            "tiny-matrix-bot", "run_path",
+            fallback=os.path.join(root_path, "run"))
+        os.chdir(run_path)
+        scripts_path = self.config.get(
+            "tiny-matrix-bot", "scripts_path",
+            fallback=os.path.join(root_path, "scripts"))
+        enabled_scripts = self.config.get(
+            "tiny-matrix-bot", "enabled_scripts", fallback=None)
+        self.scripts = self.load_scripts(scripts_path, enabled_scripts)
         self.inviter_whitelist = self.config.get(
             "tiny-matrix-bot",
             "inviter_whitelist",
             fallback=None)
-        self.url = self.config.get("tiny-matrix-bot", "url")
+        self.base_url = self.config.get("tiny-matrix-bot", "base_url")
         self.token = self.config.get("tiny-matrix-bot", "token")
         self.connect()
         self.client.start_listener_thread(
@@ -84,11 +84,11 @@ class TinyMatrixtBot():
 
     def connect(self):
         try:
-            logger.info("connecting to {}".format(self.url))
-            self.client = MatrixClient(self.url, token=self.token)
+            logger.info("connecting to {}".format(self.base_url))
+            self.client = MatrixClient(self.base_url, token=self.token)
         except Exception:
             logger.warning(
-                "connection to {} failed".format(self.url) +
+                "connection to {} failed".format(self.base_url) +
                 ", retrying in 5 seconds...")
             sleep(5)
             self.connect()
