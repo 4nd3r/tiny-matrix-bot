@@ -66,16 +66,16 @@ class TinyMatrixtBot():
                 ).communicate()[0].strip()
             if not script_regex:
                 continue
-            script_config = None
+            script_env = None
             if self.config.has_section(script_name):
-                script_config = {}
+                script_env = {}
                 for key, value in self.config.items(script_name):
-                    script_config["__" + key] = value
+                    script_env["__" + key] = value
             script = {
                 "name": script_name,
                 "path": script_path,
                 "regex": script_regex,
-                "config": script_config
+                "env": script_env
             }
             scripts.append(script)
             logger.info("script {}".format(script["name"]))
@@ -139,16 +139,19 @@ class TinyMatrixtBot():
             self.run_script(room, event, script, args)
 
     def run_script(self, room, event, script, args):
-        env = {}
-        if script["config"]:
-            env = script["config"]
-        env["__room_id"] = event["room_id"]
-        env["__sender"] = event["sender"]
-        logger.debug("script env {}".format(env))
+        script["env"]["__room_id"] = event["room_id"]
+        script["env"]["__sender"] = event["sender"]
+        logger.debug("script {}".format(script))
+        if ("__whitelist" in script["env"] and not re.search(script["env"]["__whitelist"], event["room_id"])):
+            logger.debug("script not whitelisted")
+            return
+        if ("__blacklist" in script["env"] and re.search(script["env"]["__blacklist"], event["room_id"])):
+            logger.debug("script blacklisted")
+            return
         logger.debug("script run {}".format([script["name"], args]))
         run = subprocess.Popen(
             [script["path"], args],
-            env=env,
+            env=script["env"],
             stdout=subprocess.PIPE,
             universal_newlines=True
         )

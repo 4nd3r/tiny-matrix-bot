@@ -7,4 +7,6 @@ token = SuperSecretToken
 #inviter_whitelist = :example\.com$
 
 #[ping]
+#whitelist = \!rOomId1:example\.com
+#blacklist = \!roOMid2:example\.com
 #reply = PONG!
