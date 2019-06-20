@@ -32,10 +32,8 @@ class TinyMatrixtBot():
         enabled_scripts = self.config.get(
             "tiny-matrix-bot", "enabled_scripts", fallback=None)
         self.scripts = self.load_scripts(scripts_path, enabled_scripts)
-        self.inviter_whitelist = self.config.get(
-            "tiny-matrix-bot",
-            "inviter_whitelist",
-            fallback=None)
+        self.inviter = self.config.get(
+            "tiny-matrix-bot", "inviter", fallback=None)
         self.base_url = self.config.get("tiny-matrix-bot", "base_url")
         self.token = self.config.get("tiny-matrix-bot", "token")
         self.connect()
@@ -104,11 +102,11 @@ class TinyMatrixtBot():
             sender = event["sender"]
             break
         logger.info("invited to {} by {}".format(room_id, sender))
-        if self.inviter_whitelist:
-            if not re.search(self.inviter_whitelist, sender):
+        if self.inviter:
+            if not re.search(self.inviter, sender):
                 logger.info(
-                    "no whitelist match, ignoring invite from {}"
-                    .format(_sender))
+                    "{} is not inviter, ignoring invite"
+                    .format(sender))
                 return
         self.join_room(room_id)
 

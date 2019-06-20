@@ -4,7 +4,7 @@ token = SuperSecretToken
 #run_path = run
 #scripts_path = scripts
 #enabled_scripts = ping
-#inviter_whitelist = :example\.com$
+#inviter = :example\.com$
 
 #[ping]
 #whitelist = \!rOomId1:example\.com
