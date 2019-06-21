@@ -64,9 +64,8 @@ class TinyMatrixtBot():
                 ).communicate()[0].strip()
             if not script_regex:
                 continue
-            script_env = None
+            script_env = {}
             if self.config.has_section(script_name):
-                script_env = {}
                 for key, value in self.config.items(script_name):
                     script_env["__" + key] = value
             script = {
