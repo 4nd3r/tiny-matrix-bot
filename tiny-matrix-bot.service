@@ -6,7 +6,7 @@ User=tiny-matrix-bot
 Group=users
 Environment=PYTHONUNBUFFERED=1
 ExecStart=/home/tiny-matrix-bot/tiny-matrix-bot/tiny-matrix-bot.py
-ExecReload=/bin/kill -HUP $MAINPID
+ExecStop=/bin/kill -9 $MAINPID
 Restart=on-failure
 RestartSec=30
 
