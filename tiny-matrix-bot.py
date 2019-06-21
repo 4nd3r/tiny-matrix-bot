@@ -169,7 +169,7 @@ class TinyMatrixtBot():
 
 
 if __name__ == "__main__":
-    if 'DEBUG' in os.environ:
+    if "DEBUG" in os.environ:
         logging.basicConfig(level=logging.DEBUG)
     else:
         logging.basicConfig(level=logging.INFO)
