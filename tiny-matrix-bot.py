@@ -22,6 +22,18 @@ class TinyMatrixtBot():
         else:
             config_path = os.path.join(root_path, "tiny-matrix-bot.cfg")
         self.config.read(config_path)
+        self.base_url = self.config.get("tiny-matrix-bot", "base_url")
+        self.token = self.config.get("tiny-matrix-bot", "token")
+        self.connect()
+        if len(sys.argv) > 1:
+            if sys.argv[1] not in self.client.rooms:
+                sys.exit(1)
+            if len(sys.argv) == 3:
+                text = sys.argv[2]
+            else:
+                text = sys.stdin.read()
+            self.client.rooms[sys.argv[1]].send_text(text)
+            sys.exit(0)
         run_path = self.config.get(
             "tiny-matrix-bot", "run_path",
             fallback=os.path.join(root_path, "run"))
@@ -34,9 +46,6 @@ class TinyMatrixtBot():
         self.scripts = self.load_scripts(scripts_path, enabled_scripts)
         self.inviter = self.config.get(
             "tiny-matrix-bot", "inviter", fallback=None)
-        self.base_url = self.config.get("tiny-matrix-bot", "base_url")
-        self.token = self.config.get("tiny-matrix-bot", "token")
-        self.connect()
         self.client.start_listener_thread(
             exception_handler=self.listener_exception_handler)
         self.client.add_invite_listener(self.on_invite)
