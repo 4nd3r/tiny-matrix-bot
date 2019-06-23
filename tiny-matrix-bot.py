@@ -55,6 +55,20 @@ class TinyMatrixtBot():
         while True:
             sleep(1)
 
+    def connect(self):
+        try:
+            logger.info("connecting to {}".format(self.base_url))
+            self.client = MatrixClient(self.base_url, token=self.token)
+        except Exception:
+            logger.warning(
+                "connection to {} failed".format(self.base_url) +
+                ", retrying in 5 seconds...")
+            sleep(5)
+            self.connect()
+
+    def listener_exception_handler(self, e):
+        self.connect()
+
     def load_scripts(self, path, enabled):
         scripts = []
         for script_name in os.listdir(path):
@@ -87,20 +101,6 @@ class TinyMatrixtBot():
             logger.info("script {}".format(script["name"]))
             logger.debug("script {}".format(script))
         return scripts
-
-    def connect(self):
-        try:
-            logger.info("connecting to {}".format(self.base_url))
-            self.client = MatrixClient(self.base_url, token=self.token)
-        except Exception:
-            logger.warning(
-                "connection to {} failed".format(self.base_url) +
-                ", retrying in 5 seconds...")
-            sleep(5)
-            self.connect()
-
-    def listener_exception_handler(self, e):
-        self.connect()
 
     def on_invite(self, room_id, state):
         sender = "someone"
