@@ -40,7 +40,7 @@ class TinyMatrixtBot():
         self.client.start_listener_thread(
             exception_handler=self.listener_exception_handler)
         self.client.add_invite_listener(self.on_invite)
-        for room_id in self.client.get_rooms():
+        for room_id in self.client.rooms:
             self.join_room(room_id)
         self.client.add_leave_listener(self.on_leave)
         while True:
