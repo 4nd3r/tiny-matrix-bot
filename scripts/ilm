@@ -3,7 +3,7 @@
 if [ -n "$CONFIG" ]
 then
     echo '^!?ilm\??$'
-    exit
+    exit 0
 fi
 
 __get() {
@@ -15,26 +15,9 @@ __get() {
     cat "$c"
 }
 
-__tallinn() {
-    __get http://on-line.msi.ttu.ee/tallinn/ \
-        | sed -nr 's/.+<font class="ohutemp">([0-9\.\-]+)\s°C.+/\1/p'
-}
-
 __ilmateenistus() {
     __get http://www.ilmateenistus.ee/ilma_andmed/xml/observations.php \
         | xmlstarlet sel -t -v "/observations/station[name='$1']/airtemperature"
-}
-
-__mordor() {
-    __get http://meteo.physic.ut.ee/et/freshwin.php \
-        | sed -nr 's/.+<B>([0-9\.\-]+)\s&deg;C<\/B>.+/\1/p'
-}
-
-__tartu() {
-    m=$( __mordor )
-    k=$( __ilmateenistus Tartu-Kvissental )
-    t=$( __ilmateenistus Tartu-Tõravere )
-    echo "($m+$k+$t)/3" | bc
 }
 
 __print() {
@@ -43,14 +26,12 @@ __print() {
         | sed 's/,0//'
 }
 
-__print Tallinn "$( __tallinn )"
+__print Tallinn "$( __ilmateenistus Tallinn-Harku )"
 
-__print Harku "$( __ilmateenistus Tallinn-Harku )"
-
-__print Tartu "$( __tartu )"
+__print Tartu "$( __ilmateenistus Tartu-Kvissental )"
 
 __print Elva "$( __ilmateenistus Elva )"
 
 __print Võru "$( __ilmateenistus Võru )"
 
-__print Pärnu "$( __ilmateenistus Pärnu-Sauga )"
+__print Pärnu "$( __ilmateenistus Pärnu )"
