@@ -1,10 +1,6 @@
 # tiny-matrix-bot
 
-simple [matrix](https://matrix.org) bot based on [matrix-python-sdk](https://github.com/matrix-org/matrix-python-sdk)
-
-no support, no warranty, works for me
-
-scripts must have execute bit - `chmod +x`
+simple [matrix](https://matrix.org) bot based on [matrix-python-sdk](https://github.com/matrix-org/matrix-python-sdk) with no support and no warranty.
 
 ```
 sudo apt install python3 python3-requests
