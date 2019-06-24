@@ -47,7 +47,7 @@ class TinyMatrixtBot():
         self.inviter = self.config.get(
             "tiny-matrix-bot", "inviter", fallback=None)
         self.client.start_listener_thread(
-            exception_handler=self.listener_exception_handler)
+            exception_handler=lambda e: self.connect())
         self.client.add_invite_listener(self.on_invite)
         for room_id in self.client.rooms:
             self.join_room(room_id)
@@ -59,15 +59,13 @@ class TinyMatrixtBot():
         try:
             logger.info("connecting to {}".format(self.base_url))
             self.client = MatrixClient(self.base_url, token=self.token)
+            logger.info("connection established")
         except Exception:
             logger.warning(
                 "connection to {} failed".format(self.base_url) +
                 ", retrying in 5 seconds...")
             sleep(5)
             self.connect()
-
-    def listener_exception_handler(self, e):
-        self.connect()
 
     def load_scripts(self, path, enabled):
         scripts = []
