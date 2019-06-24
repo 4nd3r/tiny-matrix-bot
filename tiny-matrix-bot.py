@@ -46,12 +46,12 @@ class TinyMatrixtBot():
         self.scripts = self.load_scripts(scripts_path, enabled_scripts)
         self.inviter = self.config.get(
             "tiny-matrix-bot", "inviter", fallback=None)
-        self.client.start_listener_thread(
-            exception_handler=lambda e: self.connect())
         self.client.add_invite_listener(self.on_invite)
+        self.client.add_leave_listener(self.on_leave)
         for room_id in self.client.rooms:
             self.join_room(room_id)
-        self.client.add_leave_listener(self.on_leave)
+        self.client.start_listener_thread(
+            exception_handler=lambda e: self.connect())
         while True:
             sleep(1)
 
