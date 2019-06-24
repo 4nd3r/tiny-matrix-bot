@@ -32,7 +32,9 @@ class TinyMatrixtBot():
                 text = sys.argv[2]
             else:
                 text = sys.stdin.read()
+            logger.info("send message to {}".format(sys.argv[1]))
             self.client.rooms[sys.argv[1]].send_text(text)
+            logger.info("message sent, exiting")
             sys.exit(0)
         run_path = self.config.get(
             "tiny-matrix-bot", "run_path",
