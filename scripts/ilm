@@ -30,8 +30,8 @@ __print Tallinn "$( __ilmateenistus Tallinn-Harku )"
 
 __print Tartu "$( __ilmateenistus Tartu-Kvissental )"
 
-__print Elva "$( __ilmateenistus Elva )"
+__print Pärnu "$( __ilmateenistus Pärnu )"
 
 __print Võru "$( __ilmateenistus Võru )"
 
-__print Pärnu "$( __ilmateenistus Pärnu )"
+__print Elva "$( __ilmateenistus Elva )"
