@@ -20,6 +20,11 @@ __ilmateenistus() {
         | xmlstarlet sel -t -v "/observations/station[name='$1']/airtemperature"
 }
 
+__mordor() {
+    __get http://meteo.physic.ut.ee/et/freshwin.php \
+        | sed -nr 's/.+<B>([0-9\.\-]+)\s&deg;C<\/B>.+/\1/p'
+}
+
 __print() {
     printf '%s: %.1f °C\n' "$1" "$2" \
         | sed 's/\./,/' \
@@ -28,7 +33,7 @@ __print() {
 
 __print Tallinn "$( __ilmateenistus Tallinn-Harku )"
 
-__print Tartu "$( __ilmateenistus Tartu-Kvissental )"
+__print Tartu "$( __mordor )"
 
 __print Pärnu "$( __ilmateenistus Pärnu )"
 
