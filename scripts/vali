@@ -1,13 +1,17 @@
 #!/bin/sh -e
 
-regex='^!vali\s*'
+regex='^!(vali|otsusta)\s*'
 
 if [ -n "$CONFIG" ]
 then
     echo "$regex"
-    exit
+    exit 0
 fi
+
+s="$( echo "$@" | sed -r "s/$regex//I" )"
+
+[ -z "$s" ] && exit 1
 
 echo 'hmm...'
 echo
-echo "$@" | sed -r "s/$regex//I" | sed -r 's/(\s+või\s+)/\n/gI' | shuf -n1
+echo "$s" | sed -r 's/(\s+või\s+)/\n/gI' | shuf -n1
