@@ -1,16 +1,20 @@
 #!/bin/sh -e
 
-regex='^!plaan\s'
+regex='^!pla+n\s*'
 
 if [ -n "$CONFIG" ]
 then
     echo "$regex"
-    exit
+    exit 0
 fi
+
+s="$( echo "$@" | sed -r "s/$regex//I" )"
+
+[ -z "$s" ] && exit 1
 
 # https://github.com/mth/hirc/blob/master/plans.txt
 
-echo "1. $( echo "$@" | sed "s/$regex//I" )"
+echo "1. $s"
 echo
 echo "2. ???"
 echo
