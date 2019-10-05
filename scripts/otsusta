@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-regex='^!(vali|otsusta)\s*'
+regex='^!(otsusta|vali)\s*'
 
 if [ -n "$CONFIG" ]
 then
