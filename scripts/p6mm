@@ -1,9 +1,0 @@
-#!/bin/sh -e
-
-if [ -n "$CONFIG" ]
-then
-    echo '(põmm|beilis|lakute|lakkuma|jooma|õlu|õlli|viin|sport|läti|lätti|ossinovski|jevgeni|sõge)'
-    exit 0
-fi
-
-printf 'PÕ%s!' "$( printf 'M%.0s' $( seq 1 $( shuf -i 2-8 -n 1 ) ) )"
