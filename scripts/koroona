@@ -16,7 +16,7 @@ __get() {
 }
 
 d="$( __get https://www.terviseamet.ee/et/uuskoroonaviirus \
-    | sed -nr 's/.+(Terviseamet on kokku.+osutunud positiivseks.).+/\1/p' \
+    | sed -nr 's/.+(Terviseamet on kokku.+osutunud positiivseks\.).+/\1/p' \
     | grep -Eo '[0-9]+' )"
 
 t="$( echo "$d" | head -1 )"
