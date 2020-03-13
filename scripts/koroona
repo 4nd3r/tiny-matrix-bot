@@ -7,7 +7,7 @@ then
 fi
 
 __get() {
-    c=/tmp/koroona-terviseamet-cache
+    c=/tmp/koroona-cache
     [ -f "$c" ] && a=$(( $( date +%s ) - $( date -r "$c" +%s ) ))
     if [ ! -f "$c" ] || [ "$a" -gt 500 ]
     then curl -s -A tiny-matrix-bot -o "$c" "$1"
