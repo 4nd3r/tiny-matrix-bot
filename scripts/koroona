@@ -15,11 +15,7 @@ __get() {
     cat "$c"
 }
 
-d="$( __get https://www.terviseamet.ee/et/uuskoroonaviirus \
-    | sed -nr 's/.+(Terviseamet on kokku.+osutunud positiivseks\.).+/\1/p' \
-    | grep -Eo '[0-9]+' )"
+d="$( __get 'https://et.wikipedia.org/w/index.php?title=2020._aasta_koroonaviirushaiguse_pandeemia_Eestis&action=raw' )"
+n="$( echo "$d" | sed -nr 's/.*nakatunuid\s*=\s*([0-9]+).*/\1/p' )"
 
-t="$( echo "$d" | head -1 )"
-p="$( echo "$d" | tail -1 )"
-
-echo "Terviseamet on kokku analüüsinud $t proovi, millest $p on osutunud positiivseks."
+echo "$n nakatunut"
