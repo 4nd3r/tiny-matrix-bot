@@ -50,16 +50,9 @@ for x in data:
     totals[result]['K']    += 1
     totals[result][gender] += 1
 
-sort = {}
-
-for x in sorted(list(results.keys())):
-    sort[x] = results[x]
-
-results = sort
-
 results['Kokku'] = totals
 
-for x in list( results.keys() )[-( count + 1 ):]:
+for x in sorted( results )[-( count + 1 ):]:
     print( '{}: {} testi, millest positiivseid {} ({:.1f}%)'.format(
         x,
         results[x]['K'],
