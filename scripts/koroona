@@ -3,58 +3,62 @@
 import dateutil.parser
 import json
 import os
-import sys
 import re
+import sys
 import time
 import urllib.request
 
-regex = '^!*koroona\?*\s*'
+regex = '^!*koroona\\?*\\s*'
 
 if 'CONFIG' in os.environ:
-    print( regex )
+    print(regex)
     sys.exit(0)
 
 count = 3
 
-if len( sys.argv ) > 1:
-    x = re.sub( regex, '', sys.argv[1] )
+if len(sys.argv) > 1:
+    x = re.sub(regex, '', sys.argv[1])
     if x.isdigit():
-        x = int( x )
+        x = int(x)
         if x > count and x < 11:
             count = x
 
 tmp = '/tmp/covid19cache.json'
 
-if not os.path.exists( tmp ) or time.time() - os.path.getmtime( tmp ) > 500:
+if not os.path.exists(tmp) or time.time() - os.path.getmtime(tmp) > 500:
     urllib.request.urlretrieve(
         'https://opendata.digilugu.ee/opendata_covid19_test_results.json',
-        tmp )
+        tmp)
 
-data    = json.loads( open( tmp, 'r' ).read() )
+data = json.loads(open(tmp, 'r').read())
 results = {}
-totals  = { 'P': { 'M': 0, 'N': 0, 'K': 0 }, 'N': { 'M': 0, 'N': 0, 'K': 0 }, 'K': 0 }
+totals = {'P': {'M': 0, 'N': 0, 'K': 0},
+          'N': {'M': 0, 'N': 0, 'K': 0},
+          'K': 0}
 
 for x in data:
     gender = x['Gender']
     result = x['ResultValue']
-    day    = dateutil.parser.parse( x['ResultTime'] ).strftime( '%Y-%m-%d' )
+    day = dateutil.parser.parse(x['ResultTime']).strftime('%Y-%m-%d')
 
     if day not in results:
-        results[day] = { 'P': { 'M': 0, 'N': 0, 'K': 0 }, 'N': { 'M': 0, 'N': 0, 'K': 0 }, 'K': 0 }
+        results[day] = {'P': {'M': 0, 'N': 0, 'K': 0},
+                        'N': {'M': 0, 'N': 0, 'K': 0},
+                        'K': 0}
 
-    results[day]['K']            += 1
-    results[day][result]['K']    += 1
+    results[day]['K'] += 1
+    results[day][result]['K'] += 1
     results[day][result][gender] += 1
 
-    totals['K']            += 1
-    totals[result]['K']    += 1
+    totals['K'] += 1
+    totals[result]['K'] += 1
     totals[result][gender] += 1
 
 results['Kokku'] = totals
 
-for x in sorted( results )[-( count + 1 ):]:
-    print( '{}: {} testi, millest positiivseid {} ({:.1f}%)'.format(
+for x in sorted(results)[-(count+1):]:
+    print('{}: {} testi, millest positiivseid {} ({:.1f}%)'.format(
         x,
         results[x]['K'],
         results[x]['P']['K'],
-        results[x]['P']['K'] / results[x]['K'] * 100 ) )
+        results[x]['P']['K'] / results[x]['K'] * 100))
