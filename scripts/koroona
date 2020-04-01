@@ -52,7 +52,7 @@ for x in data:
 
 sort = {}
 
-for x in sorted( results.keys() ):
+for x in sorted(list(results.keys())):
     sort[x] = results[x]
 
 results = sort
