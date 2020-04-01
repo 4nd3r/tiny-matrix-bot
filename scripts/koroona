@@ -50,7 +50,12 @@ for x in data:
     totals[result]['K']    += 1
     totals[result][gender] += 1
 
-results = dict( sorted( results.items() ) )
+sort = {}
+
+for x in sorted( results.keys() ):
+    sort[x] = results[x]
+
+results = sort
 
 results['Kokku'] = totals
 
