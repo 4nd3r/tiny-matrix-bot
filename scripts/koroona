@@ -37,7 +37,7 @@ totals  = { 'P': { 'M': 0, 'N': 0, 'K': 0 }, 'N': { 'M': 0, 'N': 0, 'K': 0 }, 'K
 for x in data:
     gender = x['Gender']
     result = x['ResultValue']
-    day    = dateutil.parser.isoparse( x['ResultTime'] ).strftime( '%Y-%m-%d' )
+    day    = dateutil.parser.parse( x['ResultTime'] ).strftime( '%Y-%m-%d' )
 
     if day not in results:
         results[day] = { 'P': { 'M': 0, 'N': 0, 'K': 0 }, 'N': { 'M': 0, 'N': 0, 'K': 0 }, 'K': 0 }
