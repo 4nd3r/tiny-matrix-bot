@@ -60,8 +60,13 @@ for x in data:
 results['Kokku'] = totals
 
 for x in sorted(results)[-(count+1):]:
-    print('{}: {} testi, millest positiivseid {} ({:.1f}%)'.format(
-        x,
-        results[x]['K'],
-        results[x]['P']['K'],
-        results[x]['P']['K'] / results[x]['K'] * 100))
+    if results[x]['P']['K'] == 0:
+        print('{}: {} testi, kõik negatiivsed'.format(
+            x,
+            results[x]['K']))
+    else:
+        print('{}: {} testi, millest positiivseid {} ({:.1f}%)'.format(
+            x,
+            results[x]['K'],
+            results[x]['P']['K'],
+            results[x]['P']['K'] / results[x]['K'] * 100))
