@@ -40,9 +40,11 @@ totals = {'P': {'M': 0, 'N': 0, 'K': 0},
 for x in data:
     gender = x['Gender']
     result = x['ResultValue']
+    timefmt = '%Y-%m-%dT%H:%M:%S+{}'.format(
+        re.search('\\+([0-9:]{5})$', x['ResultTime']).group(1))
     day = datetime.datetime.strptime(
         x['ResultTime'],
-        '%Y-%m-%dT%H:%M:%S+00:00').strftime('%Y-%m-%d')
+        timefmt).strftime('%Y-%m-%d')
 
     if day not in results:
         results[day] = {'P': {'M': 0, 'N': 0, 'K': 0},
