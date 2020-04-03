@@ -14,7 +14,7 @@ if 'CONFIG' in os.environ:
     print(regex)
     sys.exit(0)
 
-count = 3
+count = 5
 
 if len(sys.argv) > 1:
     x = re.sub(regex, '', sys.argv[1])
