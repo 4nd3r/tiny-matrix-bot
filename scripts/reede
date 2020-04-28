@@ -3,22 +3,28 @@
 if [ -n "$CONFIG" ]
 then
     echo '^reede\?$'
-    exit
+    exit 0
 fi
 
-__kas_on() {
+__kas_on()
+{
     if [ -n "$1" ]
-    then d="$1"
-    else d=today
+    then
+        d="$1"
+    else
+        d='today'
     fi
+
     date -d "$d" '+%d%m' | grep -Eq "$2"
 }
 
-__on_lyhendatud() {
+__on_lyhendatud()
+{
     __kas_on "$1" '2302|2206|2312|3112'
 }
 
-__on_riigipyha() {
+__on_riigipyha()
+{
     y="$( date +%Y )"
     g="$(( y % 19 ))"
     c="$(( y / 100 ))"
@@ -29,6 +35,7 @@ __on_riigipyha() {
     m="$(( 3 + ( p + 26 ) / 30 ))"
     d="$(( ( 1 + ( p + 27 + ( p + 6 ) / 40 ) % 31 ) - 2 ))"
     s="$( printf "%02d%02d" "$d" "$m" )"
+
     __kas_on "$1" "0101|2402|$s|0105|2306|2406|2008|2412|2512|2612"
 }
 
@@ -37,7 +44,8 @@ __d="$( date '+%u' )"
 if __on_riigipyha
 then
     if __on_riigipyha 'tomorrow' || [ "$__d" = '6' ]
-    then echo 'Pühad on, kasi tagasi jooma!'
+    then
+        echo 'Pühad on, kasi tagasi jooma!'
     else
         case "$( date -d 'tomorrow' '+%u' )" in
             1|2|3) echo 'Hakkame lõpetama!' ;;
@@ -48,22 +56,39 @@ then
 elif __on_riigipyha 'tomorrow'
 then
     if [ "$__d" = '7' ]
-    then echo 'Pühad on, kasi tagasi jooma!'
+    then
+        echo 'Pühad on, kasi tagasi jooma!'
+
     elif __on_lyhendatud
-    then echo 'Jood juba?'
-    else echo 'JAH!!!'
+    then
+        echo 'Jood juba?'
+    else
+        echo 'JAH!!!'
     fi
+
 elif [ "$__d" = '4' ]
-then echo 'Varareede alles.'
+then
+    echo 'Varareede alles.'
+
 elif __on_lyhendatud 'tomorrow' || __on_riigipyha '2 days'
-then echo 'Võta tervisepäevad ja kasi jooma!'
+then
+    echo 'Võta tervisepäevad ja kasi jooma!'
+
 elif [ "$__d" = '3' ]
-then echo 'Kolmapäev on nädala selgroog.'
+then
+    echo 'Kolmapäev on nädala selgroog.'
+
 elif [ "$__d" = '5' ]
-then echo 'JAH!!!'
+then
+    echo 'JAH!!!'
+
 elif [ "$__d" = '6' ]
-then echo 'Nädalavahetus on, kasi tagasi jooma!'
+then
+    echo 'Nädalavahetus on, kasi tagasi jooma!'
+
 elif [ "$__d" = '7' ]
-then echo 'Hakkame lõpetama!'
-else echo 'Ei.'
+then
+    echo 'Hakkame lõpetama!'
+else
+    echo 'Ei.'
 fi
