@@ -3,7 +3,7 @@
 if [ -n "$CONFIG" ]
 then
     echo '^võtame!$'
-    exit
+    exit 0
 fi
 
 # https://github.com/JaanVr/bots/blob/master/bots/v%C3%B5tame.txt
