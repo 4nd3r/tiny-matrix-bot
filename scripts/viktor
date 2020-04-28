@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-regex='^!viktor\s'
+regex='^!viktor\s*'
 
 if [ -n "$CONFIG" ]
 then
@@ -8,8 +8,11 @@ then
     exit 0
 fi
 
-n="$( echo "$@" | sed "s/$regex//I" )"
+arg="$( echo "$@" | sed "s/$regex//I" )"
 
-[ -z "$n" ] && exit 1
+if [ -z "$arg" ]
+then
+    exit 1
+fi
 
-echo "Viktor Vassiljev: $n olemine pole ainult amet, see on diagnoos elu lõpuni"
+echo "Viktor Vassiljev: $arg olemine pole ainult amet, see on diagnoos elu lõpuni"
