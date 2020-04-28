@@ -56,7 +56,7 @@ then
 elif [ "$__d" = '4' ]
 then echo 'Varareede alles.'
 elif __on_lyhendatud 'tomorrow' || __on_riigipyha '2 days'
-then echo 'Võta tervisepäev ja kasi jooma!'
+then echo 'Võta tervisepäevad ja kasi jooma!'
 elif [ "$__d" = '3' ]
 then echo 'Kolmapäev on nädala selgroog.'
 elif [ "$__d" = '5' ]
