@@ -5,22 +5,28 @@ regex='^(1Ms|2Ms|3Ms|4Ms|5Ms|Jos|Km|Rt|1Sm|2Sm|1Kn|2Kn|1Aj|2Aj|Esr|Ne|Est|Ii|Ps|
 if [ -n "$CONFIG" ]
 then
     echo "$regex"
-    exit
+    exit 0
 fi
 
-query="$( echo "$@" | grep -ioP "$regex" | sed 's/\s/+/' )"
+arg="$( echo "$@" | grep -ioP "$regex" | sed 's/\s/+/' )"
 
-[ -z "$query" ] && exit
+if [ -z "$arg" ]
+then
+    exit 1
+fi
 
-dump="$( mktemp )"
+json="$( curl -s "http://piibel.net/api/v3/.json?q=$arg" )"
 
-curl -s -o "$dump" "http://piibel.net/api/v3/.json?q=$query"
+if [ -z "$json" ]
+then
+    exit 1
+fi
 
-jq -r '.result.verses[].text' "$dump" \
-| while read -r l
-do echo "$l"
-done \
-| sed -r 's/(&[a-z]+;|br \/|\s+)/ /gim' \
-| sed -r 's/\s+/ /gim'
-
-rm -f "$dump"
+echo "$json" \
+    | jq -r '.result.verses[].text' \
+    | while read -r l
+    do
+        echo "$l"
+    done \
+        | sed -r 's/(&[a-z]+;|br \/|\s+)/ /gim' \
+        | sed -r 's/\s+/ /gim'
