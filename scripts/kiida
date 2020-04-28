@@ -1,76 +1,76 @@
 #!/bin/sh -e
 
-regex='^!kiida\s'
+regex='^!(kiida|compliment)\s*'
 
 if [ -n "$CONFIG" ]
 then
     echo "$regex"
-    exit
+    exit 1
 fi
 
-n="$( echo "$@" | sed "s/$regex//I" | sed 's/.*/\u&/' )"
+arg="$( echo "$@" | sed -r "s/$regex//I" | sed 's/.*/\u&/' )"
 
 # https://github.com/mth/hirc/blob/master/compliments.txt
 
-echo "Milline sümpaatne noor inimene on $n! Olgu ta teile eeskujuks.
+echo "Milline sümpaatne noor inimene on $arg! Olgu ta teile eeskujuks.
 Pidevast õllejoomisest hoolimata on Sul fantastiline figuur!
-Ma pole veel kohanud nii võrratu käitumisega inimest kui $n
-Eesti mees nagu $n on kõige parem
+Ma pole veel kohanud nii võrratu käitumisega inimest kui $arg
+Eesti mees nagu $arg on kõige parem
 Sul on nii armsad silmad, just nagu kutsikal!
 Sa oled sama ilus kui tänane päev!
 Oma aju ja teadmistega võiksid Sa vabalt olla mees!
 Sa oled nagu ingel kesapõllul!
-$n eest annaks ma terve kuningriigi
-$n, Sa oled nagu hea vein, mida keegi ei raatsi puutuda
+$arg eest annaks ma terve kuningriigi
+$arg, Sa oled nagu hea vein, mida keegi ei raatsi puutuda
 Tahaks Sind kallistada!
 Sa oled arukas, heatujuline ja elav. Kuidas naistega läheb?
-$n mõistus on kahtlemata omal kohal
+$arg mõistus on kahtlemata omal kohal
 Sa oled nagu sinilill kibuvitsapõõsas
-$n, mu ingel
-Aitäh, $n, et Sa elus oled!
+$arg, mu ingel
+Aitäh, $arg, et Sa elus oled!
 Sina oledki see kirkaim kriit karbis!
 Sa näed välja nagu koorejäätis kirsiga
 Piiblis on kirjas: \"Ja nüüd istub ta Tema paremal käel.\" Mõeldi vist Sind.
-Ma arvan, et $n on selle koha tegelik juhtfiguur
-$n, kas Sa oleksid palun mu laste isa?
+Ma arvan, et $arg on selle koha tegelik juhtfiguur
+$arg, kas Sa oleksid palun mu laste isa?
 Kas need on Sinu Porsched seal maja ees?
 Tule ma annan Sulle musi
 Kui Sind ära ruunata, oleks Sa ikka rohkem mees kui need teised lontrused siin
-$n, kas MENSA jäi Sulle kitsaks?
-Ükski prohvet, isegi mitte $n, pole kuulus omal maal...
-$n, Su kaunidus võtab jalust nõrgemaks kui liköör shampusega
-Räägitakse, et $n on uus Ron Jeremy...
+$arg, kas MENSA jäi Sulle kitsaks?
+Ükski prohvet, isegi mitte $arg, pole kuulus omal maal...
+$arg, Su kaunidus võtab jalust nõrgemaks kui liköör shampusega
+Räägitakse, et $arg on uus Ron Jeremy...
 Sa näed fantastiline välja. Oled Sa ikka eestlane?
 Muskulatuuri järgi võiks arvata, et Sa oled neeger
 Igal õhtul ma palvetan, et mulle Sinusugune mees saadetaks!
-$n presidendiks!
-Teen ettepaneku nimetada $n Valgetähe ordeni kandidaadiks
-$n on nii lahe, et talle peaks selle eest raha maksma
-Kui ma oleks nii kuulus kui $n, ei julgeks ma ilma turvadeta väljagi minna...
-Minu laste isa on $n. Soovitan teistelegi.
-Päike oli valge, enne kui ta $n peale vaadates kadedusest kollaseks läks
+$arg presidendiks!
+Teen ettepaneku nimetada $arg Valgetähe ordeni kandidaadiks
+$arg on nii lahe, et talle peaks selle eest raha maksma
+Kui ma oleks nii kuulus kui $arg, ei julgeks ma ilma turvadeta väljagi minna...
+Minu laste isa on $arg. Soovitan teistelegi.
+Päike oli valge, enne kui ta $arg peale vaadates kadedusest kollaseks läks
 Sinu sära juures poleks meile päikest vajagi
-$n paneb aluse uuele inimtõule
-Meie ajastu vajab kangelasi. $n, astu ette!
-Mehed nagu $n viivad meid tähtedele
-$n, kas sind esitati jälle Nobeli preemia kandidaadiks?
-Hea on päeva alustada, kui tead, et $n on lähedal
-Kui Billi asemel juhiks Microsofti $n, kasutaks kogu see rahvas Windowsit
-$n: Sinuga läheks luurele küll. Ja tuleks koos tagasi ka.
-$n: Ema Teresal oli Sinu kohta mõndagi head öelda
-Kui maailmas oleks ainult inimesed nagu $n, elaksime siiani paradiisis
-Kas teadsite, et buda mungad käisid $n juures kannatlikkust õppimas?
-$n võitles meie vabaduse eest. Mida tegite teie?
-Vaadake! $n'st levib ürgset mehelikku jõudu!
-Maagiat ma ei usu, aga $n on küll täielik tehnikavõlur
-$n, Sa oled mu eeskuju. Ausõna.
-Pange tähele, veel mõni aasta ja $n on populaarsem kui Jeesus ja biitlid kokku
-$n: Kuidas Sa küll suudad alati olla nii rõõmsameelne, optimistlik ja lahke?
-$n: Su elurõõm on piiritu, jaga seda teistelegi
-$n, Sa oled ikka uskumatult positiivne tüüp! Fantastiline! Täiesti super!
-Pärast $n nägemist on terve päev nagu päikest täis
-Sinuga, $n, võiks ma minna kasvõi maailma lõppu!
-Mis on õnn? Aga vaadake $n poole, saate aru...
-$n: Tule ma kallistan Sind!
-$n: Su elu on nagu muinasjutt...
-Kas teate, miks John Holmes Eestis ei käinud? Ta kartis $n'ga võistelda." | shuf -n1
+$arg paneb aluse uuele inimtõule
+Meie ajastu vajab kangelasi. $arg, astu ette!
+Mehed nagu $arg viivad meid tähtedele
+$arg, kas sind esitati jälle Nobeli preemia kandidaadiks?
+Hea on päeva alustada, kui tead, et $arg on lähedal
+Kui Billi asemel juhiks Microsofti $arg, kasutaks kogu see rahvas Windowsit
+$arg: Sinuga läheks luurele küll. Ja tuleks koos tagasi ka.
+$arg: Ema Teresal oli Sinu kohta mõndagi head öelda
+Kui maailmas oleks ainult inimesed nagu $arg, elaksime siiani paradiisis
+Kas teadsite, et buda mungad käisid $arg juures kannatlikkust õppimas?
+$arg võitles meie vabaduse eest. Mida tegite teie?
+Vaadake! $arg'st levib ürgset mehelikku jõudu!
+Maagiat ma ei usu, aga $arg on küll täielik tehnikavõlur
+$arg, Sa oled mu eeskuju. Ausõna.
+Pange tähele, veel mõni aasta ja $arg on populaarsem kui Jeesus ja biitlid kokku
+$arg: Kuidas Sa küll suudad alati olla nii rõõmsameelne, optimistlik ja lahke?
+$arg: Su elurõõm on piiritu, jaga seda teistelegi
+$arg, Sa oled ikka uskumatult positiivne tüüp! Fantastiline! Täiesti super!
+Pärast $arg nägemist on terve päev nagu päikest täis
+Sinuga, $arg, võiks ma minna kasvõi maailma lõppu!
+Mis on õnn? Aga vaadake $arg poole, saate aru...
+$arg: Tule ma kallistan Sind!
+$arg: Su elu on nagu muinasjutt...
+Kas teate, miks John Holmes Eestis ei käinud? Ta kartis $arg'ga võistelda." | shuf -n1
