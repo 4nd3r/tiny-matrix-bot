@@ -6,21 +6,29 @@ then
     exit 0
 fi
 
-__kas_on()
+__mis_nadalapaev()
 {
-    if [ -n "$1" ]
-    then
-        d="$1"
-    else
-        d='today'
-    fi
+    date -d "$d" '+%u'
+}
 
-    date -d "$d" '+%d%m' | grep -Eq "$2"
+__mis_kuupaev()
+{
+    date -d "$d" '+%d%m'
+}
+
+__on_nadalavahetus()
+{
+    __mis_nadalapaev "$1" | grep -Eq '6|7'
+}
+
+__on_kuupaev()
+{
+    __mis_kuupaev "$1" | grep -Eq "$2"
 }
 
 __on_lyhendatud()
 {
-    __kas_on "$1" '2302|2206|2312|3112'
+    __on_kuupaev "$1" '2302|2206|2312|3112'
 }
 
 __on_riigipyha()
@@ -36,59 +44,46 @@ __on_riigipyha()
     d="$(( ( 1 + ( p + 27 + ( p + 6 ) / 40 ) % 31 ) - 2 ))"
     s="$( printf "%02d%02d" "$d" "$m" )"
 
-    __kas_on "$1" "0101|2402|$s|0105|2306|2406|2008|2412|2512|2612"
+    __on_kuupaev "$1" "0101|2402|$s|0105|2306|2406|2008|2412|2512|2612"
 }
 
-__d="$( date '+%u' )"
-
-if __on_riigipyha
+if __on_riigipyha 'today'
 then
-    if __on_riigipyha 'tomorrow' || [ "$__d" = '6' ]
+    if __on_riigipyha 'tomorrow' || __on_nadalavahetus 'tomorrow'
     then
         echo 'Pühad on, kasi tagasi jooma!'
     else
-        case "$( date -d 'tomorrow' '+%u' )" in
+        case "$( __mis_nadalapaev 'tomorrow' )" in
             1|2|3) echo 'Hakkame lõpetama!' ;;
             4)     echo 'Äkki peaks tervisepäevad võtma?' ;;
             5)     echo 'Võta tervisepäev ja kasi tagasi jooma!' ;;
         esac
     fi
+
 elif __on_riigipyha 'tomorrow'
 then
-    if [ "$__d" = '7' ]
+    if __on_nadalavahetus 'today'
     then
         echo 'Pühad on, kasi tagasi jooma!'
 
-    elif __on_lyhendatud
+    elif __on_lyhendatud 'today'
     then
-        echo 'Jood juba?'
+        echo 'Miks sa ei joo juba?'
     else
         echo 'JAH!!!'
     fi
-
-elif [ "$__d" = '4' ]
-then
-    echo 'Varareede alles.'
 
 elif __on_lyhendatud 'tomorrow' || __on_riigipyha '2 days'
 then
     echo 'Võta tervisepäevad ja kasi jooma!'
 
-elif [ "$__d" = '3' ]
-then
-    echo 'Kolmapäev on nädala selgroog.'
-
-elif [ "$__d" = '5' ]
-then
-    echo 'JAH!!!'
-
-elif [ "$__d" = '6' ]
-then
-    echo 'Nädalavahetus on, kasi tagasi jooma!'
-
-elif [ "$__d" = '7' ]
-then
-    echo 'Hakkame lõpetama!'
 else
-    echo 'Ei.'
+    case "$( __mis_nadalapaev 'today' )" in
+        1|2) echo 'Ei' ;;
+        3)   echo 'Kolmapäev on nädala selgroog.' ;;
+        4)   echo 'Varareede alles.' ;;
+        5)   echo 'JAH!!!' ;;
+        6)   echo 'Nädalavahetus on, kasi tagasi jooma!' ;;
+        7)   echo 'Hakkame lõpetama!' ;;
+    esac
 fi
