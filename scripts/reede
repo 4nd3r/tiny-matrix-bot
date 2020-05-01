@@ -11,7 +11,7 @@ __mis_nadalapaev()
     date -d "$d" '+%u'
 }
 
-__mis_kuupaev()
+__mis_paevkuu()
 {
     date -d "$d" '+%d%m'
 }
@@ -21,14 +21,14 @@ __on_nadalavahetus()
     __mis_nadalapaev "$1" | grep -Eq '6|7'
 }
 
-__on_kuupaev()
+__on_paevkuu()
 {
-    __mis_kuupaev "$1" | grep -Eq "$2"
+    __mis_paevkuu "$1" | grep -Eq "$2"
 }
 
 __on_lyhendatud()
 {
-    __on_kuupaev "$1" '2302|2206|2312|3112'
+    __on_paevkuu "$1" '2302|2206|2312|3112'
 }
 
 __on_riigipyha()
@@ -44,7 +44,7 @@ __on_riigipyha()
     d="$(( ( 1 + ( p + 27 + ( p + 6 ) / 40 ) % 31 ) - 2 ))"
     s="$( printf "%02d%02d" "$d" "$m" )"
 
-    __on_kuupaev "$1" "0101|2402|$s|0105|2306|2406|2008|2412|2512|2612"
+    __on_paevkuu "$1" "0101|2402|$s|0105|2306|2406|2008|2412|2512|2612"
 }
 
 if __on_riigipyha 'today'
