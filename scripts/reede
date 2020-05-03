@@ -79,7 +79,7 @@ then
 
 else
     case "$( __mis_nadalapaev 'today' )" in
-        1|2) echo 'Ei' ;;
+        1|2) echo 'Ei.' ;;
         3)   echo 'Kolmapäev on nädala selgroog.' ;;
         4)   echo 'Varareede alles.' ;;
         5)   echo 'JAH!!!' ;;
