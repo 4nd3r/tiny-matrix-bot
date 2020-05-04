@@ -83,7 +83,7 @@ class TinyMatrixtBot():
                 continue
             script_env = os.environ
             script_env["CONFIG"] = "1"
-            logger.debug("script {} executing with env {}".format(script_name, script_env))
+            logger.debug("script {} config with env {}".format(script_name, script_env))
             script_regex = subprocess.Popen(
                 [script_path],
                 env=script_env,
@@ -104,8 +104,10 @@ class TinyMatrixtBot():
                 "env": script_env
             }
             scripts.append(script)
-            logger.info("script {}".format(script["name"]))
-            logger.debug("script {}".format(script))
+            if "DEBUG" in os.environ:
+                logger.debug("script {}".format(script))
+            else:
+                logger.info("script {}".format(script["name"]))
         return scripts
 
     def on_invite(self, room_id, state):
@@ -153,18 +155,17 @@ class TinyMatrixtBot():
     def run_script(self, room, event, script, args):
         script["env"]["__room_id"] = event["room_id"]
         script["env"]["__sender"] = event["sender"]
-        logger.debug("script {}".format(script))
         if "__whitelist" in script["env"]:
             if not re.search(script["env"]["__whitelist"],
                              event["room_id"]+event["sender"]):
-                logger.debug("script not whitelisted")
+                logger.debug("script {} not whitelisted".format(script["name"]))
                 return
         if "__blacklist" in script["env"]:
             if re.search(script["env"]["__blacklist"],
                          event["room_id"]+event["sender"]):
-                logger.debug("script blacklisted")
+                logger.debug("script {} blacklisted".format(script["name"]))
                 return
-        logger.debug("script run {}".format([script["name"], args]))
+        logger.debug("script {} run with env {}".format([script["name"], args], script["env"]))
         run = subprocess.Popen(
             [script["path"], args],
             env=script["env"],
@@ -173,12 +174,12 @@ class TinyMatrixtBot():
         )
         output = run.communicate()[0].strip()
         if run.returncode != 0:
-            logger.debug("script exit {}".format(run.returncode))
+            logger.debug("script {} exited with {}".format(script["name"], run.returncode))
             return
         sleep(0.5)
         for p in output.split("\n\n"):
             for l in p.split("\n"):
-                logger.debug("script output {}".format(l))
+                logger.debug("script {} output {}".format(script["name"], l))
             room.send_text(p)
             sleep(0.8)
 
