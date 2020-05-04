@@ -72,18 +72,18 @@ class TinyMatrixtBot():
     def load_scripts(self, path, enabled):
         scripts = []
         for script_name in os.listdir(path):
-            logger.debug("found script {}".format(script_name))
             script_path = os.path.join(path, script_name)
             if enabled:
                 if script_name not in enabled:
-                    logger.debug("script {} no enabled".format(script_name))
+                    logger.debug("script {} is not enabled".format(script_name))
                     continue
             if (not os.access(script_path, os.R_OK) or
                     not os.access(script_path, os.X_OK)):
-                logger.debug("script {} not executable".format(script_name))
+                logger.debug("script {} is not executable".format(script_name))
                 continue
             script_env = os.environ
             script_env["CONFIG"] = "1"
+            logger.debug("script {} executing with env {}".format(script_name, script_env))
             script_regex = subprocess.Popen(
                 [script_path],
                 env=script_env,
