@@ -79,15 +79,17 @@ class TinyMatrixtBot():
             if (not os.access(script_path, os.R_OK) or
                     not os.access(script_path, os.X_OK)):
                 continue
+            script_env = os.environ
+            script_env["CONFIG"] = "1"
             script_regex = subprocess.Popen(
                 [script_path],
-                env={"CONFIG": "1"},
+                env=script_env,
                 stdout=subprocess.PIPE,
                 universal_newlines=True
                 ).communicate()[0].strip()
             if not script_regex:
                 continue
-            script_env = os.environ
+            del script_env["CONFIG"]
             if self.config.has_section(script_name):
                 for key, value in self.config.items(script_name):
                     script_env["__" + key] = value
