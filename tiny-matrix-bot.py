@@ -72,12 +72,15 @@ class TinyMatrixtBot():
     def load_scripts(self, path, enabled):
         scripts = []
         for script_name in os.listdir(path):
+            logger.debug("found script {}".format(script_name))
             script_path = os.path.join(path, script_name)
             if enabled:
                 if script_name not in enabled:
+                    logger.debug("script {} no enabled".format(script_name))
                     continue
             if (not os.access(script_path, os.R_OK) or
                     not os.access(script_path, os.X_OK)):
+                logger.debug("script {} not executable".format(script_name))
                 continue
             script_env = os.environ
             script_env["CONFIG"] = "1"
@@ -88,6 +91,7 @@ class TinyMatrixtBot():
                 universal_newlines=True
                 ).communicate()[0].strip()
             if not script_regex:
+                logger.debug("script {} has no regex".format(script_name))
                 continue
             del script_env["CONFIG"]
             if self.config.has_section(script_name):

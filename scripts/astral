@@ -12,7 +12,7 @@ try:
     from astral import moon
     from astral import sun
 except ImportError as e:
-    print(e)
+    print(e, file=sys.stderr)
     sys.exit(0)
 
 
