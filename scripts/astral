@@ -1,0 +1,131 @@
+#!/usr/bin/env python3
+
+try:
+    import os
+    import re
+    import sys
+
+    import datetime
+    import pytz
+
+    from astral import LocationInfo
+    from astral import moon
+    from astral import sun
+except ImportError as e:
+    print(e)
+    sys.exit(0)
+
+
+def get_places():
+    # TODO read this from file?
+    return {
+        'Tallinn': [
+            'Tallinn',
+            'Estonia',
+            'Europe/Tallinn',
+            59.437222,
+            24.745278],
+        'Tartu': [
+            'Tartu',
+            'Estonia',
+            'Europe/Tallinn',
+            58.383333,
+            26.716667],
+        'Pärnu': [
+            'Pärnu',
+            'Estonia',
+            'Europe/Tallinn',
+            58.383333,
+            24.5],
+        'Võru': [
+            'Võru',
+            'Estonia',
+            'Europe/Tallinn',
+            57.848611,
+            26.992778],
+        'Elva': [
+            'Elva',
+            'Estonia',
+            'Europe/Tallinn',
+            58.224444,
+            26.421111]}
+
+
+def print_places():
+    places = sorted(get_places().keys())
+    i = len(places) - 1
+    if i == 0:
+        print(places[0]+'?')
+    else:
+        print(', '.join(places[:i]) + ' or ' + places[i] + '?')
+
+
+def get_place(place):
+    places = get_places()
+    if place in places.keys():
+        return places[place]
+    else:
+        return False
+
+
+def print_place(p):
+    place = get_place(p)
+    if not place:
+        print_places()
+        sys.exit(0)
+
+    city, region, tzname, lat, lon = place
+    location = LocationInfo(city, region, tzname, lat, lon)
+    observer = location.observer
+
+    timezone = pytz.timezone(location.timezone)
+    today = datetime.datetime.now(timezone)
+    tomorrow = today + datetime.timedelta(days=1)
+
+    sunrise_today = sun.sunrise(observer, today, timezone)
+    sunrise_today_is = sunrise_today.strftime('🌅 %H:%m:%S')
+    sunrise_tomorrow = sun.sunrise(observer, tomorrow, timezone)
+    sunrise_tomorrow_is = sunrise_today.strftime('🌅 %H:%m:%S')
+
+    sunset_today = sun.sunset(observer, today, timezone)
+    sunset_today_is = sunset_today.strftime('🌇 %H:%m:%S')
+    sunset_tomorrow = sun.sunset(observer, tomorrow, timezone)
+    sunset_tomorrow_is = sunset_tomorrow.strftime('🌇 %H:%m:%S')
+
+    moon_today = moon.phase()
+
+    if 0 <= moon_today <= 6.99:
+        moon_today_is = '🌚'
+    elif 7 <= moon_today <= 13.99:
+        moon_today_is = '🌓'
+    elif 14 <= moon_today <= 20.99:
+        moon_today_is = '🌝'
+    elif 21 <= moon_today <= 27.99:
+        moon_today_is = '🌗'
+
+    print("{} {} {} {} {:.1f} {} {}".format(
+        location.name,
+        sunrise_today_is,
+        sunset_today_is,
+        moon_today_is,
+        moon_today,
+        sunrise_tomorrow_is,
+        sunset_tomorrow_is))
+
+
+regex = '^!?astral\\s*'
+
+if 'CONFIG' in os.environ:
+    print(regex)
+    sys.exit(0)
+
+if len(sys.argv) != 2:
+    print('Error?')
+    sys.exit(0)
+
+arg = re.sub(regex, '', sys.argv[1])
+
+if arg == '?':
+    print_places()
+else:
+    print_place(arg)
