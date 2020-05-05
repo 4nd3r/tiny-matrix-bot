@@ -20,31 +20,31 @@ except ImportError as e:
 def get_places():
     # TODO read this from file?
     return {
-        'Tallinn': [
+        'tallinn': [
             'Tallinn',
             'Estonia',
             'Europe/Tallinn',
             59.437222,
             24.745278],
-        'Tartu': [
+        'tartu': [
             'Tartu',
             'Estonia',
             'Europe/Tallinn',
             58.383333,
             26.716667],
-        'Pärnu': [
+        'pärnu': [
             'Pärnu',
             'Estonia',
             'Europe/Tallinn',
             58.383333,
             24.5],
-        'Võru': [
+        'võru': [
             'Võru',
             'Estonia',
             'Europe/Tallinn',
             57.848611,
             26.992778],
-        'Elva': [
+        'elva': [
             'Elva',
             'Estonia',
             'Europe/Tallinn',
@@ -53,7 +53,7 @@ def get_places():
 
 
 def print_places():
-    places = sorted(get_places().keys())
+    places = sorted([place[0] for place in get_places().values()])
     i = len(places) - 1
     if i == 0:
         print(places[0]+'?')
@@ -124,7 +124,7 @@ if len(sys.argv) != 2:
     print('Error?')
     sys.exit(0)
 
-arg = re.sub(regex, '', sys.argv[1])
+arg = re.sub(regex, '', sys.argv[1], flags=re.IGNORECASE).lower()
 
 if arg == '?':
     print_places()
