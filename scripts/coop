@@ -10,7 +10,7 @@ fi
 
 arg="$( echo "$@" | sed -r "s/$regex//I" )"
 
-keyword="$( printf "%s" "$arg" | python -c 'import sys,urllib;print urllib.quote_plus("".join(sys.stdin.readlines()))' )"
+keyword="$( printf "%s" "$arg" | sed 's/\s/+/g' )"
 
 json="$( curl -s "https://ecoop.ee/api/v1/products?ordering=relevancy&show_search=1&keyword=$keyword" )"
 
@@ -29,5 +29,6 @@ else
         printf "%s toodet: " "$count"
     fi
 
-    echo "https://ecoop.ee/et/otsing/?ordering=relevancy&otsing=$keyword"
+    echo "https://ecoop.ee/et/otsing/?ordering=relevancy&otsing=$keyword" \
+        | sed 's/\s/+/g'
 fi
