@@ -81,7 +81,7 @@ class TinyMatrixtBot():
                     not os.access(script_path, os.X_OK)):
                 logger.debug("script {} is not executable".format(script_name))
                 continue
-            script_env = os.environ
+            script_env = os.environ.copy()
             script_env["CONFIG"] = "1"
             logger.debug("script {} config with env {}".format(script_name, script_env))
             script_regex = subprocess.Popen(
