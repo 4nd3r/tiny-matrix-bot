@@ -1,0 +1,77 @@
+#!/bin/bash
+
+if [ -n "$CONFIG" ]; then
+        echo '^restart$|^reset$|^restart .*$|^reset .*$'
+        exit 0
+fi
+
+args=$(echo "$1" | tr -s ' ' | cut -s -d ' ' -f 2-)
+#echo "restart: arguments: \"$args\""
+if [ "$args" == "" ]; then
+        echo "You must be restarting something. Try \"restart bot\" or \"restart matrix\"."
+        exit 0
+fi
+arg1=$(echo "$args" | tr -s ' ' | cut -d ' ' -f 1)
+
+function dorestart() {
+        arg1="$1"
+        case "${arg1,,}" in
+        "bot" | "ibot")
+                echo "The bot will reset itself."
+                # THIS WILL ONLY WORK IF THE ACCOUNT UNDER WHICH THIS IS EXECUTED HAS PERMISSIONS TO DO SUDO!
+                p="tiny-matrix-bot"
+                sudo systemctl restart "$p" ||
+                        {
+                                echo "Error while trying to restart service \"$p\". systemctl restart \"$p\" failed. Maybe due to missing permissions?"
+                                return 0
+                        }
+                # the following output will go nowhere, nothing will be returned to user
+                echo "The bot did restart."
+                systemctl status tiny-matrix-bot
+                ;;
+        "world")
+                echo "Reseting world order. Done!"
+                ;;
+        "matrix")
+                echo "The bot will reset Matrix service"
+                # the name of the service might vary based on installation from : synapse-matrix, matrix, etc.
+                # let's be reckless and reset all services that contain "matrix" in their name
+                # THIS WILL ONLY WORK IF THE ACCOUNT UNDER WHICH THIS IS EXECUTED HAS PERMISSIONS TO DO SUDO!
+                service --status-all | grep -i matrix | tr -s " " | cut -d " " -f 5 | while read -r p; do
+                        sudo systemctl stop "$p" ||
+                                {
+                                        echo "Error while trying to stop service \"$p\". systemctl stop \"$p\" failed. Maybe due to missing permissions?"
+                                        return 0
+                                }
+                        sleep 1
+                        echo "Service \"$p\" was stopped successfully."
+                        sudo systemctl start "$p" ||
+                                {
+                                        echo "Error while trying to start service \"$p\". systemctl start \"$p\" failed. Maybe due to missing permissions?"
+                                        return 0
+                                }
+                        sleep 1
+                        echo "Service \"$p\" was started successfully."
+                        echo "Status of service \"$p\" is:"
+                        systemctl status "$p"
+                done
+                # output will be shown by bot after Matrix restarts and bot reconnects.
+                ;;
+        *)
+                echo "The bot does not know how to restart ${args}."
+                echo "Only \"bot\", \"matrix\", and \"world\" are configured on server."
+                ;;
+        esac
+}
+
+dorestart "$arg1"
+
+exit 0
+
+# The __reply env variable set in the config file is not used in this script
+#if [ -n "$__reply" ]
+#then
+#    echo "$__reply"
+#else
+#    echo 'P O N G'
+#fi
