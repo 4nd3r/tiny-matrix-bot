@@ -1,0 +1,53 @@
+#!/bin/bash
+
+if [ -n "$CONFIG" ]; then
+        echo '^hn$|^hn .*$'
+        exit 0
+fi
+
+TORIFY="torify"
+
+# tor and torify should be installed for your privacy.
+type torify >/dev/null 2>&1 || {
+        echo "It is recommended that you install the packge \"tor\" on the server for privacy."
+        TORIFY=""
+}
+
+function gethackernewsfromweb() {
+        $TORIFY w3m -dump news.ycombinator.com 2>&1 | grep -v -E 'points.*comments' |
+                grep -v -E ' points by .* minutes ago | hide | discuss' |
+                grep -v -E ' ago | hide' |
+                grep -v 'Guidelines | FAQ | Support | API | Security | Lists | Bookmarklet' |
+                grep -v "Legal | Apply to YC | Contact" |
+                grep -v -E ' *Search: \[ *\]$' |
+                grep -v "        submit" |
+                grep -v "           More" |
+                grep -v -E '     \*$' | sed '/^[[:space:]]*$/d' | sed 's/^......//'
+        # remove lines with only whitespaces, remove leading 6 characters
+}
+
+#arg1=$(echo "$1" | tr -s ' ' | cut -s -d ' ' -f 2)
+##echo "hn: argument 1: \"$arg1\""
+#if [ "$arg1" == "" ]; then
+#       ; # no argument
+#fi
+#case "$arg1" in
+#'' | *[!0-9]*)
+#       echo "First argument is not a number. Skipping. Try \"hn\" or \"hn 5\"."
+#       exit 0
+#       ;;
+#*)
+#       # echo "First argument is a number. "
+#       ;;
+#esac
+
+gethackernewsfromweb # "$arg1"
+exit 0
+
+# Argument __reply from config file is not used in this script
+#if [ -n "$__reply" ]
+#then
+#    echo "$__reply"
+#else
+#    echo 'P O N G'
+#fi
