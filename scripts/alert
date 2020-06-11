@@ -1,0 +1,56 @@
+#!/bin/bash
+
+if [ -n "$CONFIG" ]; then
+        echo '^alert$|^alert .*$|^alarm$'
+        exit 0
+fi
+
+MEM_ALERT=0.8  # more than 80% of RAM used
+CPU_ALERT=0.7  # more than 80% of CPU used
+DSK_ALERT=0.9 # more than 80% of DISK used
+
+# free -m | awk 'NR==2{printf "Memory Usage: %s/%sMB (%.2f%%)\n", $3,$2,$3*100/$2 }'
+# df -h | awk '$NF=="/"{printf "Disk Usage: %d/%dGB (%s)\n", $3,$2,$5}'
+# top -bn1 | grep load | awk '{printf "CPU Load: %.2f\n", $(NF-2)}'
+
+# Memory Usage: 536/3793MB (14.13%)
+# Disk Usage: 7/30GB (25%)
+# CPU Load: 0.22
+
+MEM=$(free -m | awk 'NR==2{printf "%.2f", $3/$2 }')
+CPU=$(top -bn1 | grep load | awk '{printf "%.2f", $(NF-2)/1.0}')
+DSKP=$(df -h | awk '$NF=="/"{printf substr($5, 1, length($5)-1)}')                   # e.g. 25 for 25%
+DSK=$(LC_ALL=en_US.UTF-8 printf "%'.2f" "$(echo "scale=10; $DSKP / 100.0" | bc -l)") # e.g. 0.25
+
+MEMP=$(LC_ALL=en_US.UTF-8 printf "%'.0f" "$(echo "scale=10; $MEM * 100.0" | bc -l)")
+CPUP=$(LC_ALL=en_US.UTF-8 printf "%'.0f" "$(echo "scale=10; $CPU * 100.0" | bc -l)")
+
+# echo "MEM=$MEM, CPU=$CPU, DSK=$DSK"
+# echo "MEM=${MEMP}%, CPU=${CPUP}%, DSK=${DSKP}%"
+
+RET=0
+
+if (($(echo "$MEM > $MEM_ALERT" | bc -l))); then
+        echo "ALERT: memory consumption too high!"
+        echo "MEM=${MEMP}%, CPU=${CPUP}%, DSK=${DSKP}%"
+        RET=$((RET + 1))
+fi
+if (($(echo "$CPU > $CPU_ALERT" | bc -l))); then
+        echo "ALERT: CPU usage too high!"
+        echo "MEM=${MEMP}%, CPU=${CPUP}%, DSK=${DSKP}%"
+        RET=$((RET + 2))
+fi
+if (($(echo "$DSK > $DSK_ALERT" | bc -l))); then
+        echo "ALERT: disk too full!"
+        echo "MEM=${MEMP}%, CPU=${CPUP}%, DSK=${DSKP}%"
+        RET=$((RET + 4))
+fi
+
+exit $RET
+
+#if [ -n "$__reply" ]
+#then
+#    echo "$__reply"
+#else
+#    echo 'P O N G'
+#fi
