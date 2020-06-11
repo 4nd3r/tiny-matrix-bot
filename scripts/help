@@ -1,0 +1,13 @@
+#!/bin/sh -e
+
+if [ -n "$CONFIG" ]; then
+        echo '^!?help(!|\?)?$|^ayuda$|^man$|^manual$|^hilfe$|^je suis perdu$|^perdu$|^socorro$'
+        exit 0
+fi
+
+# shellcheck disable=SC2154
+if [ -n "$__reply" ]; then
+        echo "$__reply"
+else
+        echo 'Read the config file for help :)'
+fi
