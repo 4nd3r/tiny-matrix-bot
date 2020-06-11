@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ -n "$CONFIG" ]; then
+        echo '^disks$|^disk$|^full$|^space$'
+        exit 0
+fi
+
+du -hs "$HOME" 2>>/dev/null
+echo "========================="
+df -h 2>>/dev/null
+
+#if [ -n "$__reply" ]
+#then
+#    echo "$__reply"
+#else
+#    echo 'P O N G'
+#fi
