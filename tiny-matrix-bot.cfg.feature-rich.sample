@@ -1,0 +1,144 @@
+[tiny-matrix-bot]
+base_url = https://matrix.example.com
+token = SuperSecretToken
+#run_path = run
+#scripts_path = scripts
+enabled_scripts = ping,pong,help,cputemp,disks,hn,btc,eth,mn,ddg,web,restart,update,check,motd,hello,pick,firewall,totp,datetime,rss,twitter,tesla,platform,ps,top,alert
+#inviter = :example\.com$
+
+[help]
+#whitelist = \!rOomId1:example\.com
+#blacklist = (@spammer|\!roOMid2):example\.com
+reply = Try: ping, pong, cputemp, disks, hn, btc, eth, mn, ddg, web, restart, hello, update, check, motd, pick, firewall, totp, date, rss, twitter, tesla, platform, ps, top, alert. 
+
+[ping]
+#whitelist = \!rOomId1:example\.com
+#blacklist = (@spammer|\!roOMid2):example\.com
+reply = PONG!
+
+[pong]
+#whitelist = \!rOomId1:example\.com
+#blacklist = (@spammer|\!roOMid2):example\.com
+reply = PING!
+
+[cputemp]
+#whitelist = \!rOomId1:example\.com
+#blacklist = (@spammer|\!roOMid2):example\.com
+reply = Prints the CPU temperature.
+
+[disks]
+#whitelist = \!rOomId1:example\.com
+#blacklist = (@spammer|\!roOMid2):example\.com
+reply = Prints how much disk space is used up.
+
+[hn]
+#whitelist = \!rOomId1:example\.com
+#blacklist = (@spammer|\!roOMid2):example\.com
+reply = Read Hacker News
+
+[btc]
+#whitelist = \!rOomId1:example\.com
+#blacklist = (@spammer|\!roOMid2):example\.com
+reply = Bitcoin BTC price ticker
+
+[eth]
+#whitelist = \!rOomId1:example\.com
+#blacklist = (@spammer|\!roOMid2):example\.com
+reply = Ethereum ETH price ticker
+
+[mn]
+#whitelist = \!rOomId1:example\.com
+#blacklist = (@spammer|\!roOMid2):example\.com
+reply = Read Messari News
+
+[ddg]
+#whitelist = \!rOomId1:example\.com
+#blacklist = (@spammer|\!roOMid2):example\.com
+reply = Search the web with DuckDuckGo search engine
+
+[web]
+#whitelist = \!rOomId1:example\.com
+#blacklist = (@spammer|\!roOMid2):example\.com
+reply = Surfing the web. Get a web page (no JavaScript please)
+
+[restart]
+#whitelist = \!rOomId1:example\.com
+#blacklist = (@spammer|\!roOMid2):example\.com
+reply = Restarting services
+
+[check]
+#whitelist = \!rOomId1:example\.com
+#blacklist = (@spammer|\!roOMid2):example\.com
+reply = Checking for status, health status, updates, etc ...
+
+[motd]
+#whitelist = \!rOomId1:example\.com
+#blacklist = (@spammer|\!roOMid2):example\.com
+reply = Read Linux Message Of The Day
+
+[update]
+#whitelist = \!rOomId1:example\.com
+#blacklist = (@spammer|\!roOMid2):example\.com
+reply = Updating bot, services or the operating system
+
+[hello]
+#whitelist = \!rOomId1:example\.com
+#blacklist = (@spammer|\!roOMid2):example\.com
+reply = I will return a compliment :)
+
+[pick]
+#whitelist = \!rOomId1:example\.com
+#blacklist = (@spammer|\!roOMid2):example\.com
+reply = Selects one of the choices like: pizza or hamburgers or salad
+
+[firewall]
+#whitelist = \!rOomId1:example\.com
+#blacklist = (@spammer|\!roOMid2):example\.com
+reply = List firewall settings
+
+[totp]
+#whitelist = \!rOomId1:example\.com
+#blacklist = (@spammer|\!roOMid2):example\.com
+reply = Return 2FA TOTP code (PIN)
+
+[datetime]
+#whitelist = \!rOomId1:example\.com
+#blacklist = (@spammer|\!roOMid2):example\.com
+reply = Return time and date
+
+[rss]
+#whitelist = \!rOomId1:example\.com
+#blacklist = (@spammer|\!roOMid2):example\.com
+reply = Read RSS feeds
+
+[twitter]
+#whitelist = \!rOomId1:example\.com
+#blacklist = (@spammer|\!roOMid2):example\.com
+reply = Read Twitter feeds
+
+[tesla]
+#whitelist = \!rOomId1:example\.com
+#blacklist = (@spammer|\!roOMid2):example\.com
+reply = Chat with (dummy) Tesla car
+
+[platform]
+#whitelist = \!rOomId1:example\.com
+#blacklist = (@spammer|\!roOMid2):example\.com
+reply = List server platform info
+
+[ps]
+#whitelist = \!rOomId1:example\.com
+#blacklist = (@spammer|\!roOMid2):example\.com
+reply = Print CPU/RAM/disk utilization
+
+[top]
+#whitelist = \!rOomId1:example\.com
+#blacklist = (@spammer|\!roOMid2):example\.com
+reply = Lists top 5 CPU and RAM consuming processes
+
+[alert]
+#whitelist = \!rOomId1:example\.com
+#blacklist = (@spammer|\!roOMid2):example\.com
+reply = Only prints msg if an CPU, RAM or disk usage is beyond an alert level
+
+##################################################
