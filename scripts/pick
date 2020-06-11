@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ -n "$CONFIG" ]; then
+        echo 'pick|pick .*|^pick .*$|^choose .*|^decide .*|^select .*$'
+        exit 0
+fi
+
+args=$(echo "$1" | tr -s ' ' | cut -s -d ' ' -f 2-)
+#echo "pick: arguments: \"$args\""
+if [ "$args" == "" ]; then
+        echo "You must give me something to chose from. Try \"pick pizza or hamburger or salad\"."
+        exit 0
+fi
+printf 'hmm... let me think, tough choice, how about:  %s\n' \
+        "$(echo "$args" | sed -r 's/(,|\.|[[:punct:]]|\s+(et|ou|und|oder|y|o|and|or)\s+)/\n/gI' | sed '/^[[:space:]]*$/d' | shuf -n1 | sed 's/^[ \t]*//;s/[ \t]*$//')"
