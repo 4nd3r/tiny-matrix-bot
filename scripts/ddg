@@ -1,0 +1,31 @@
+#!/bin/bash
+
+if [ -n "$CONFIG" ]; then
+        echo '^ddg$|^ddg .*$|^duck$|^duck .*$|^duckduckgo$|^duckduckgo .*$|^search$|^search .*$'
+        exit 0
+fi
+
+# ddgr must be installed
+type ddgr >/dev/null 2>&1 || {
+        echo "For duckduckgo search to work you must first install the packge \"ddgr\" on the server."
+        exit 0
+}
+
+args=$(echo "$1" | tr -s ' ' | cut -s -d ' ' -f 2-)
+#echo "ddg: arguments: \"$args\""
+if [ "$args" == "" ]; then
+        echo "You must be looking for something. Try \"ddg matrix news\"."
+        exit 0
+fi
+
+ddgr --np -n=10 -C "$args"
+
+exit 0
+
+# The argument __reply from the config file ist not used in this script.
+#if [ -n "$__reply" ]
+#then
+#    echo "$__reply"
+#else
+#    echo 'P O N G'
+#fi
