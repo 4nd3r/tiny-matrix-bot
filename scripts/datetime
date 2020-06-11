@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ -n "$CONFIG" ]; then
+        echo '^date$|^time$|^tiempo$|^hora$|^temps$|^heure$|^heures$|^datum$|^zeit$'
+        exit 0
+fi
+
+date
+
+#if [ -n "$__reply" ]
+#then
+#    echo "$__reply"
+#else
+#    echo 'P O N G'
+#fi
