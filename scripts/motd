@@ -1,0 +1,19 @@
+#!/bin/bash
+
+if [ -n "$CONFIG" ]; then
+        echo 'motd|^!?motd.*$'
+        exit 0
+fi
+
+if [ -f /etc/motd ]; then
+        cat /etc/motd
+else
+        echo "There is no message of the day on your system. So, be happpy."
+fi
+
+#if [ -n "$__reply" ]
+#then
+#    echo "$__reply"
+#else
+#    echo 'P O N G'
+#fi
