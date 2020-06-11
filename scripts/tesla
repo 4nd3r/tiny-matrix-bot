@@ -1,0 +1,27 @@
+#!/bin/bash
+
+if [ -n "$CONFIG" ]; then
+        echo 'model3.*|tesla|^tesla .*$'
+        exit 0
+fi
+
+echo "   Sorry master. I am resting. Better take a walk, that is healthier anyway...
+   Not now, I am charging.
+   Can't do. My batteries are low.
+   Not today. A Vaseline truck crashed on the highway and cars were sliding all over the place.
+   Uber surge pricing is 4.6x right now
+   It’s raining!
+   Omg, I totally forgot we had plans
+   I am in the middle of watch a YouTube film, don't bother me now!
+   I can’t find my own car keys :(
+   You are so lazy!
+   Please not today. It is my day off!
+   Don't you have another car?
+   I can't hear you. Speak louder." | shuf -n1
+
+#if [ -n "$__reply" ]
+#then
+#    echo "$__reply"
+#else
+#    echo 'P O N G'
+#fi
