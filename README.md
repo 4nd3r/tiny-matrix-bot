@@ -16,3 +16,7 @@ systemctl enable tiny-matrix-bot
 systemctl start tiny-matrix-bot
 systemctl stop tiny-matrix-bot
 ```
+
+## notable forks
+
+  * [8go/tiny-matrix-bot](https://github.com/8go/tiny-matrix-bot)
