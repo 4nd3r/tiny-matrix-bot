@@ -155,15 +155,15 @@ class TinyMatrixtBot():
     def run_script(self, room, event, script, args):
         script["env"]["__room_id"] = event["room_id"]
         script["env"]["__sender"] = event["sender"]
-        if "__whitelist" in script["env"]:
-            if not re.search(script["env"]["__whitelist"],
+        if "__allowlist" in script["env"]:
+            if not re.search(script["env"]["__allowlist"],
                              event["room_id"]+event["sender"]):
-                logger.debug("script {} not whitelisted".format(script["name"]))
+                logger.debug("script {} not allowed".format(script["name"]))
                 return
-        if "__blacklist" in script["env"]:
-            if re.search(script["env"]["__blacklist"],
+        if "__denylist" in script["env"]:
+            if re.search(script["env"]["__denylist"],
                          event["room_id"]+event["sender"]):
-                logger.debug("script {} blacklisted".format(script["name"]))
+                logger.debug("script {} denied".format(script["name"]))
                 return
         logger.debug("script {} run with env {}".format([script["name"], args], script["env"]))
         run = subprocess.Popen(
