@@ -8,5 +8,5 @@ token = SuperSecretToken
 
 #[ping]
 #allowlist = \!rOomId1:example\.com
-#blocklist = (@spammer|\!roOMid2):example\.com
+#denylist = (@spammer|\!roOMid2):example\.com
 #reply = PONG!
