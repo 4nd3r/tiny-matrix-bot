@@ -3,12 +3,6 @@
 if [ -n "$CONFIG" ]
 then
     echo '^!?ping(!|\?)?$'
-    exit 0
-fi
-
-if [ -n "$__reply" ]
-then
-    echo "$__reply"
 else
     echo 'P O N G'
 fi

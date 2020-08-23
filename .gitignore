@@ -1,4 +1,3 @@
-matrix_client
-run/*
-!run/.placeholder
-tiny-matrix-bot.cfg
+scripts-enabled/*
+!scripts-enabled/.placeholder
+tiny-matrix-bot.env
