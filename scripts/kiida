@@ -5,7 +5,7 @@ regex='^!(kiida|compliment)\s*'
 if [ -n "$CONFIG" ]
 then
     echo "$regex"
-    exit 1
+    exit 0
 fi
 
 arg="$( echo "$@" | sed -r "s/$regex//I" | sed 's/.*/\u&/' )"
