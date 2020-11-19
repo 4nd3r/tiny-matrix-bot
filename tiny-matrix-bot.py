@@ -8,6 +8,7 @@ import re
 import subprocess
 import sys
 import time
+import traceback
 
 from nio import (
     AsyncClient,
@@ -157,6 +158,7 @@ if __name__ == '__main__':
             TMB.accept_invites = os.environ['TMB_ACCEPT_INVITES']
         asyncio.run(TMB.run())
     except Exception:
+        traceback.print_exc(file=sys.stdout)
         sys.exit(1)
     except KeyboardInterrupt:
         sys.exit(0)
