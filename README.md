@@ -8,7 +8,7 @@ and sends output to room.
 
 That's it.
 
-Sans E2E support, I consider this bot feature complete.
+Sans E2E support, I consider this bot feature complete, but not bug free.
 
 Code could be better, but I'll try to "improve" it as I get better with Python 😏
 
