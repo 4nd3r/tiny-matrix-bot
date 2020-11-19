@@ -31,11 +31,11 @@ Optional environment variables with defaults:
 
 ### Trigger
 
-Bot sets environment variable `CONFIG` and executes script.
+To get the trigger, bot sets environment variable `CONFIG` and executes script.
 
 Script output MUST contain
 [Python compatible regular expression](https://docs.python.org/3.7/library/re.html#regular-expression-syntax),
-which will execute or "trigger" script.
+which will execute or "trigger" the script.
 
 Matching is case-insensitive.
 
