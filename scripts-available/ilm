@@ -6,18 +6,40 @@ then
     exit 0
 fi
 
-__get() {
-    c="/tmp/ilm-cache-$( echo "$1" | md5sum | awk '{print $1}' )"
-    [ -f "$c" ] && a=$(( $( date +%s ) - $( date -r "$c" +%s ) ))
-    if [ ! -f "$c" ] || [ "$a" -gt 500 ]
-    then curl -s -A tiny-matrix-bot -o "$c" "$1"
+for cmd in curl xmlstarlet
+do
+    if ! command -v "$cmd" > /dev/null
+    then
+        echo "$cmd: command not found"
+        exit 0
     fi
-    cat "$c"
+done
+
+__curl() {
+    cache="/tmp/ilm-cache-$( echo "$1" | md5sum | awk '{print $1}' )"
+
+    age=0
+
+    if [ -f "$cache" ]
+    then
+        age=$(( $( date +%s ) - $( date -r "$cache" +%s ) ))
+    fi
+
+    if [ ! -f "$cache" ] || [ "$age" -gt 300 ]
+    then
+        if result="$( curl -s -A tiny-matrix-bot "$1" )"
+        then
+            echo "$result" > "$cache"
+        fi
+    fi
+
+    cat "$cache"
 }
 
 __ilmateenistus() {
-    __get http://www.ilmateenistus.ee/ilma_andmed/xml/observations.php \
-        | xmlstarlet sel -t -v "/observations/station[name='$1']/airtemperature"
+    __curl http://www.ilmateenistus.ee/ilma_andmed/xml/observations.php \
+        | xmlstarlet sel -t -v \
+            "/observations/station[name='$1']/airtemperature"
 }
 
 __print() {
@@ -26,12 +48,12 @@ __print() {
         | sed 's/,0//'
 }
 
-__print Tallinn "$( __ilmateenistus Tallinn-Harku )"
+__print 'Tallinn' "$( __ilmateenistus 'Tallinn-Harku' )"
 
-__print Tartu "$( __ilmateenistus Tartu-Kvissental )"
+__print 'Tartu' "$( __ilmateenistus 'Tartu-Kvissental' )"
 
-__print Pärnu "$( __ilmateenistus Pärnu )"
+__print 'Pärnu' "$( __ilmateenistus 'Pärnu' )"
 
-__print Võru "$( __ilmateenistus Võru )"
+__print 'Võru' "$( __ilmateenistus 'Võru' )"
 
-__print Elva "$( __ilmateenistus Elva )"
+__print 'Elva' "$( __ilmateenistus 'Elva' )"
