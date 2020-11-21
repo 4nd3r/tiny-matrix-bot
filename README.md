@@ -1,10 +1,8 @@
 # tiny-matrix-bot
 
-Simple (and tiny!) [Matrix](https://matrix.org)
-bot based on [matrix-nio](https://github.com/poljar/matrix-nio).
+Simple (and tiny!) [Matrix](https://matrix.org) bot based on [matrix-nio](https://github.com/poljar/matrix-nio).
 
-Bot triggers on messages matching regular expressions, executes related script
-and sends output to room.
+Bot triggers on messages matching regular expressions, executes corresponding script and sends it's output to room.
 
 That's it.
 
@@ -49,7 +47,7 @@ Following environment variables are set:
 * `TMB_SENDER`
 * `TMB_BODY`
 
-For compatibility (fow now), message body is also given as first argument.
+For compatibility message body is also given as first argument. I'll probably remove this in future.
 
 Standard output (if exit code is zero) will be sent to room as plain text.
 
