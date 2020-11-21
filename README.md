@@ -29,13 +29,15 @@ Optional environment variables with defaults:
 
 ## Scripts
 
+Scripts can be written in any language and they MUST have execute bit set (`chmod +x`).
+
 ### Trigger
 
 To get the trigger, bot sets environment variable `CONFIG` and executes script.
 
-Script output MUST contain
+Standard output MUST contain
 [Python compatible regular expression](https://docs.python.org/3.7/library/re.html#regular-expression-syntax),
-which will execute or "trigger" the script.
+which will execute (trigger) the script.
 
 Matching is case-insensitive.
 
@@ -49,7 +51,7 @@ Following environment variables are set:
 
 For compatibility (fow now), message body is also given as first argument.
 
-Execution output (if exit code is zero) will be sent to room as plain text.
+Standard output (if exit code is zero) will be sent to room as plain text.
 
 Empty lines will separate messages.
 
