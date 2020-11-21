@@ -2,7 +2,7 @@
 
 Simple (and tiny!) [Matrix](https://matrix.org) bot based on [matrix-nio](https://github.com/poljar/matrix-nio).
 
-Bot triggers on messages matching regular expressions, executes corresponding script and sends it's output to room.
+Bot triggers on messages matching regular expressions, executes corresponding script and sends output to room.
 
 That's it.
 
