@@ -107,14 +107,14 @@ class TinyMatrixBot:
                 event.sender,
                 event.body,
                 script_path)
-            await self._client.room_typing(room.room_id, True)
-            time.sleep(0.4)
-            await self._client.room_typing(room.room_id, False)
             script_output = self.shell_exec(
                 [script_path, event.body],
                 {'TMB_ROOM_ID': room.room_id,
                 'TMB_SENDER': event.sender,
                 'TMB_BODY': event.body})
+            if not script_output:
+                continue
+            await self._client.room_typing(room.room_id, True)
             for line in script_output.split('\n\n'):
                 time.sleep(0.8)
                 logger.debug('send %s %s', room.room_id, line)
@@ -122,6 +122,7 @@ class TinyMatrixBot:
                     room_id=room.room_id,
                     message_type='m.room.message',
                     content={'msgtype': 'm.text', 'body': line})
+            await self._client.room_typing(room.room_id, False)
 
     homeserver = None
     access_token = None
