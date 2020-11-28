@@ -6,7 +6,7 @@ Bot triggers on messages matching regular expressions, executes corresponding sc
 
 That's it.
 
-Sans E2E support, I consider this bot feature complete, but not bug free.
+Sans E2EE support, I consider this bot feature complete, but not bug free.
 
 Code could be better, but I'll try to "improve" it as I get better with Python 😏
 
