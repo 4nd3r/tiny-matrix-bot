@@ -12,6 +12,21 @@ Code could be better, but I'll try to "improve" it as I get better with Python ğ
 
 PRs are welcome, but no promises are given. You might be better off with fork ğŸ™
 
+## Installation
+
+It goes roughly like this:
+
+```
+sudo pip3 install matrix-nio
+git clone https://github.com/4nd3r/tiny-matrix-bot
+cd tiny-matrix-bot/scripts-enabled/
+find ../scripts-available/ -type f -exec ln -s {} \;
+cd ..
+cp tiny-matrix-bot.env.sample tiny-matrix-bot.env
+vim tiny-matrix-bot.env
+./tiny-matrix-bot.sh
+```
+
 ## Configuration
 
 Required environment variables:
