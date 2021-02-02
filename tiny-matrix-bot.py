@@ -26,12 +26,16 @@ class TinyMatrixBot:
         env_copy = os.environ.copy()
         if env:
             env_copy.update(env)
-        run = subprocess.run(
-            args,
-            stdout=subprocess.PIPE,
-            env=env_copy,
-            check=False,
-            universal_newlines=True)
+        try:
+            run = subprocess.run(
+                args,
+                stdout=subprocess.PIPE,
+                env=env_copy,
+                check=False,
+                universal_newlines=True)
+        except Exception as e:
+            logger.error('exec %s failed: %s', args, str(e))
+            return False
         output = run.stdout.rstrip()
         logger.debug('exec %s %s %s', args, env, output)
         if run.returncode != 0 or not output:
