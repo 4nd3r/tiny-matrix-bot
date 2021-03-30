@@ -8,7 +8,7 @@ then
     exit 0
 fi
 
-arg="$( echo "$@" | grep -ioP "$regex" | sed 's/\s/+/' )"
+arg="$( echo "$TMB_BODY" | grep -ioP "$regex" | sed 's/\s/+/' )"
 
 if [ -z "$arg" ]
 then
@@ -28,5 +28,7 @@ echo "$json" \
     do
         echo "$l"
     done \
+        | sed -r 's/\[[a-z]\]/ /g' \
         | sed -r 's/(&[a-z]+;|br \/|\s+)/ /gim' \
-        | sed -r 's/\s+/ /gim'
+        | sed -r 's/\s+/ /gim' \
+        | sed -r 's/^\s+//'

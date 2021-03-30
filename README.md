@@ -2,15 +2,13 @@
 
 Simple (and tiny!) [Matrix](https://matrix.org) bot based on [matrix-nio](https://github.com/poljar/matrix-nio).
 
-Bot triggers on messages matching regular expressions, executes corresponding script and sends output to room.
+Bot triggers on messages matching regular expressions, runs corresponding script and sends output to room.
 
 That's it.
 
 Sans E2EE support, I consider this bot feature complete, but not bug free.
 
-Code could be better, but I'll try to "improve" it as I get better with Python 😏
-
-PRs are welcome, but no promises are given. You might be better off with fork 🙏
+PRs are welcome, but no promises are given. You might be better off with fork.
 
 ## Installation
 
@@ -42,19 +40,24 @@ Optional environment variables with defaults:
 
 ## Scripts
 
-Scripts can be written in any language and they MUST have execute bit set (`chmod +x`).
+Scripts can be written in any language and they MUST have `+x` bit set.
 
-### Trigger
+### Setting the trigger
 
-To get the trigger, bot sets environment variable `CONFIG` and executes script.
+Bot sets an environment variable `CONFIG` and runs the script.
 
-Standard output MUST contain
-[Python compatible regular expression](https://docs.python.org/3.7/library/re.html#regular-expression-syntax),
-which will execute (trigger) the script.
+Manual example:
+
+```
+$ CONFIG=1 scripts-available/ping
+^!?ping(!|\?)?$
+```
+
+Standard output MUST contain [Python compatible regular expression](https://docs.python.org/3.7/library/re.html#regular-expression-syntax).
 
 Matching is case-insensitive.
 
-### Executing
+### Running triggered scripts
 
 Following environment variables are set:
 
@@ -62,15 +65,20 @@ Following environment variables are set:
 * `TMB_SENDER`
 * `TMB_BODY`
 
-For compatibility message body is also given as first argument. I'll probably remove this in future.
+Manual example:
 
-Standard output (if exit code is zero) will be sent to room as plain text.
+```
+$ TMB_BODY='1Ms 1:1' scripts-available/piibel 
+Alguses lõi Jumal taeva ja maa.
+```
 
-Empty lines will separate messages.
+Non-empty standard output (if exit code is zero) will be sent to room as plain text.
 
-To mimic interaction, messages are sent to room with small delay 🤖
+Empty line between non-empty lines will separate messages.
 
-## Previous version
+To mimic interaction, messages are sent with small delay.
 
-[matrix-python-sdk](https://github.com/matrix-org/matrix-python-sdk) based version's last commit is
-[3e6fa5978492020876e8a70feac12663d6530bcd](https://github.com/4nd3r/tiny-matrix-bot/tree/3e6fa5978492020876e8a70feac12663d6530bcd).
+## Previous versions
+
+* [0c7c79e146970f19693b37b84df35a501513ff99](https://github.com/4nd3r/tiny-matrix-bot/tree/0c7c79e146970f19693b37b84df35a501513ff99)
+* [3e6fa5978492020876e8a70feac12663d6530bcd](https://github.com/4nd3r/tiny-matrix-bot/tree/3e6fa5978492020876e8a70feac12663d6530bcd)

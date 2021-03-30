@@ -1,0 +1,29 @@
+#!/bin/sh -e
+
+if [ -n "$CONFIG" ]
+then
+    echo '^#test'
+    exit 0
+fi
+
+if echo "$TMB_BODY" | grep -Eq 'non-zero-exit$'
+then
+    echo 'non-zero-exit'
+    exit 1
+elif
+    echo "$TMB_BODY" | grep -Eq 'no-output$'
+then
+    echo ' '
+    echo
+    echo ' '
+elif
+    echo "$TMB_BODY" | grep -Eq 'multiline$'
+then
+    echo 1
+    echo
+    echo 2
+    echo
+    echo 3
+else
+    echo 'It works!'
+fi
