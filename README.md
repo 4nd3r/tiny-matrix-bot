@@ -78,6 +78,17 @@ Empty line between non-empty lines will separate messages.
 
 To mimic interaction, messages are sent with small delay.
 
+## Running with systemd
+
+Bot itself don't need to write persistent data, so read-only system access for
+long running service is reasonable thing to have, hence `ProtectSystem=strict`
+and friends.
+
+However, if script wants to write persistent data, then write path MUST be
+allowed using `ReadWritePaths=` in systemd unit `[Service]` section. See
+[systemd documentation](https://www.freedesktop.org/software/systemd/man/systemd.exec.html)
+for details.
+
 ## Previous versions
 
 * [0c7c79e146970f19693b37b84df35a501513ff99](https://github.com/4nd3r/tiny-matrix-bot/tree/0c7c79e146970f19693b37b84df35a501513ff99)
