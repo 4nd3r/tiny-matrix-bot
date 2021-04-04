@@ -100,7 +100,7 @@ class TinyMatrixBot:
         self._client.add_response_callback(self._on_sync, nio.SyncResponse)
         self._client.add_event_callback(self._on_invite, nio.InviteMemberEvent)
         self._client.add_event_callback(self._on_message, nio.RoomMessageText)
-        await self._client.sync_forever()
+        await self._client.sync_forever(timeout=30000)
         await self._client.close()
 
     async def _on_error(self, response):
