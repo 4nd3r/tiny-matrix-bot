@@ -163,9 +163,14 @@ class TinyMatrixBot:
 
 
 if __name__ == '__main__':
+    asyncio_debug = False
+    if 'TMB_DEBUG' in os.environ:
+        import logging
+        logging.basicConfig(level=logging.DEBUG)
+        asyncio_debug = True
     try:
         TMB = TinyMatrixBot()
-        asyncio.run(TMB.run())
+        asyncio.run(TMB.run(), debug=asyncio_debug)
     except KeyboardInterrupt:
         sys.exit(0)
     except Exception as e:
