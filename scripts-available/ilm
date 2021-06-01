@@ -2,7 +2,7 @@
 
 if [ -n "$CONFIG" ]
 then
-    echo '^!?ilm\??$'
+    echo '^!?ilm\??\s*$'
     exit 0
 fi
 
