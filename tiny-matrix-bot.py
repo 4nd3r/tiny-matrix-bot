@@ -22,6 +22,7 @@ class TinyMatrixBot:
     user_id = None
     accept_invites = None
     scripts_path = None
+    proxy = None
     _scripts = None
 
     def __init__(self):
