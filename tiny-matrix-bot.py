@@ -96,7 +96,7 @@ class TinyMatrixBot:
         if self.proxy is None:
             self._client = nio.AsyncClient(self.homeserver)
         else:
-            self._client = nio.AsyncClient(self.homeserver,proxy=self.proxy)
+            self._client = nio.AsyncClient(self.homeserver, proxy=self.proxy)
         self._client.access_token = self.access_token
         self._client.user_id = self.user_id
         self._client.device_id = 'TinyMatrixBot'
