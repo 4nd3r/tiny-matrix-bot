@@ -33,14 +33,11 @@ Required environment variables:
 * `TMB_ACCESS_TOKEN` = `ABCDEFGH`
 * `TMB_USER_ID` = `@bot:example.com`
 
-Optional environment variables with defaults:
+Optional environment variables:
 
-* `TMB_SCRIPTS_PATH` = `scripts-enabled`
+* `TMB_SCRIPTS_PATH` = `scripts-enabled` (this value is used when unset)
 * `TMB_ACCEPT_INVITES` = `:example\.com$` (derived from `TMB_USER_ID` when unset)
-
-If it's required to connect the homeserver through a simple proxy:
-
-* `TMB_PROXY` = `http://proxy.example.com:3128`
+* `TMB_PROXY` = `http://proxy.example.com:3128` (this value is an example, see [matrix-nio documentation](https://matrix-nio.readthedocs.io/en/latest/nio.html?highlight=proxy#nio.AsyncClient))
 
 ## Scripts
 
