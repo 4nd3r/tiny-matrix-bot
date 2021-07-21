@@ -40,7 +40,7 @@ Optional environment variables with defaults:
 
 If it's required to connect the homeserver through a simple proxy:
 
-* `TMB_PROXY` = `http://squid.internal:3128`
+* `TMB_PROXY` = `http://proxy.example.com:3128`
 
 ## Scripts
 
