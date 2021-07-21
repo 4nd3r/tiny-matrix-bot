@@ -22,7 +22,6 @@ class TinyMatrixBot:
     user_id = None
     accept_invites = None
     scripts_path = None
-    proxy = None
     _scripts = None
 
     def __init__(self):
@@ -93,10 +92,7 @@ class TinyMatrixBot:
 
     async def run(self):
         print(f'connecting to {self.homeserver}')
-        if self.proxy is None:
-            self._client = nio.AsyncClient(self.homeserver)
-        else:
-            self._client = nio.AsyncClient(self.homeserver, proxy=self.proxy)
+        self._client = nio.AsyncClient(self.homeserver, proxy=self.proxy)
         self._client.access_token = self.access_token
         self._client.user_id = self.user_id
         self._client.device_id = 'TinyMatrixBot'
