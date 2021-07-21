@@ -38,6 +38,10 @@ Optional environment variables with defaults:
 * `TMB_SCRIPTS_PATH` = `scripts-enabled`
 * `TMB_ACCEPT_INVITES` = `:example\.com$` (derived from `TMB_USER_ID` when unset)
 
+If it's required to connect the homeserver through a simple proxy:
+
+* `TMB_PROXY` = `http://proxy.example.com:3128`
+
 ## Scripts
 
 Scripts can be written in any language and they MUST have `+x` bit set.
