@@ -37,8 +37,12 @@ renewable="$( echo "$system" | jq .data[].production_renewable )"
 
 consumption="$( echo "$system" | jq .data[].consumption )"
 
+balance="$( echo "$system" | jq .data[].system_balance )"
+
 echo "Hind: $price €/MWh"
 
 echo "Tootmine: $production MW (sh $renewable MW taastuvatest)"
 
 echo "Tarbimine: $consumption MW"
+
+echo "Jääk: $balance MW"
