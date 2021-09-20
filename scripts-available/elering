@@ -1,0 +1,44 @@
+#!/bin/sh -e
+
+if [ -n "$CONFIG" ]
+then
+    echo '^!?(elering|elekter)\??\s*$'
+    exit 0
+fi
+
+__curl() {
+    cache="/tmp/elering-cache-$( echo "$1" | md5sum | awk '{print $1}' )"
+
+    age=0
+
+    if [ -f "$cache" ]
+    then
+        age=$(( $( date +%s ) - $( date -r "$cache" +%s ) ))
+    fi
+
+    if [ ! -f "$cache" ] || [ "$age" -gt 300 ]
+    then
+        if result="$( curl -s -A tiny-matrix-bot "$1" )"
+        then
+            echo "$result" > "$cache"
+        fi
+    fi
+
+    cat "$cache"
+}
+
+price="$( __curl 'https://dashboard.elering.ee/api/nps/price/EE/current' | jq '.data[].price' )"
+
+system="$( __curl 'https://dashboard.elering.ee/api/system/latest' )"
+
+production="$( echo "$system" | jq .data[].production )"
+
+renewable="$( echo "$system" | jq .data[].production_renewable )"
+
+consumption="$( echo "$system" | jq .data[].consumption )"
+
+echo "Hind: $price €/MWh"
+
+echo "Tootmine: $production MW (sh $renewable MW taastuvatest)"
+
+echo "Tarbimine: $consumption MW"
