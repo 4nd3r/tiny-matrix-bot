@@ -15,7 +15,7 @@ then
     exit 1
 fi
 
-json="$( curl -s "http://piibel.net/api/v3/.json?q=$arg" )"
+json="$( curl -s "https://piibel.net/api/v3/.json?q=$arg" )"
 
 if [ -z "$json" ]
 then
