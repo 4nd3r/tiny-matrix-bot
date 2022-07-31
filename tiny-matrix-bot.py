@@ -31,7 +31,7 @@ class TinyMatrixBot:
 
     def _run_script(self, script_path, script_env=None):
         script_name = os.path.basename(script_path)
-        print(f"running script {script_name}")
+        print(f"running script {script_name} with env {script_env}")
         env = os.environ.copy()
         if script_env:
             env.update(script_env)
@@ -72,7 +72,7 @@ class TinyMatrixBot:
             if not script_regex:
                 print(f"script {script_name} loading failed")
                 continue
-            print(f"script {script_name} loaded")
+            print(f"script {script_name} loaded with regex {script_regex}")
             scripts.update({script_path: script_regex})
         return scripts
 
