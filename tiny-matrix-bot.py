@@ -91,7 +91,8 @@ class TinyMatrixBot:
             self.accept_invites = ":{}$".format(re.escape(self.user_id.split(":")[1]))
         if self.scripts_path is None:
             self.scripts_path = os.path.join(
-                os.path.dirname(os.path.realpath(__file__)), "scripts-enabled"
+                os.path.dirname(os.path.realpath(__file__)),
+                "scripts-enabled"
             )
         if os.path.isdir(self.scripts_path):
             self._scripts = self._load_scripts(self.scripts_path)
@@ -172,7 +173,6 @@ if __name__ == "__main__":
     asyncio_debug = False
     if "TMB_DEBUG" in os.environ:
         import logging
-
         logging.basicConfig(level=logging.DEBUG)
         asyncio_debug = True
     try:
