@@ -29,46 +29,6 @@ class TinyMatrixBot:
     _last_event_timestamp = time.time() * 1000
     _scripts = None
 
-    def __init__(self):
-        required_env_vars = ["TMB_HOMESERVER", "TMB_ACCESS_TOKEN", "TMB_USER_ID"]
-        for env_var in os.environ:
-            if not env_var.startswith("TMB_"):
-                continue
-            if env_var in required_env_vars:
-                required_env_vars.remove(env_var)
-            setattr(self, env_var.lower()[4:], os.environ[env_var])
-        if required_env_vars:
-            raise Exception("missing {}".format(", ".join(required_env_vars)))
-        if self.accept_invites is None:
-            self.accept_invites = ":{}$".format(re.escape(self.user_id.split(":")[1]))
-        if self.scripts_path is None:
-            self.scripts_path = os.path.join(
-                os.path.dirname(os.path.realpath(__file__)), "scripts-enabled"
-            )
-        if os.path.isdir(self.scripts_path):
-            self._scripts = self._load_scripts(self.scripts_path)
-
-    def _load_scripts(self, scripts_path):
-        scripts = {}
-        for file in os.listdir(scripts_path):
-            script_path = os.path.join(self.scripts_path, file)
-            script_name = os.path.basename(script_path)
-            if script_name[0] == ".":
-                continue
-            if not os.access(script_path, os.R_OK):
-                print(f"script {script_name} is not readable")
-                continue
-            if not os.access(script_path, os.X_OK):
-                print(f"script {script_name} is not executable")
-                continue
-            script_regex = self._run_script(script_path, {"CONFIG": "1"})
-            if not script_regex:
-                print(f"script {script_name} loading failed")
-                continue
-            print(f"script {script_name} loaded")
-            scripts.update({script_path: script_regex})
-        return scripts
-
     def _run_script(self, script_path, script_env=None):
         script_name = os.path.basename(script_path)
         print(f"running script {script_name}")
@@ -95,18 +55,45 @@ class TinyMatrixBot:
             return False
         return output
 
-    async def run(self):
-        print(f"connecting to {self.homeserver}")
-        self._client = nio.AsyncClient(self.homeserver, proxy=self.proxy)
-        self._client.access_token = self.access_token
-        self._client.device_id = "TinyMatrixBot"
-        self._client.user_id = self.user_id
-        self._client.add_response_callback(self._on_error, nio.SyncError)
-        self._client.add_response_callback(self._on_sync, nio.SyncResponse)
-        self._client.add_event_callback(self._on_invite, nio.InviteMemberEvent)
-        self._client.add_event_callback(self._on_message, nio.RoomMessageText)
-        await self._client.sync_forever(timeout=30000)
-        await self._client.close()
+    def _load_scripts(self, scripts_path):
+        scripts = {}
+        for file in os.listdir(scripts_path):
+            script_path = os.path.join(self.scripts_path, file)
+            script_name = os.path.basename(script_path)
+            if script_name[0] == ".":
+                continue
+            if not os.access(script_path, os.R_OK):
+                print(f"script {script_name} is not readable")
+                continue
+            if not os.access(script_path, os.X_OK):
+                print(f"script {script_name} is not executable")
+                continue
+            script_regex = self._run_script(script_path, {"CONFIG": "1"})
+            if not script_regex:
+                print(f"script {script_name} loading failed")
+                continue
+            print(f"script {script_name} loaded")
+            scripts.update({script_path: script_regex})
+        return scripts
+
+    def __init__(self):
+        required_env_vars = ["TMB_HOMESERVER", "TMB_ACCESS_TOKEN", "TMB_USER_ID"]
+        for env_var in os.environ:
+            if not env_var.startswith("TMB_"):
+                continue
+            if env_var in required_env_vars:
+                required_env_vars.remove(env_var)
+            setattr(self, env_var.lower()[4:], os.environ[env_var])
+        if required_env_vars:
+            raise Exception("missing {}".format(", ".join(required_env_vars)))
+        if self.accept_invites is None:
+            self.accept_invites = ":{}$".format(re.escape(self.user_id.split(":")[1]))
+        if self.scripts_path is None:
+            self.scripts_path = os.path.join(
+                os.path.dirname(os.path.realpath(__file__)), "scripts-enabled"
+            )
+        if os.path.isdir(self.scripts_path):
+            self._scripts = self._load_scripts(self.scripts_path)
 
     async def _on_error(self, response):
         if self._client:
@@ -165,6 +152,19 @@ class TinyMatrixBot:
                     content={"msgtype": "m.text", "body": message_body},
                 )
             await self._client.room_typing(room.room_id, False)
+
+    async def run(self):
+        print(f"connecting to {self.homeserver}")
+        self._client = nio.AsyncClient(self.homeserver, proxy=self.proxy)
+        self._client.access_token = self.access_token
+        self._client.device_id = "TinyMatrixBot"
+        self._client.user_id = self.user_id
+        self._client.add_response_callback(self._on_error, nio.SyncError)
+        self._client.add_response_callback(self._on_sync, nio.SyncResponse)
+        self._client.add_event_callback(self._on_invite, nio.InviteMemberEvent)
+        self._client.add_event_callback(self._on_message, nio.RoomMessageText)
+        await self._client.sync_forever(timeout=30000)
+        await self._client.close()
 
 
 if __name__ == "__main__":
