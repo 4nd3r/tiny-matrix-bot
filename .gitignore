@@ -1,6 +1,5 @@
+!.gitkeep
 .python-version
 .venv*
-
 scripts-enabled/*
-!scripts-enabled/.placeholder
 tiny-matrix-bot.env
