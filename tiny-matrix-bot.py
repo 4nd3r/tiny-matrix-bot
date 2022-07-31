@@ -100,9 +100,7 @@ class TinyMatrixBot:
     async def _on_error(self, response):
         if self._client:
             await self._client.close()
-        print(response)
-        print("got error, exiting")
-        sys.exit(1)
+        raise Exception(response)
 
     async def _on_sync(self, _response):
         if not self._initial_sync_done:
