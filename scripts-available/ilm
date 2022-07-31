@@ -27,7 +27,7 @@ __curl() {
 
     if [ ! -f "$cache" ] || [ "$age" -gt 300 ]
     then
-        if result="$( curl -s -A tiny-matrix-bot "$1" )"
+        if result="$( curl -sSL -A tiny-matrix-bot "$1" )"
         then
             echo "$result" > "$cache"
         fi
@@ -37,7 +37,8 @@ __curl() {
 }
 
 __ilmateenistus() {
-    __curl http://www.ilmateenistus.ee/ilma_andmed/xml/observations.php \
+    __curl https://www.ilmateenistus.ee/ilma_andmed/xml/observations.php \
+        | sed 's/[õä]/x/' \
         | xmlstarlet sel -t -v \
             "/observations/station[name='$1']/airtemperature"
 }
@@ -52,8 +53,8 @@ __print 'Tallinn' "$( __ilmateenistus 'Tallinn-Harku' )"
 
 __print 'Tartu' "$( __ilmateenistus 'Tartu-Kvissental' )"
 
-__print 'Pärnu' "$( __ilmateenistus 'Pärnu' )"
+__print 'Pärnu' "$( __ilmateenistus 'Pxrnu' )"
 
-__print 'Võru' "$( __ilmateenistus 'Võru' )"
+__print 'Võru' "$( __ilmateenistus 'Vxru' )"
 
 __print 'Elva' "$( __ilmateenistus 'Elva' )"
