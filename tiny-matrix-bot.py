@@ -12,6 +12,7 @@ import re
 import subprocess
 import sys
 import time
+import traceback
 
 import nio
 
@@ -44,7 +45,7 @@ class TinyMatrixBot:
                 universal_newlines=True,
             )
         except Exception:
-            print("  failed with exception")
+            print(traceback.format_exc().strip())
             return False
         if run.returncode != 0:
             print("  non-zero exit code")
@@ -177,9 +178,8 @@ if __name__ == "__main__":
     try:
         TMB = TinyMatrixBot()
         asyncio.run(TMB.run(), debug=asyncio_debug)
+    except Exception:
+        print(traceback.format_exc().strip())
+        sys.exit(1)
     except KeyboardInterrupt:
         sys.exit(0)
-    except Exception as e:
-        print(e)
-        print("got exception, exiting")
-        sys.exit(1)
