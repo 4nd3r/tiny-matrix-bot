@@ -17,12 +17,16 @@ import nio
 
 
 class TinyMatrixBot:
-    homeserver = None
-    access_token = None
-    user_id = None
     accept_invites = None
-    scripts_path = None
+    access_token = None
+    homeserver = None
     proxy = None
+    scripts_path = None
+    user_id = None
+
+    _client = None
+    _initial_sync_done = False
+    _last_event_timestamp = time.time() * 1000
     _scripts = None
 
     def __init__(self):
@@ -91,14 +95,12 @@ class TinyMatrixBot:
             return False
         return output
 
-    _client = None
-
     async def run(self):
         print(f"connecting to {self.homeserver}")
         self._client = nio.AsyncClient(self.homeserver, proxy=self.proxy)
         self._client.access_token = self.access_token
-        self._client.user_id = self.user_id
         self._client.device_id = "TinyMatrixBot"
+        self._client.user_id = self.user_id
         self._client.add_response_callback(self._on_error, nio.SyncError)
         self._client.add_response_callback(self._on_sync, nio.SyncResponse)
         self._client.add_event_callback(self._on_invite, nio.InviteMemberEvent)
@@ -112,8 +114,6 @@ class TinyMatrixBot:
         print(response)
         print("got error, exiting")
         sys.exit(1)
-
-    _initial_sync_done = False
 
     async def _on_sync(self, _response):
         if not self._initial_sync_done:
@@ -129,8 +129,6 @@ class TinyMatrixBot:
         else:
             print(f"invite from {event.sender} to {room.room_id} accepted")
             await self._client.join(room.room_id)
-
-    _last_event_timestamp = time.time() * 1000
 
     async def _on_message(self, room, event):
         await self._client.update_receipt_marker(room.room_id, event.event_id)
