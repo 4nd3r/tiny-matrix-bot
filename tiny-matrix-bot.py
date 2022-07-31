@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
 # pylint: disable=broad-except
+# pylint: disable=consider-using-f-string
 # pylint: disable=invalid-name
 # pylint: disable=missing-docstring
-# pylint: disable=no-self-use
 # pylint: disable=too-few-public-methods
 
 import asyncio
@@ -127,8 +127,8 @@ class TinyMatrixBot:
         if not self._scripts:
             print("no scripts")
             return
-        for script_path in self._scripts:
-            if not re.search(self._scripts[script_path], event.body, re.IGNORECASE):
+        for script_path, script_regex in self._scripts.items():
+            if not re.search(script_regex, event.body, re.IGNORECASE):
                 continue
             script_name = os.path.basename(script_path)
             print(f"script {script_name} triggered in {room.room_id}")
