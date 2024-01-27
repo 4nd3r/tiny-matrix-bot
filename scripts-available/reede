@@ -8,12 +8,12 @@ fi
 
 __mis_nadalapaev()
 {
-    date -d "$d" '+%u'
+    date -d "$1" '+%u'
 }
 
 __mis_paevkuu()
 {
-    date -d "$d" '+%d%m'
+    date -d "$1" '+%d%m'
 }
 
 __on_nadalavahetus()
